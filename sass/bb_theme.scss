@@ -1,0 +1,112 @@
+
+:root:not(.light) {
+  --c1: #161423;// Background Color Primary
+  --c2: #483d70;// Background Color Secondary
+  --c3: #ac81c1;// Table Rows, Block quote edge, Borders
+  --cheader: #a471a3; //code header
+  --chb: #0f0718;
+  --chf: #fff;
+
+    .z-code {
+       color: var(--chf);
+       background-color: var(--chb);
+       border-radius: var(--br);
+    }
+
+
+    blockquote {
+       border: 0.05rem solid var(--c3);
+    }
+
+.code_with_header {
+    .z-code {
+        margin-top: 0;
+        border-radius: 0px var(--br) var(--br) var(--br);
+    }
+}
+}
+
+:root.light {
+  --c1: #FDDE9E;// Background Color Primary
+  --c2: #EEE3CF;// Background Color Secondary
+  --c3: #C49129;// Table Rows, Block quote edge, Borders
+  --cheader: #91500a; //code header
+  --chf: #1d1c22;
+  --chb: #ecc797;
+
+  .z-code {
+     color: var(--chf);
+     background-color: var(--chb);
+     border-radius: var(--br);
+  }
+
+.code_with_header {
+    .z-code {
+        margin-top: 0;
+        border-radius: 0px var(--br) var(--br) var(--br);
+    }
+
+}
+  blockquote {
+     border: 0.05rem solid var(--c3);
+  }
+}
+
+.timedate {
+    background-color: var(--chb);
+    color: var(--cheader);
+    border-radius: var(--br);
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.codeheader {
+    border-radius: var(--br) var(--br) 0px 0px;
+    background-color: var(--chb);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: 20rem;
+    width: fit-content;
+    color: var(--cheader);
+}
+
+hr {
+    border-color: var(--c2);
+}
+
+
+
+// Table Override, this is used for Zola's linenos and hl_lines
+code {
+  mark {
+    display: block;
+    background-color: var(--c2);
+    color: unset;
+    padding: 0;
+  }
+
+  table mark {
+    display: block;
+    background-color: var(--c2);
+    color: unset;
+    padding: 0;
+  }
+
+  tbody td {
+    text-align: left;
+    border: 0;
+    height: 100%;
+    padding: 0;
+  }
+
+  tbody td:first-child {
+    text-align: center;
+    user-select: none;
+    max-width: 60px;
+    width: 5%;
+  }
+}
+
+pre code[data-lang]::before {
+  content: "";
+}

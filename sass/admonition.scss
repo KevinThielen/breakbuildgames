@@ -1,0 +1,128 @@
+:root {
+  --note-icon:
+    url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z'/></svg>");
+  --abstract-icon:
+    url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 9H7V7h10m0 6H7v-2h10m-3 6H7v-2h7M12 3a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m7 0h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z'/></svg>");
+  --question-icon:
+    url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='m15.07 11.25-.9.92C13.45 12.89 13 13.5 13 15h-2v-.5c0-1.11.45-2.11 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41a2 2 0 0 0-2-2 2 2 0 0 0-2 2H8a4 4 0 0 1 4-4 4 4 0 0 1 4 4 3.2 3.2 0 0 1-.93 2.25M13 19h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10c0-5.53-4.5-10-10-10z'/></svg>");
+  --warning-icon:
+    url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21z'/></svg>");
+  --details-icon:
+    url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8.59 16.58 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42Z'/></svg>");
+}
+
+:root:not(.light) {
+    $admonitions: (
+        "note": ( "border": #ffd4c5, "bg": #2d1e71, "color": #fdeeff, icon: --note-icon),
+        "hint": ( "border": #ffd4c5, "bg": #402106, "color": #fbfad8, icon: --details-icon ),
+        "warn": ( "border": #ffd4c5, "bg": #9d0421, "color": #fff7f3, icon: --warning-icon ),
+        "example": ( "border": #ffd4c5, "bg": #484242, "color": #fff, icon: --abstract-icon ),
+        "question": ( "border": #ffd4c5, "bg": #1a5504, "color": #fbfad8, icon: --question-icon ),
+    );
+
+  @each $name, $list in $admonitions { 
+    .admonition.#{$name} {
+        border-color: map-get($list, "border");
+        background-color: map-get($list, "bg");
+        color: map-get($list, "border");
+    }
+
+    .admonition.#{$name}.title {
+      position: relative;
+      padding: 0.4rem 2.9rem 0.7rem;
+      color: map-get($list, "border");
+
+      &::before {
+          mask-image: var(map-get($list, "icon"));
+          -webkit-mask-image: var(map-get($list, "icon"));
+          mask-repeat: no-repeat;
+          -webkit-mask-repeat: no-repeat;
+          mask-size: contain;
+          content: "";
+          top: 0.3rem;
+          left: 0.6em;
+          width: 1.8rem;
+          height: 1.8rem;
+          position: absolute;
+          background-color: map-get($list, "border");
+      }
+  }
+  }
+}
+
+:root {
+    $admonitions: (
+        "note": ( "border": #2d1705, "bg": #b0a5ff, "color": black, icon: --note-icon),
+        "hint": ( "border": #2d1705, "bg": #ee9c7c, "color": black, icon: --details-icon ),
+        "warn": ( "border": #2d1705, "bg": #ff002f, "color": black, icon: --warning-icon ),
+        "example": ( "border": #2d1705, "bg": #bfb8ab, "color": black, icon: --abstract-icon ),
+        "question": ( "border": #2d1705, "bg": #34bb3c, "color": black, icon: --question-icon ),
+    );
+
+  @each $name, $list in $admonitions { 
+    .admonition.#{$name} {
+        border-color: map-get($list, "border");
+        background-color: map-get($list, "bg");
+        color: map-get($list, "border");
+    }
+
+    .admonition.#{$name}.title {
+      position: relative;
+      padding: 0.3rem 2.9rem;
+      color: map-get($list, "border");
+
+      &::before {
+          mask-image: var(map-get($list, "icon"));
+          -webkit-mask-image: var(map-get($list, "icon"));
+          mask-repeat: no-repeat;
+          -webkit-mask-repeat: no-repeat;
+          mask-size: contain;
+          content: "";
+          top: 0.3rem;
+          left: 0.6em;
+          width: 1.8rem;
+          height: 1.8rem;
+          position: absolute;
+          background-color: map-get($list, "border");
+      }
+  }
+  }
+}
+
+  .admonition {
+    margin-left:0;
+    padding:.5rem .0rem .5rem 1.5rem;
+    border: 0.25rem solid;
+    border-top: 0px;
+    display: flow-root;
+
+    border-radius: 0px 0px 25px 25px;
+    border-top: 0px;
+    background-color: black;
+    margin: 0 0;
+    page-break-inside: avoid;
+
+
+    // [print]: Omit shadow as it may lead to rendering errors
+    @media print {
+      box-shadow: none;
+    }
+
+    // Hack: Chrome exhibits a weird issue where it will set nested elements to
+    // content-box. Doesn't happen in other browsers, so looks like a bug.
+    > * {
+      box-sizing: border-box;
+    }
+
+    // Admonition title
+    &.title
+    {
+      position: relative;
+      margin-block: 0;
+      padding-block: 0;
+      font-weight: 700;
+      border-bottom: 0.2rem dashed;
+      border-top: 0.25rem solid;
+      border-radius: 25px 25px 0px 0px;
+    }
+  }
