@@ -27,12 +27,13 @@
 }
 
 :root.light {
-  --c1: #FDDE9E;// Background Color Primary
+  --c1: #FFF1D3;// Background Color Primary
   --c2: #EEE3CF;// Background Color Secondary
   --c3: #C49129;// Table Rows, Block quote edge, Borders
   --cheader: #91500a; //code header
   --chf: #1d1c22;
   --chb: #ecc797;
+  --ccb: #ecc797;
 
   .z-code {
      color: var(--chf);
@@ -69,6 +70,17 @@
     width: fit-content;
     color: var(--cheader);
 }
+
+.toc-item .chapter_header {
+    color: var(--a1);
+    font-weight: 700;
+}
+
+.toc-item .chapter {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 
 hr {
     border-color: var(--c2);

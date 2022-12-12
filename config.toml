@@ -70,7 +70,7 @@ headhr = false # show or hide horizontal rule below header
 foothr = true # show or hide horizontal rule above footer
 
 menu = [
-    {url = "/about/", name = "About", slash = false, blank = false},
+    {url = "/", name = "About", slash = false, blank = false},
     {url = "/blog/", name = "Blog", slash = true, blank = false},
     {url = "/devlog/", name = "Devlog", slash = true, blank = false},
     {url = "/support/", name = "Support", slash = true, blank = false},

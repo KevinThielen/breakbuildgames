@@ -72,17 +72,15 @@ to distract me from my work.
 
 Everyone knows about the Rust Evangelism Strikeforce. Overly zealous Rust
 programmers, who spread the word of their lord and savior to an almost annoying extent. 
-
-However, this streamer was my first exposure to the neat little things the language has to offer,
-beyond just throwing around keywords I didn't care about.
+This was different. He was enthusiastic about the language, but actually showed the neat little
+things the language has to offer, beyond just throwing around keywords I didn't care about.
 
 Who cares about non-saying things like correctness or safety?
 It's not like they don't matter, but so far I could manage without them with no
 issues. It's not like a small wannabe game developer like me really cares so much
 about the common buzzwords around Rust. To be completely honest, I am sure there were 
-some feelings of spite towards this "cult" that just made me not look into the language further, beyond superficially DuckDuckGoing some sample
-code. I feel like you only really start to appreciate these keywords once you
-experienced them firsthand.
+some feelings of spite towards this "cult" that just made me not look into the language further, beyond superficially DuckDuckGoing some sample code and calling it hideous(I mainly blame lifetimes for that). I feel like you only really start to appreciate these keywords once you
+experienced them firsthand, at least I did.
 
 Instead, this bearded man talked about enums in combination with pattern matching,
 how there is no null and no inheritance, almost everything is an expression, all the countless quality of life features, modern tools,
@@ -131,11 +129,12 @@ use after free or move, or shared mutable state, at least for the most part.
 There are also lots of useful tools to add more type safety, without any costs.
 
 Errors can often even be recognized almost right after writing a line of code, because they don't pass the compiler.
-RustAnalyzer is also doing an amazing job. This is a huge productivity boost.  
+RustAnalyzer is also doing an amazing job here. This is a huge productivity boost.  
 This is by no means unique to Rust and you get something similar in any modern
 IDE for most relevant languages. The big difference is that Rust's strict rules,
 be it ownership or type safety, just catches a lot more, to a point where it's
 not rare no get suspicious when it compiles without any complains. 
+
 
 Rust also forces you to handle all code paths. You have to be explicit about things
 that can fail. A function doesn't just randomly throw some exception when something goes
@@ -995,4 +994,4 @@ All in all, even after weighing the cons, Rust just ticks the right boxes for me
 my journey will take me. I don't see me writing code in another language in the
 foreseeable future. 
 
-Thank you for reading. If you want more, check out my [devlog](devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this articles, I am currently writing abstraction around OpenGL for the renderer, so take a look if you are interested. 
+Thank you for reading. If you want more, check out my [devlog](/devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this articles, I am currently writing abstraction around OpenGL for the renderer, so take a look if you are interested. 

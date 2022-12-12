@@ -4,10 +4,9 @@
 {%- block content %}
 <article>
 
-{% set main_page = get_page(path="pages/blog.md") %}
-{{ main_page.content | safe }}
+{{ section.content | safe }}
 
-{%- set section_item = get_section(path="blog/_index.md") %}
+
   {%- if config.extra.recent | default(value=true) %}
    <div >
       <div>

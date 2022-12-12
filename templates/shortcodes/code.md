@@ -43,7 +43,7 @@
 <div class="code_with_header">
 <div class="codeheader">{{name}}</div>
 
-{{ source }}
+{{ body }}
 
 </div>
 
