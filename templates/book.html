@@ -3,7 +3,6 @@
 
 
 {%- block content %}
-<!-- Fill the book vars for the current page  -->
 {% set path = "" %}
 {%- if section %}
     {% set path = section.components %}
@@ -13,58 +12,51 @@
 
 {%- set root_section = get_section(path=path[0] ~ "/" ~ path[1] ~ "/_index.md") %}
 
-<!-- Get the current page index, the total page count and the next and prev links  -->
 {% set next = "" %}
 {% set previous = "" %}
 {% set current = 0 %}
 {% set found_current = false %}
 {% set total = 0 %}
 
-<!-- Check if current page is the title page -->
 {% if path == root_section.components %}
     {% set_global found_current = true %}
 {% else %}
     {% set_global previous = root_section.permalink %}
 {% endif %}
 
-<!-- Go through all chapters -->
 {%- for chapter in root_section.subsections %}
     {%- set chapter_section = get_section(path=chapter) %}
 
     {% set_global total = total + 1 %}
 
-    <!-- Last page or chapter was current, so this one must be the next one -->
     {% if found_current and next == "" %}
         {% set_global next = chapter_section.permalink %}
     {% endif %}
 
-    <!-- This page is the current one! -->
     {% if not found_current and path == chapter_section.components %}
         {% set_global found_current = true %}
         {% set_global current = total %}
     {% endif %}
 
-    <!-- This page was NOT the current one! So it is potentially the previous of the current one -->
     {% if not found_current %}
           {% set_global previous = chapter_section.permalink %}
     {% endif %}
     
-    <!-- Go through all pages in a chapter -->
     {%- for page in chapter_section.pages %} 
+        {% if page.extra.chapter  %} 
+        {%    continue %}
+        {% endif %} 
         {% set_global total = total + 1 %}
        
-        <!-- Last page or chapter was current, so this one must be the next one -->
         {% if found_current and next == "" %}
             {% set_global next = page.permalink %}
         {% endif %}
 
-        <!-- This page is the current one! -->
         {% if not found_current and path == page.components %}
             {% set_global found_current = true %}
             {% set_global current = total %}
         {% endif %}
 
-        <!-- This page was NOT the current one! So it is potentially the previous of the current one -->
         {% if not found_current %}
               {% set_global previous = page.permalink %}
         {% endif %}
@@ -74,8 +66,19 @@
 <article>
 {%- if section %}
     <h1>{{ section.title }}</h1>
-    {{ section.content | safe }}
-{% else %}
+
+    {%- if section.relative_path == root_section.relative_path %}
+            {{ section.content | safe }}
+    {% else %}
+        {% set section_item = get_section(path=section.relative_path) %}
+        {% set chapter_frontpage = section_item.pages %}
+        {% if chapter_frontpage[0].extra.chapter %} 
+            {{ chapter_frontpage[0].content | safe }}
+        {% else %}
+            {{ section.content | safe }}
+        {% endif %}
+    {% endif %}
+{%- else %}
     <h1>{{ page.title }}</h1>
     {{ page.content | safe }}
 {%- endif %}
@@ -100,7 +103,6 @@
   <div class="toc-sticky">
     <div class="toc-item">
 
-        <!--Header -->
         {% if path == root_section.components %}
             <a class = "chapter chapter_header" href="{{ root_section.permalink | safe }}">{{ root_section.title }}</a>
         {% else %}
@@ -108,9 +110,7 @@
         {% endif %}
 
         {% set index = 1 %}
-
         {%- for chapter in root_section.subsections %}
-            {% set sub_index = 1 %}
             {%- set chapter_section = get_section(path=chapter) %}
             <div class="toc-item header">
                 {% if path == chapter_section.components %}
@@ -130,7 +130,12 @@
                 {% endif %}
             </div>
             
+            {% set_global sub_index = 1 %}
             {%- for page in chapter_section.pages %} 
+                {% if page.extra.chapter  %} 
+                {%    continue %}
+                {% endif %} 
+
                 <div class="toc-item-child">
                 {% if path == page.components %}
                     <a class="chapter" href="{{ page.permalink | safe }}">{{index}}.{{sub_index}} {{page.title | safe }}</a> 
@@ -144,10 +149,9 @@
                 {% else %}
                     <a href="{{ page.permalink | safe }}">{{index}}.{{sub_index}} {{ page.title | safe }}</a> 
                 {% endif %}
-
-                {% set_global sub_index = sub_index + 1 %}
                 </div>
-            {%- endfor %}
+                {% set_global sub_index = sub_index + 1 %}
+            {% endfor %}
         {% set_global index = index + 1 %}
         {%- endfor %}
 

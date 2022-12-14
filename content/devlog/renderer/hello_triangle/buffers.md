@@ -1,29 +1,36 @@
 +++
 title = "Buffers"
-description = "Which OpenGL version to target and how"
-date = 2022-12-10
+description = "How to store data for our triangle on the GPU with OpenGL. Hello Vertex Buffer Objects."
+date = 2022-12-03
 weight = 1
 draft = false
 template="book.html"
 
 [taxonomies]
 categories = ["Devlog"]
-tags = ["GameDev", "OpenGL", "Context", "Renderer"]
+tags = ["OpenGL", "Context", "Renderer"]
 [extra]
 toc = true
-keywords = "Game Development, GameDev, OpenGL, Graphics Programming"
+keywords = "OpenGL, Vertex Buffer, VBO"
 +++
 
 First and foremost, we need buffers. 
 Buffers are "dumb" blobs of data living in the memory of the graphics
-device<sup>1</sup>. 
-They can contain vertices, indices(kinda like vertex ID's) but also "shader variables"(uniforms) and
-more. In OpenGL, they are called buffer objects. 
-The most basic thing we need are so called "vertex buffer objects". Buffer
-objects that contain the vertex data.
+device [^1]. 
 
-> <sup>1</sup> That said, the driver is free to use the memory however it wants, and can even allocate 
-> on the stack and heap, so there is no guarantee where the memory will be ultimately allocated
+
+They can contain vertices, indices, but also shader variables and
+more.
+
+The only important things for now are the vertices.
+Vertices(plural of Vertex), are essentially single points in 3D space. 
+Multiple vertices make up a geometric shape(usually 3 vertices become a single triangle). 3D objects are generally made out of many triangles. A quad is made out of 2 touching triangles. That said, a vertex isn't just about the position in 3D space, but also about other per-vertex data, like the color, or texture coordinates, but more about that later.
+
+In OpenGL, those blobs of data are stored as buffer objects. 
+The most basic thing we need are so called "Vertex Buffer Objects", or VBO's in
+short. Buffer objects that contain the vertex data.
+
+> [^1] That said, the driver is free to use the memory however it wants, and can even allocate on the stack and heap, so there is no guarantee where the memory will be ultimately allocated. What is certain is that our GPU can access the data.
 
 So let us create a simple function in our `playground.rs` to create our vertex
 buffer. This is our "safe abstraction" over the unsafe FFI calls for now. 
@@ -34,7 +41,7 @@ fn create_vbo() -> gl::types::GLuint {
 }
 ```
 
-In OpenGL, objects are referenced via their "names". It's just an unsigned id.
+In OpenGL, objects are referenced via their "names", which are just unsigned integers.
 To create a buffer, we just need to call `gl::GenBuffers`. In OpenGL, most
 create-functions are pluralized and accept arrays. Also, because of C(and cross
 platform support in general), most
@@ -47,13 +54,13 @@ for the count we pass to it.
 Generally, generating as many buffers as we need at once is theoretically better
 for the performance, but in reality, you are unlikely to measure a difference on
 a modern machine even when generating thousands of buffers.
-So for now, we just generate a single buffer on demand.
+So for now, we just generate a single buffer every time we call this function.
 
 We are also technically required to delete the buffer at some point, by calling
 `gl::DeleteBuffers`. However, we feel young and invincible, and blindly
 trust our OS to clean up this mess once the context is destroyed. This is just
 the playground to explore OpenGL and will be refactored into proper abstractions
-once the triangle is there, so we just take a mental note.
+once the triangle is there, so we just take a mental note. 
 
 ```rust 
 fn create_vbo() -> gl::types::GLuint {
@@ -67,8 +74,7 @@ fn create_vbo() -> gl::types::GLuint {
 }
 ```
 
-A single buffer without any data is frankly quite boring.
-So we need to shove some data into it. 
+A single buffer without any data is frankly quite boring, so we need to shove some data into it. 
 This is now where the biggest difference between the previously mentioned `DSA`
 of OpenGL >= 4.5 and the traditional "modern" OpenGL lies: We need to bind our
 buffer to some global state machine before we can use it.
@@ -83,20 +89,20 @@ unsafe {
 }
 ```
 
-Now, to actually write data for it, we need to call
+Now, to actually write data to it, we need to call
 [glBufferData](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBufferData.xhtml).
 
-Notice how it doesn't require our buffer as parameter, but instead relies in the
+Notice how it doesn't require our buffer as a parameter, but instead relies on the
 "target". This is the global state machine at work. Also, the same page in the
 references shows us mockingly the bindless "glNamedBufferData" version, just to
-shatter our dreams at the bottom with the Version Support table. 
+shatter our dreams at the bottom with the version support table. 
 
-Anyway, the following two parameters are just dynamic C-Array style arguments.
-One is a size of the data as a whole and the other is the pointer to the first
+Anyway, the following two parameters are just "dynamic C-Array"-style arguments.
+One is the size of the data as a whole and the other is the pointer to the first
 element of our data blob. Keep in mind that the data needs to be either a slice
-of a C compatible type or a struct with `repr(C)`.
+of a C compatible type or a struct with `repr(C)`. 
 
-Finally, we need to pass in some Usage flags. While modern drivers are able to make
+Finally, we need to pass in some usage flags. While modern drivers are able to make
 the decision based on actual usage, it is still recommended to follow the
 spec. There is no restriction or guarantee about the actual usage, it is merely
 a hint.
@@ -104,15 +110,14 @@ a hint.
 The usage flag is made out of 2 parts, the access and the frequency.
 
 For the access there are the following three values: 
-- **DRAW**: The user can only write data to the buffer, but they can't read it.
-- **READ**: The user can only read the data of the buffer, but they can't write to it.
+- **DRAW**: The user can only write data to the buffer, but they can't read from it.
+- **READ**: The user can only read the data from the buffer, but they can't write to it.
 - **COPY**: The user can't neither read nor write data to the buffer. Only OpenGL can. 
 
 Some nifty reader might notice that there is no case for "The user can upload
-data to the buffer and the user can read it". The reason is that it would result
-in horrible performance. The alternative is to create two buffers, one for
+data to the buffer and the user can read from it". The alternative is to create two buffers, one for
 reading and one for writing and then let OpenGL copy the content from to the
-other.
+other. 
 
 The frequency is the other half of the flags, which has also three values: 
 - **STATIC**: Set the data only once
@@ -124,24 +129,26 @@ For our buffer, we want to set it but never read it(`DRAW`), and we only want to
 set it once(`STATIC`). So our usage argument is the constant `STATIC_DRAW`.  
 If we were to have a terrain that changes occasionally based on a texture for
 example, we would use `DYNAMIC_COPY` to occasionally let OpenGL take another
-OpenGL object provide the data for the buffer. Though, the difference between
-DYNAMIC and STREAM is not clear. 
+OpenGL object(a texture) to provide the data for the buffer. Though, the line between
+DYNAMIC and STREAM is not 100% defined. 
 
 But again, these are only hints, so nothing prevents us from using STATIC_COPY,
 while we set the data every frame manually, except potentially horrible
 performance.
 
-For our vbo, we set the data, from a generic slice.
+For our vbo, we set the data from a generic slice.
 Instead of caring about the usage hints, we just focus on the STATIC_DRAW, since
 we only want to draw a triangle.
 
-> **Note**: We don't need to care for the lifetime of
-> our data, because it is uploaded to our buffer right away. 
-> Generally, OpenGL doesn't block, but just queues them up until we 
-> call glFlush, which then executes whatever is in the queue asynchronously.
-> Our context calls implicitly glFinish on swap_buffers, which is the same as
-> glFlush, with the addition that it blocks until the commands are actually
-> finished
+{% note(name="Note") %}
+We don't need to care for the lifetime of
+our data, because it is uploaded to our buffer right away. 
+Generally, OpenGL doesn't block, but just queues commands up until we 
+call glFlush, which then executes whatever is in the queue asynchronously.
+Our context calls implicitly glFinish on swap_buffers, which is the same as
+glFlush, with the addition that it blocks until the commands are actually
+finished
+{% end %}
 
 ```rust 
 //take in any data
@@ -168,13 +175,13 @@ fn create_vbo<T>(data: &[T]) -> gl::types::GLuint {
 }
 ```
 
-This function is in theory not safe anymore. Our buffer data requires to conform
-the C layout, alignment and all. This is not a problem for the native types,
+This function is in theory not safe anymore. Our buffer data requires us to conform
+ to the C layout, alignment and all. This is not a problem for the native types,
 which are tightly packed, but more for custom struct and similar, which require
 `repr(C)`. To make it safe later, we will either use a trait bound or only
-accept certain slice(e.g. u8 slices) of data.
+accept certain slices(e.g. &[u8]).
 
-Now that we can create out buffer, we call this function with the data of 4
+Now that we can create our buffer, we call this function with the data of 4
 vertices in our main, right before our `event_loop.run`.
 
 ```rust 
@@ -201,10 +208,10 @@ The whole space discussion is arguably boring and I am not nearly enough trained
 in math to explain this correctly and there are already pretty nifty resources, so look at
 [learnopengl.com](https://learnopengl.com/Getting-started/Coordinate-Systems) or DuckDuckGo for the actual details.
 
-The important thing is that our vertices sit at distance of 0.1 on the X and Y axes away from the border of our window.
+The important thing is that our vertices sit at a distance of 0.1 on the X and Y axes away from the border of our window.
 If we were to set the Z value to 1.0, our vertices would be as close to the
 screen as possible before leaving it and a Z below -1.0 would mean they are
 "behind" our screen.
 
 Why 4 vertices when we want to draw a triangle?
-W
+Well, find out in the next episode of "Hello Triangle" ;)

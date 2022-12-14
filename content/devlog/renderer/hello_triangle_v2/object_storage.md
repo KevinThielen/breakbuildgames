@@ -1,28 +1,45 @@
 +++
 title = "Object Storage"
-description = "Which OpenGL version to target and how"
-date = 2022-12-10
-weight = 1
-draft = false
+description = "We are going to replace the think really hard about how we are going to store the GL objects."
+date = 2022-12-08
+weight = 4
+draft = true
 template="book.html"
 
 [taxonomies]
 categories = ["Devlog"]
-tags = ["GameDev", "OpenGL", "Context", "Renderer"]
+tags = ["OpenGL", "Context", "Renderer"]
 [extra]
 toc = true
-keywords = "Game Development, GameDev, OpenGL, Graphics Programming"
+keywords = "OpenGL, Context, GenVec, Storage"
 +++
 
-Before we figure out a way to replace the OpenGL calls in our `playground.rs`,
+Before we figure out a way to replace the remaining OpenGL calls in our `playground.rs`,
 we need to think about their storage and ownership.
+
+We got away with it with our RenderTarget, because it doesn't store any OpenGL
+specific state (yet). But what about the buffers, vertex array objects and
+shaders? 
 
 Do we want the user to essentially store (wrapped) GLObjects, or should they
 solely live in our `opengl::Context`? What about their global state? They also
 shouldn't be too expensive to retrieve, but also not a pain to pass around.
 
-After sketching around for a while, I came to the conclusion that it would be nice to store them as they
+Storing them inside the structs means that they would need to be completely
+generic. Our game wouldn't be able to store a simple `Buffer`. It would need to
+store `Buffer<opengl::Buffer>`, or go some weird associated type route.
+
+After playing around for a while, I thought it would be nice to store them as they
 are in the context, and make manipulation only possible via some sort of "dumb" handle. 
+Basically like an index into a `Vec`, and we just pass the index around.
+When we want to do something with a graphics object, we send the ID with the
+operation, and let the graphics backend figure something out.
+
+The issue with the handle is that it has no connection to the lifetime of the
+object. If an object is for example deleted and we create another one, the new one might occupy the
+same slot/key in our container.
+
+
 With some sort of generational vec, storing the index and some sort of generation in
 the handle. Overwriting or deleting an object will automatically
 invalidate all handles to that it, because whatever else is stored at the same

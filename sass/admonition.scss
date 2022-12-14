@@ -17,7 +17,7 @@
         "hint": ( "border": #ffd4c5, "bg": #402106, "color": #fbfad8, icon: --details-icon ),
         "warn": ( "border": #ffd4c5, "bg": #9d0421, "color": #fff7f3, icon: --warning-icon ),
         "example": ( "border": #ffd4c5, "bg": #484242, "color": #fff, icon: --abstract-icon ),
-        "question": ( "border": #ffd4c5, "bg": #1a5504, "color": #fbfad8, icon: --question-icon ),
+        "question": ( "border": #ffd4c5, "bg": #133e03, "color": #fbfad8, icon: --question-icon ),
     );
 
   @each $name, $list in $admonitions { 

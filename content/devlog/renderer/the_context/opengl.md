@@ -1,27 +1,27 @@
 +++
 title = "OpenGL"
-description = "Which OpenGL version to target and how"
-date = 2022-12-10
+description = "Which OpenGL version to target and how."
+date = 2022-12-02
 weight = 1
 draft = false
 template="book.html"
 
 [taxonomies]
 categories = ["Devlog"]
-tags = ["GameDev", "OpenGL", "Context", "Renderer"]
+tags = ["OpenGL", "Context", "Renderer"]
 [extra]
 toc = true
-keywords = "Game Development, GameDev, OpenGL, Graphics Programming"
+keywords = "OpenGL"
 +++
 
 ## Why OpenGL
 OpenGL development has been mostly abandoned for Vulkan nowadays, so why would
-you still want to target OpenGL? 
+anyone still want to target OpenGL? 
 
-For starters, it is widely supported and the drivers are matured. It's also way
-simpler than Vulkan, but also makes cross platform support way easier. It is
-possible to target Desktops, Webbrowsers and mobile devices with almost the same
-subset of OpenGL.
+For starters, it is widely supported, and the drivers are matured. It's also way
+simpler than Vulkan, but also makes cross-platform support way easier. It is
+possible to target Desktops, Web Browsers and mobile devices with almost the same
+subset.
 
 However, the goal of this context abstraction is to be graphics API agnostic
 anyway, so it is always possible to add another one and will even be required
@@ -33,26 +33,22 @@ Adding Vulkan later is also not off the table either.
 So in short, OpenGL is a great entry-level API which runs almost everywhere,
 which makes it an ideal candidate for our first game.
 
+I am also a bit more familiar with OpenGL than the other graphics API's, so I
+hope to hit the point where we can start with the actual game sooner :)
+
 ## OpenGL Versions
-Since we are going to use OpenGL, the first thing we should think about, is about the OpenGL version we want to
-target. While it is possible to target a older version and spread `if's` in our
-code base to pick the better alternative when supported, it adds an unnecessary
-overhead and bloat. Instead, I want to target a specific version, poll some
-extensions when needed(e.g. debug callback is a great extension in 3.3 to poll
-for), and when needed, just implement a different backend altogether for
-another version. So for example, have a dedicated 3.3 backend and a 4.6 one.
+Since we are going to use OpenGL, the first thing we should think about is about the OpenGL version we want to
+target. While it is possible to target multiple versions with a single backend and infest our code base with `if's` to pick the better alternative when supported, it adds an unnecessary overhead and bloat. Instead, we can target a specific version, poll some extensions when needed(for example, debug callback is a great extension in 3.3 to poll for), and when needed, just implement a different backend altogether for
+another version. Let's say to have a dedicated 3.3 backend and a separate 4.6 one.
 
 Which version we want to target depends first and foremost on the "OpenGL flavor"
 we are aiming for. There are basically 3.
 
 - **Legacy OpenGL**      
-  Also known as "fixed function pipeline" or "immediate mode OpenGL", is a straight forward
-  way to draw things, but comes with a worse performance. You will end up with
-  far more API calls, need to send more Data around and is not nearly as flexible as the programmable pipeline.
-  It's the OpenGL-style that uses `glBegin`, `glEnd`, `glMatrixMode`, etc, and
+  Also known as "fixed function pipeline" or "immediate mode OpenGL", is a straightforward way to draw things, but comes with a worse performance. You will end up with
+  far more API calls, need to send more data around, and is not nearly as flexible as the programmable pipeline.
+  It's the OpenGL-style that uses `glBegin`, `glEnd`, `glMatrixMode`, etc., and
   was deprecated with the release of OpenGL 3.0         
-
-<!--->
 
 - **"Modern" OpenGL**   
   This is the "programmable pipeline", where you mostly deal with shaders,
@@ -63,13 +59,13 @@ we are aiming for. There are basically 3.
 - **Bindless OpenGL**    
   Bindless is about "Direct State Access"(DSA). This changes the previous way of globally binding objects to the context to
   "named" access. Functions take in the object that they are going to manipulate
-  instead if relying on global state, where the latter often lead to
+  instead of relying on global state, where the latter often leads to
   accidentally querying or changing the state of the wrong object. This leads
   not only to fewer errors, but also to more efficiency(no need to constantly
   bind things or keep track of the current bindings).
   This is pretty much OpenGL >= 4.5.
 
-There is are also the core and the compatibility profiles, where the latter just enabled
+There are also the core and the compatibility profiles, where the latter just enabled
 support for the fixed function pipeline in the newer versions, though they don't
 work with programmable pipeline ones(so it's not really possible to mix both
 ways). OpenGL features are generally additive, so this profile split was a
@@ -79,8 +75,12 @@ Which versions of these flavors we want to use depends on the functionality that
 we need from the API and the available support on the target platform. 3.3 is a solid choice for a wide range of hardware and
 driver maturity, but handy functions like compute shaders came with 4.3. Apple
 devices also stopped support for OpenGL versions above 4.1.
+Realistically speaking, most Desktop systems support the decade old 4.5 according to the [steam
+hardware survey](https://store.steampowered.com/hwsurvey). More than 90% support
+DX-12 capable hardware, which is pretty much the same hardware that supports
+4.5.
 
-Extensions can make muddle this choice further, because it is possible to create
+Extensions can muddle this choice further, because it is possible to create
 an older context, but get the "newer" functionality via extensions.
 So frankly speaking, it is kinda messy.
 
@@ -88,13 +88,14 @@ But which one to pick?
 Legacy OpenGL is an easy no for our purposes, because it doesn't make use of any modern hardware. 
 The question between "modern" and bindless OpenGL is more difficult.
 Bindless makes things easier and more efficient, but "modern" supports a wider
-range of hardware. Since the goal is support WebGL, non-bindless makes a lot of
-sense. Also, arguably, we would just pick Vulkan if we need the state of the art.
+range of hardware. Since our goal is to support WebGL, non-bindless makes a lot of
+sense. Also, arguably, we would just pick Vulkan if we need state-of-the-art efficiency.
 
 OpenGL 4.3 Core seems to be the best bet for us. It has a great overlap with GLes3, which is used as base for WebGL2,
 has compute shaders and debug callbacks. Historically, GLes3.0 was created from
 a subset of OpenGL 3.3, but OpenGL 4.3 includes functionality to increase the
-compatibility between the other two.
+compatibility between them. It might be a bummer to be unable to support macOS,
+but frankly speaking, I don't care about this developer-unfriendly platform.
 
 ## Creating the context
 Before we can do any fancy OpenGL calls, we need to create an OpenGL context.
@@ -126,7 +127,7 @@ raw-gl-context = "0.*"
 ```
 
 {% note(title="Note") %}
-Note: On my machine, X11 requires an zero alpha bits in the context creation with Nvidia drivers. 
+Note: On my machine, X11 requires zero alpha bits in the context creation with Nvidia drivers. 
 In theory, just using the default should be fine. It's a [known issue](https://github.com/glowcoil/raw-gl-context/issues/2) with some
 workarounds, but since I don't need alpha bits for now, it is a problem for
  future me.
@@ -138,26 +139,28 @@ Creating an OpenGL-context using the Core profile, requesting the version 4.3,
 then "activating" the context. Activating means making the OpenGL-context the
 current context of the calling thread. A thread can only have one context being bound,
 and a context can only be bound to a single thread at a time. This makes
-multi-threading in OpenGL is a major pain, so we will use an alternative to
+multi-threading in OpenGL a major pain, so we will use an alternative to
 bypass this issue later.
 
 
 
 Finally, in our event_loop, we will call 
+
 ```rust 
 context.swap_buffers();
 ```
+
 to swap the front with the back buffer. The details are not important, but to
 put it simply, it "updates" the content of the screen. We are generally drawing
-to the backbuffer, but the window displays the frontbuffer. So to actually see
-what he have drawn, we swap them. We didn't draw anything yet, so the screen is
+to the back buffer, but the window displays the front buffer. So to actually see
+what we have drawn, we swap them. We haven't drawn anything yet, so the screen is
 just black. `swap_buffers` waits for the issued calls to be finished before it
 swaps. Keep in mind, this is just a minimalistic explanation and in reality, it
 is not uncommon for having more than two buffers(e.g. triple-buffering) or
-`swap_buffers` blocking until the monitor refresh before swapping(vsync).
+`swap_buffers` blocking until the monitor refreshes before swapping(vsync).
 
 ## Generating the Bindings
-Now that we got an OpenGL-context, we can load OpenGL functions.
+Now that we have an OpenGL-context, we can load the OpenGL functions.
 The easiest way is to use any bindings generator, which loads the function
 pointers we need for us.
 
@@ -171,7 +174,12 @@ We will go with `gl_generator` for no reason in particular.
 The example code shows creating a `build.rs` in the project and uses the output
 directory environment variable to include it into the modules, but since this
 should pretty much never change, we can create a simple throwaway project to generate
-the bindings just once, and copy them into our project.
+the bindings just once, and copy them into our project. Feel free to stick with
+the version as described in the docs, where you re-generate the bindings
+every time they change/you create a new clean build. I just think that the
+extra build.rs in our project is unnecessary noise, especially once we
+need to generate other bindings. The drawback is that we have now a 27K lines of
+code, \>800kb monster in our repo.
 
 ```bash 
 #in some empty dir 
@@ -183,6 +191,7 @@ add `gl_generator` as build dependency:
 {% code(name="gl_bindings/Cargo.toml") %}
 ```toml 
 [build-dependencies]
+#OpenGL Context Creation
 gl_generator = "*"
 ```
 {% end %}
@@ -210,7 +219,7 @@ the project root.
 `gl_generator` also allows us to adjust the generated bindings. The `GlobalGenerator`
 allows us to access OpenGL functions from anywhere in the project(that has
 access to the gl43_core module), without passing some context around. This makes
-thing far simpler for us. We are not going to expose the gl lib to the public
+things far simpler for us. We are not going to expose the gl lib to the public
 and we will use a different way to tie the lifetime to the actual gl context.
 
 We just copy the generated file into the src dir of our context member.(don't forget to delete the throwaway `gl_bindings` project afterwards, it's just clutter on our hard drive now)
@@ -250,14 +259,14 @@ it](https://github.com/EmbarkStudios/rust-ecosystem/blob/main/lints.rs).
 
 
 
-Now we need modify our `examples/playground.rs`, to alias the gl module with a
+Now we need to modify our `examples/playground.rs`, to alias the gl module with a
 more ergonomic name.
 
+{% code(name="cac_graphics/context/examples/playground.rs") %}
 ```rust
-//cac_graphics/context/examples/playground.rs
-
 use context::gl43_core as gl;
 ```
+{% end %}
 
 Finally, we can load the OpenGL functions right after we made our context
 current: 
@@ -268,10 +277,9 @@ context.make_current();
 gl::load_with(|symbol| context.get_proc_address(symbol));
 ```
 
-The bindings generated with `gl_generator` expose a load_with function that will load the function pointers
-of our OpenGL functions one by one. 
+The bindings generated with `gl_generator` expose a load_with function that will load the function pointers of our OpenGL functions one by one. 
 
-Now, we can test it by calling the following 2 OpenGL function in our example.
+Now, we can test it by calling the following 2 OpenGL functions in our playground.
 
 Before the event_loop.run(..) 
 ```rust 
@@ -291,15 +299,19 @@ unsafe {
 
 Because they are just function pointers, calling functions over FFI(basically calling non-Rust
 functions), they need to be in unsafe blocks.
-Unsafe sounds dangerous and scary, but it just means that Rust can't guarantee that these
-functions follow its safety principles, so the burden is on the programmer. 
+Unsafe might sound dangerous and scary, but it just means that Rust can't guarantee that these
+functions follow its safety principles, so the burden is on the programmer.
+Basically  just another day for any C++ programmer, just limited to a handful
+lines of code.
 
 
-The final code should look like this:
+The final playground should look like this:
 
 {% code(name="cac_graphics/context/examples/playground.rs") %}
 ```rust 
-//use raw_gl_context::GlContext;
+use context::gl43_core as gl;
+
+use raw_gl_context::GlContext;
 use winit::{
     event::{Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
@@ -372,3 +384,7 @@ gl::Clear(gl::COLOR_BUFFER_BIT)
 {% end %}
 
 Now we can get our hands dirty.
+
+--- 
+
+[Link to the repository](https://github.com/KevinThielen/cac_graphics/tree/048006de8aff8ee33708ec41d078f2ca86e8c3c0)  

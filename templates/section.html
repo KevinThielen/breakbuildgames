@@ -7,7 +7,7 @@
 {{ section.content | safe }}
 
 
-  {%- if config.extra.recent | default(value=true) %}
+  {%- if paginator and config.extra.recent | default(value=true) %}
    <div >
       <div>
         <h2><span >Recent Updates</span></h2>
@@ -15,11 +15,21 @@
         <hr>
         <p>
         <span class="timedate"><time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time></span>
-             <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        {% if section.components | length < 1 and page.taxonomies["categories"] %}
+            <a href="/{{ page.taxonomies.categories | first | lower | safe }}/">{{ page.taxonomies["categories"] }}</a>
+        {% endif %}
+
+             {% if page.extra.chapter %} 
+                 {% set p = page.components %}
+                 {% set chapter = get_section(path=p[0] ~ "/" ~ p[1] ~ "/" ~ p[2] ~ "/_index.md") %}
+                 <a href="{{ chapter.permalink | safe }}">{{ chapter.title }}</a>
+             {% else %}
+                 <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+             {% endif %}
              [{%- for tax, cat in page.taxonomies %}
                  {%- if tax != "categories" %}
                  {%- for c in cat %}
-                 <a href="{{tax}}/#{{ c }}">{{ c | safe }}</a>
+                 <a href="/{{tax}}/{{ c | lower }}/">{{ c | safe }}</a>
              {%- endfor %}
                  {%- endif %}
              {%- endfor %} ]
@@ -30,11 +40,14 @@
       </div>
 {%- endif %}
 <nav class="pagination">
+
+    {% if paginator %}
     {% if paginator.previous %}
         <a class="previous" href="{{ paginator.previous }}">‹ Previous</a>
     {% endif %}
     {% if paginator.next %}
         <a class="next" href="{{ paginator.next }}">Next ›</a>
+    {% endif %}
     {% endif %}
 </nav>
 </article>

@@ -1,17 +1,17 @@
 +++
 title = "[Excursion] Handwritten GL Bindings"
 description = "How to write the bindings from scratch"
-date = 2022-12-10
+date = 2022-12-02
 weight = 2
 draft = false
 template="book.html"
 
 [taxonomies]
 categories = ["Devlog"]
-tags = ["GameDev", "OpenGL", "Context", "Renderer"]
+tags = ["OpenGL", "Context", "Renderer"]
 [extra]
 toc = true
-keywords = "Game Development, GameDev, OpenGL, Graphics Programming"
+keywords = "OpenGL, Bindings"
 +++
 
 {% note(title="Note") %}
@@ -21,17 +21,17 @@ altogether.
 {% end %}
 
 
-In the previous chapter we have setup a simple playground for us.
+In the previous chapter we have set up a simple playground for us.
 
 Before going further into the context creation, let's start with a simple
-excurse about the OpenGL bindings. 
+excursion about the OpenGL bindings. 
 
 Our playground is currently using automatically generated gl bindings.
 
 However, the OpenGL spec is huge and many of the functions/types are legacy
 luggage, or at least not needed for our purpose. For example, there are around
 800 lines of constant, while we only need a few dozens of them at best.
-The generated file is a humongous 900kb chunkster.
+The generated file is a humongous \>800kb chunkster.
 So, how much "bloat" are we generating by using a bindings generator over just
 writing what we need? 
 
@@ -47,7 +47,8 @@ Generally, the bindings require 4 parts:
 - loading the function pointers
 
 The easiest thing to start with are the actual function definitions. 
-Our playground from the [previous chapter](./the_context.md) example requires calls to glClear and glClearColor.
+Our [playground from the previous chapter](https://github.com/KevinThielen/cac_graphics/tree/1f206abc09f326569f3fcf21feddde8fca70c8d0) requires calls to glClear and glClearColor.
+
 They are defined as this, in the XML-file:
 
 {% code(name="gl.xml") %}
@@ -80,24 +81,26 @@ void glClear(GLbitfield mask);
 void glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 ```
 
-Both are void functions, which means they have no return values. glClear
-takes a mask with the type GLbitfield and glClearColor takes in the 4 color
-channels as GLfloat. Just as the XML specifies, but more concise! Great!
+It's less "correct", but way easier to read. A worthwhile trade-off.
+
+Both are void functions, which means they have no return values. `glClear`
+takes a mask with the type `GLbitfield` and `glClearColor` takes in the 4 color
+channels as `GLfloat`. Just as the XML specifies, but more concise! Great!
 
 More than that, they also describe the accepted values.
-For example, the parameters for glClear specify the mask argument with: 
+For example, the parameters for `glClear` specify the mask argument with: 
 
 > **mask** \
 > Bitwise OR of masks that indicate the buffers to be cleared. The three masks are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT
 
 So we also know that we require the 3 constants for the buffer bits as well.
 This relation is specified in the XML via the group, but makes finding everything
-that is needed less convenient than just using the docs.
+that is needed even less convenient than just using the docs.
 
-Now that we know the types we are going to need, the second step is to define them.
+Now that we know the types we are going to need, the next step is to define them in our code.
 
 First we need the "platform" definitions. Things that map OpenGL-types to FFI-compatible Rust types.
-Thing like GLint, GLEnum, etc being defined with
+Things like GLint and GLEnum being defined with
 compatible "c types" that will be used for the FFI calls.
 
 Luckily, there is an official table with a description and the number of bits for each
@@ -115,6 +118,7 @@ alternative would be reading the official specs.
 | GLenum | 32 | An OpenGL enumarator value  |
 | GLsizeptr | pointer size  | Non-negative binary integer size for memory offsets and ranges   |
 | GLfloat | 32  | An IEEE-754 floating-point value |
+| GLbutfield | 32  | A bitfield value |
 | ..      | ..  | .. |
 
 Which makes it pretty straight forward.
@@ -137,7 +141,7 @@ are all we need for `glClear` and `glClearColor`.
 Now, we can also define the constants.
 As mentioned, glClear also defines 3 constants for the clear bits.
 This is where the
-[XML](https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml) is being handy. We can just search for the constant definition and copy the values: 
+[XML](https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml) is handy. We can just search for the constant definitions and copy the values: 
 
 ```XML
 <enums namespace="GL" group="AttribMask" type="bitmask">
@@ -173,7 +177,7 @@ mod handmade_gl {
     );
 ```
 
-The `extern "system"` specifies that Rust calls external function through a foreign function
+The `extern "system"` specifies that Rust calls external functions through a foreign function
 interface(FFI). They are in an external library. 
 
 All that is left is to create the function pointers.
@@ -236,7 +240,7 @@ The proc_address is just a function that looks up the symbol that we pass to it.
 It's pretty much (like) taking a loaded dynamic library(.dll) and then getting the addresses of the functions by looking them
 up via their name.
 
-Finally, we need to "map" the pointers with to the concrete function types.
+Finally, we need to "map" the pointers with the concrete function types.
 What good is a pointer if we can't pass arguments to it?
 
 To do this, we just define the gl functions one last time, "cast" the pointers
@@ -269,7 +273,7 @@ into the concrete function type with a transmute, and then invoke them with argu
 
 There is clearly an opportunity to write a `macro_rules!` that deals with all
 the boilerplate. However, before going further into this madness, let's compare
-the results with the initial approach at the top.
+the results with the initial approach at the top. 
 
 Let's not forget to replace the `gl::` in our `main fn` with our `handmade_gl`
 module.
@@ -288,7 +292,7 @@ opt-level = "s"
 ```
 (and bin size running once without any of these flags)
 
-| Approach | Build time (clean / incremental) | Binary Size with/without stripping | load_with() time |
+| Approach | Build time (clean / incremental) | Binary Size without/with stripping | load_with() time |
 |---|---|---|---| 
 | gl generator |  16.47s / 0.86s | 5.2MB / 755kb | 1.6ms |
 | "handmade" | 14.69s / 0.86s | 4.9MB / 639kb | 7.6µs |
@@ -298,19 +302,24 @@ Meanwhile, `gl_generator` loaded "everything". There is barely any difference an
 the gains further. 
 
 Given that the differences are largely negligible in the grand scheme of things, especially when we are going to load
-game assets later anyway, which makes the few 100kb a drop in the bucket, the whole endeavor nothing more than a
+game assets later anyway, which makes a few 100kb a drop in the bucket, and the whole endeavor nothing more than a
 learning experience. There are also even more things to consider, like fallback
 functions and extensions.
 
+The 'load_with()' time is more interesting, but even then we are just looking at
+1.6ms when the game is being loaded. It's not something that is noticeable or
+needs to scale.
+
 Granted, having to define the function pointers manually like this allows us to
-add logs/traces add additional validation layers, ideally behind some feature flag. It is
+add logs/traces, or add additional validation layers, ideally behind some feature flag. It is
 possible to validate the values in many cases, like glClear accepting a
 GLbitfield, but only accepting the bitwise OR of any of the three clear constants
-we defined above, would make this an ideal candidate for manual validation.
+we defined above, would make this an ideal candidate for manual validation. 
 Also, before the debug callback function in OpenGL was widely
 supported, this used to be a great opportunity to insert glError polling
 after each call(which is also possible with `gl_generator` settings). 
-
+Since we are targeting OpenGL 4.3, we get this all with `glDebugMessageCallback`,
+which we will add in one of the next chapters.
 
 
 Final code:

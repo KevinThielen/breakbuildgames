@@ -19,7 +19,7 @@
              <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
              [{%- for tax, cat in page.taxonomies %}
                  {%- for cat in page.taxonomies[tax] %}
-                 <a href="{{tax}}/#{{ cat }}">{{ cat | safe }},</a>
+                 <a href="/{{tax}}/#{{ cat }}">{{ cat | safe }},</a>
              {%- endfor %} {%- endfor %}]
 
              <div> {{ page.description }} </div> </p>

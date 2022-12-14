@@ -1,29 +1,28 @@
 +++
 title = "Shaders"
-description = "Which OpenGL version to target and how"
-date = 2022-12-10
+description = "We are going to write our shaders and finally draw this dang triangle."
+date = 2022-12-05
 weight = 3
 draft = false
 template="book.html"
 
 [taxonomies]
 categories = ["Devlog"]
-tags = ["GameDev", "OpenGL", "Context", "Renderer"]
+tags = ["OpenGL", "Context", "Renderer"]
 [extra]
 toc = true
-keywords = "Game Development, GameDev, OpenGL, Graphics Programming"
+keywords = "OpenGL, Triangle, Shader"
 +++
 
 Finally, we need shaders. Shaders are programs that run on the GPU, written in
 a shader language(OpenGL Shading Language, or in short GLSL, in OpenGL).
-They are the main difference between legacy and modern OpenGL. They make the
-whole pipeline programmable.
+They are the main difference between legacy and modern OpenGL. They are what makes the whole pipeline programmable.
 
 There are multiple kinds of shaders, but we only care about vertex and fragment shaders for now. 
 
 Simply put, vertex shaders are executed for every single vertex and the purpose
-is to transform them from 3D space into "Clip Space", often by applying all
-kind of math operations to emulate cameras, play animations and simulate
+is to transform them from 3D space into "clip space", often by applying all
+kinds of math operations to emulate cameras, play animations and simulate
 movement. 
 
 The input-data, the vertex attributes, are what we mapped to the different input
@@ -31,27 +30,26 @@ locations with the VAO in the previous chapter, so the VAO needs to match the sh
 the data for the locations that the shader requires). Attributes that are not
 enabled by the VAO or not used by the shader are ignored.
 
-After the vertices went through the vertex shader, they go through some
+After the vertices go through the vertex shader, they go through some
 automatic post-processing. In short, they are bundled into primitives, usually triangles, 
 and are discarded if the primitive is not at least partially inside the clip space. If a
 primitive is partially "visible", it is transformed into one or multiple primitive(s) that
 magically fit into the space, discarding the parts that are outside. OpenGL also
-does some coordinate conversion into screen space, some other tests.
+does some coordinate conversion into screen space and some other tests.
 
 Then the `Rasterizer` takes the surviving primitives and generates "fragments" for the "screen pixels that are covered by our
 primitive". Fragments and pixels are basically the same for all intents and
 purposes, and Direct3D uses the term pixels for fragments, but more accurately,
-a fragment a potential pixel on the screen. So in OpenGL fragments are the input
+a fragment is a potential pixel on the screen. So in OpenGL fragments are the input
 and pixels are the output.
 
 Then these fragments are processed by a fragment shader, which calculates one or more color and the depth value of the fragments, so that OpenGL then can use this information to do some additional tests(depth,
-alpha, stencil<sup>1</sup> and other masks), blends them, etc., and finally
+alpha, stencil [^1] and other masks), blends them, etc., and finally
 write the fragment to the output, like a pixel on the screen. 
 
-This overview is by no means exhaustive, there more shaders and stages, but this
-is just the TL;DR.
+This overview is by no means exhaustive, there are more shaders and stages, but this is just the crash course. 
 
-> <sup>1</sup> Stencil values are "custom values" used for some screen effects
+> [^1] Stencil values are "custom values" used for some screen effects
 
 ## Shader Sources
 So let's start with a simple vertex shader, to process the vertices that we
@@ -71,31 +69,31 @@ If we do neither, OpenGL does it automatically and completely yolo, entirely
 arbitrary. 
 No matter whether we used a location attribute or not, we need to add the type qualifier `in` to signal that our variable is
 an input variable, give it a type matching our attribute to some
-extent<sup>1</sup>, and giving it any name we want.
+extent [^3], and give it any name we want.
 
 Our position is a float made out of 3 components, which maps to a vec3 in GLSL.
 
 So if we go with hard-coded locations, the first line of our shader is: 
 
-```c 
+```glsl
 layout(location = 0) in vec3 pos;
 ```
  
 
-> <sup>1</sup> Providing data for a vec4, but defining it as a vec3 or even float is perfectly valid. The other way around works too, but we would get us default values for the additional components.
+> [^3] Providing data for a vec4, but defining it as a vec3 or even float is perfectly valid. The other way around works too, but would get us default values for the additional components.
 
 
-Then, we got outputs, which are defined as our inputs, just with a `out`
+Then, we got outputs, which are defined just as our inputs, just with an `out`
 qualifier and without the location nonsense.
 
-```c 
+```glsl
 out vec4 fragment_color;
 ```
 
 So our vertex shader will calculate or just pass a color to our fragment shader
 later.
 
-Finally, we have a C-like main function: 
+Finally, we have a main function: 
 ```C 
 void main()
 {
@@ -107,26 +105,24 @@ gl_Position is a built-in output variable we can use, that passes our vertex
 position to the next stage without doing anything fancy. It's weirdly a vec4,
 because of math. Our 3D position has no perspective at all, but to make the math
 simpler when we are going to use a "Camera" later, OpenGL does a
-"perspective divide" as part of it's pipeline. It just divides the X, Y and Z
+"perspective divide" as part of its pipeline. It just divides the X, Y and Z
 components separately by the fourth value, the W, to turn the "Clip Space" into the true NDC.
 The higher the W, the closer are the values to the center of the screen, which allows the perspective distortion.
-This explanation is overly simplistic, but a value of 1.0 just means the
-position will be taken as is.
+This explanation is overly simplistic, but a value of 1.0 just means that X, Y
+and Z won't change at all.
 
 
 Let's talk about interpolation while we are doing this math dump.
 Since or vertices are just "points", and the
 vertex shader is executed only for vertices, the whole area of our
-primitives(e.g. the triangles) needs to calculate their input values via
-interpolating our vertex output. This sounds more complicated than it is. It
-just means the closer a fragment is to a vertex, the closer it's own value is to
+primitives(e.g. the whole area covered by the triangles) need to calculate their values via interpolating our vertex output, so the values can be used as input for the next stages. This sounds more complicated than it is. It just means the closer a fragment is to a vertex, the closer its own value is to
 that vertex. The further away it goes, the closer it gets to another nearer
 vertex. If Vertex A is Black and Vertex B is White, all fragments between them
 would be grayish, getting darker closer to Vertex A and lighter closer to Vertex
 B, like a happy little gradient.
-Which is why we need to pass our attributes through the vertex shader, if we
+Which is also why we need to pass our attributes through the vertex shader, if we
 want to make them available for our fragment shader later, which is common for
-texture coordinates.
+texture coordinates and normals.
 
 So let's calculate our fragment_color variable in our main:
 
@@ -134,9 +130,10 @@ So let's calculate our fragment_color variable in our main:
     fragment_color = vec4(pos.x, pos.y, pos.x + pos.y, 1.0);
 ```
 
-The calculation is arbitrary for now.
+The calculation is a bit arbitrary for now. We turn the vertex position into a
+color.
 
-Also, because GLSL used to be updated which each OpenGL, we need to specify a
+Also, because GLSL used to be updated with each OpenGL, we need to specify a
 version at the top of our shader source code. Since OpenGL 3.3, it is pretty straight
 forward. `#version {GL_MAJOR}.{GLMINOR}0`. so four our 4.3 version, it is
 `#version 4.30` at the top of the shader, before anything else. 
@@ -179,9 +176,9 @@ void main()
 }"##;
 ```
 
-## Finally Creating The Bloody Shader Objects
+## Creating The Shader Objects
 
-The last step is actually compile the shaders and use them in our playground.
+The next step actually compiling the shaders and using them in our playground.
 
 The creation is pretty straight forward, we call `glCreateShader` with the type
 of shader we want to create, upload the shader code with `glShaderSource` and
@@ -196,7 +193,7 @@ let fs = gl::CreateShader(gl::FRAGMENT_SHADER);
 ```
 
 Now we just upload our source code to them - 
-I "just", but turns out that the
+I say "just", but it turns out that the
 [glShaderSource](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glShaderSource.xhtml) wants pointers of pointers..
 What a lunatic.
 
@@ -207,7 +204,7 @@ in C.
 Luckily, we can skip the length when we are using null-terminated string. 
 We could turn our shader code into raw byte literals with `b"SOURCE CODE"`,
 make sure we add a \0 at the end and use the raw pointer to that if we like danger, and then call it a day.
-However, I am a cowards and just bite the bullet of an additional allocation into a `CString` which fails
+However, I am a coward and just bite the bullet of an additional allocation into a `CString` which fails
 if our str can't be converted into a valid C-String.
 
 ```rust
@@ -219,14 +216,14 @@ gl::ShaderSource(vs, 1, [vert_source.as_ptr()].as_ptr(), std::ptr::null());
 gl::ShaderSource(fs, 1, [frag_source.as_ptr()].as_ptr(), std::ptr::null());
 ```
 
-However, now we really only need to compile them.
+Now we really only need to compile them.
 
 ```rust
 gl::CompileShader(vs);
 gl::CompileShader(fs);
 ```
 
-Keep in mind that here is where would check for compile errors. I defer this for
+Keep in mind that here is where we would check for compile errors. I defer this for
 our refactoring, because I am just longing for this dang triangle at this point.
 
 ## The ShaderProgram
@@ -234,10 +231,10 @@ our refactoring, because I am just longing for this dang triangle at this point.
 We got our shader objects, but there is a final object that we need to face, the
 `ShaderProgram`. We see that our shaders are not really linked together. We
 defined some input and output variables, but they are just two different
-objects. The ShaderProgram is the one doing this link. Because of it, we can
-create all kinds of different pipelines for our vertices, with all kind of
+objects. The ShaderProgram is the one linking them together, literally. Because of it, we can
+create all kinds of different pipelines for our vertices, with all kinds of
 different shader effects, while reusing existing shader objects. A fragment
-shader that outputs red pixels and a shader that outputs blue ones might
+shader that outputs red pixels and one that outputs blue pixels might
 use the same vertex shader for example.
 
 So all we need to do is create yet another object, attach our shaders to it with
@@ -252,13 +249,14 @@ gl::LinkProgram(program);
 ```
 
 Before the linking, we could manually set up attribute input locations in our
-vertex shader, or the output locations of the fragment shader.
+vertex shader, or the output locations of the fragment shader, but since we did
+it manually in the source code, we can skip this step.
 
 After linking we should check for errors yet again, but I will use the same
 excuse as before.
 
 However, after the linking, it is good practice to detach the shaders from the
-program, so that they could properly deleted by someone who cleans up their own
+program, so that they could be properly deleted by someone who cleans up their own
 mess. So the final result looks like this: 
 
 ```rust
@@ -307,7 +305,7 @@ And that's it, now we can draw the triangle.. Finally..
 ## Hello Triangle 
 
 All that is left is to bind the vao and the shader. We technically never unbound
-the vao, but it is good practice to bind it in case some hoodlum touched
+the vao, but it is good practice to bind it in case some hoodlum touches
 OpenGL's global state machine.
 
 
@@ -324,8 +322,8 @@ And in our loop, right after the clear, we call [glDrawArrays](https://registry.
 As the name suggests, it draws what we specified with our VAO.
 
 The first parameter is the mode, the kind of primitive we want to use.
-There are multiple kinda of primitives, but we are mostly interested in the
-Triangle version. `GL_TRIANGLE` will take our first 3 vertices to make a
+There are multiple kinds of primitives, but we are mostly interested in the
+triangle versions. `GL_TRIANGLE` will take the first 3 vertices to make a
 triangle out of them, then the next 3 and so on. `GL_TRIANGLE_STRIP` will take
 the first 3 vertices as well, but each subsequent vertex will re-use the
 previous two vertices to create a new triangle. 
@@ -357,9 +355,8 @@ triangles! I mean sure, we are drawing two overlapping triangles,
 everything we will ever draw will be made of triangles, because that is the only way to draw things in OpenGL,
 but still! (well, we will take a look at points and lines one day)
 
-![hello_triangle](../img/context/hello_triangle.png)
+![hello_triangle](../hello_triangle.png)
 
----
 
 Beautiful!.. is something else.. Sure, we are programmers, not artists, but even
 we should have been able to come up with more aesthetically pleasing colors.. At least
@@ -370,9 +367,8 @@ a point where we could try to make some proper abstractions, clean up our mess
 and start with proper error checking and handling. 
 
 Final playground.rs:
+{% code(name="cac_graphics/context/examples/playground.rs") %}
 ```rust 
-//cac_graphics/context/examples/playground.rs
-use std::ffi::CString;
 use context::{gl43_core as gl, opengl};
 use raw_gl_context::GlContext;
 use winit::{
@@ -533,3 +529,8 @@ const QUAD_VERTICES: [f32; 3 * 4] = [
     });
 }
 ```
+{% end %}
+
+---
+
+[Link to the repository](https://github.com/KevinThielen/cac_graphics/tree/1699ee31ed83811b6b0ee69b113d5b2665cbcf0d)

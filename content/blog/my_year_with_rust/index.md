@@ -1,7 +1,7 @@
 +++
 title = "My Year With Rust: The Good, The Bad, The Ugly"
 description = "My experience with Rust after a year of using it. The good, but also the bad things."
-date = 2022-12-10
+date = 2022-12-15
 draft = false
 template="page.html"
 
@@ -22,7 +22,7 @@ examples, but the core essence is:
 {% note(kind="example", title="Summary") %}
    **Intro**  
    Some bearded man on an internet streaming platform talked about the nice
-   things that Rust offered, that went beyond the for me irrelevant buzzwords like "safety" or
+   things that Rust offered, that went beyond for me irrelevant buzzwords like "safety" or
    "correctness". While I started to really appreciate them after using
    Rust for a while, enums with pattern matching, iterator-fu, the lack of null, the amazing tools and tons of quality of life features are what actually convinced me to take a closer look into the language. As a result, I pushed my plans of taking a year off work to make video games back for a bit over a year to learn this language.
 \
@@ -41,11 +41,11 @@ examples, but the core essence is:
    &#9642; **Rust Is Not Object Oriented**: Your enjoyment of Rust relies on
    whether you are willing to adapt and potentially ditch the way you did things
    in other languages, which is not just limited to OOP. Rust **is** different.  
-   &#9642; **Chasing Idiomatic Rust**:  I notice how I waste(d) a lot of times
+   &#9642; **Chasing Idiomatic Rust**:  I notice how I waste(d) a lot of time
    chasing the idiomatic truth. When a language is opinionated like Rust, you
-   don't want to be the odd on out.    
+   don't want to be the odd one out.    
    &#9642; **Dependency Hell**: It's not uncommon to end up with hundreds of transient dependencies. This increases build times and risks, but there is also something like an extended standard library.    
-   &#9642; **Bloat**:  Generics and derives can add a surprisingly amount of lines of code "out of nowhere".   
+   &#9642; **Bloat**:  Generics and derives can add a surprising amount of lines of code "out of nowhere".   
 \
    **The Ugly**  
    &#9642; **Lack Of Maturity**:  Lack of jobs and mature libraries. Also still many
@@ -56,7 +56,7 @@ examples, but the core essence is:
    or an unknown to break the entire architecture out of the blue. Trait objects, Sync, lifetimes,
    and async are all viral and/or feeble.    
    &#9642; **Switching To Other Languages Feels Off**:  The borrow checker
-   conditions you to write code in a specific way and once you embraced Rusts focus
+   conditions you to write code in a specific way. Once you have embraced Rust's focus
    on correctness and got used to the fact that the tools got your back, you don't want to miss them anymore.
 {% end %}
 
@@ -95,7 +95,7 @@ for over a year on my personal projects, to learn this supposed to be a "fad" of
 language. Thank you [ToggleBit](https://www.twitch.tv/togglebit) for introducing
 me to Rust :)
 
-Now, after a little bit over year of learning, I decided to share my experience and thoughts
+Now, after a little bit over a year of learning, I decided to share my experience and thoughts
 about Rust, expressing my love for this language, but also trying to balance by
 talking about its issues. Let's start with the good things.
 
@@ -133,7 +133,7 @@ RustAnalyzer is also doing an amazing job here. This is a huge productivity boos
 This is by no means unique to Rust and you get something similar in any modern
 IDE for most relevant languages. The big difference is that Rust's strict rules,
 be it ownership or type safety, just catches a lot more, to a point where it's
-not rare no get suspicious when it compiles without any complains. 
+rare to not get suspicious when it compiles without any complaints. 
 
 
 Rust also forces you to handle all code paths. You have to be explicit about things
@@ -176,9 +176,9 @@ something that just happens because you forgot to deal with potential errors.
 I am certain that this changes how programmers deal with error handling. When you have to do
 something with the error anyway, be it handling it or just crashing, most will
 automatically pick the choice that provides the better experience. 
-The side-effect is that the program ends being more correct, because the potential
+The side-effect is that the program ends up being more correct, because the potential
 error cases are explicit. Nothing just silently fails or
-is null without the programmer who is responsible knowing about it.
+is null, without the programmer who is responsible knowing about it.
 
 The Rust community itself has a strong sense of correctness and soundness, which
 you will notice in third party crates, but also in the tools. Rustacians
@@ -218,7 +218,7 @@ only do they work really well together, but since most of them essentially come 
 
 But it's not just the tools, there are also many quality of life features in the language itself.
 So many little handy helpers that you would not even expect from a high level language. 
-Helpful macros that can embedded bytes directly into the binary(useful for
+Helpful macros that can embed bytes directly into the binary(useful for
 assets in small games, like game jam entries), formatting strings, things that deal
 with boilerplate like derives and the ?-operator for bubbling up errors.
 
@@ -253,7 +253,7 @@ wouldn't go for low effort hacks, properly handle errors and would actually use 
 From my experience, programmers in general tend to go the path of least
 resistance. 
 
-Even a super diligent and enthusiastic programmer will get tired. Some after years of bending to unreasonable client requests, like a Webcrawler in a fricking game engine, while for
+Even a super diligent and enthusiastic programmer will get tired. Some after years of bending to unreasonable client requests, like a web crawler in a fricking game engine, while for
 others the lunch break is enough to reach their breaking point. 
 
 This is why defaults are impactful.
@@ -275,9 +275,9 @@ delete(copy/assignment), non-destructive move, unsafe, mutable variables in gene
 or unchecked indexing in arrays, be the default, feels just wrong and often
 causes issues.
 
-Heck, it's not even a problem exclusive to C++ or new/intermediate devs, but even experience
+Heck, it's not even a problem exclusive to C++ or new/intermediate devs, but even experienced
 programmers in other languages suffer from bad defaults. A couple months ago, there was a tweet by a C veteran who worked for decades, for
-companies like RAD, Valve, Occulus and Intel:
+companies like RAD, Valve, Oculus and Intel:
 
 ![c_lul.png](c_lul.png)
 
@@ -286,7 +286,7 @@ away or depending on the compiler, it might have been part of `-Wall`, `-Wextra`
 etc.(not sharing the rest of this tweet chain, cause the discussion kinda
 went south after the suggestions). The point is, that even industry veterans are
 sitting there, missing things that should/could have been the default. Wasting
-three days on something that not just Rust, but useful default in general, would just have prevented.
+three days on something that not just Rust, but useful defaults in general, would just have prevented.
 
 Why do programmers need to opt-in to `-Wall` and friends in the first place? And why would they even spit
 out warnings for system headers? I get that some warnings might be
@@ -296,9 +296,8 @@ There is no reason to not check for them by default, at least in debug builds.
 Warnings being opt-in just means that the people who care about them will be
 flooded with warnings for the code they didn't write and just end up missing the warning they care about.. defeating their whole purpose. 
 
-People who need the objectively "worse", rare or unsafer/unchecked options should actually opt-in to them, than making the
-better option more work. Who cares if bounds checking is slower? Most of the time
-the single bounds check is insignificant to the total performance, and in the
+People who need the objectively "worse", rare or unsafe/unchecked options should actually opt-in to them, rather than making the better option more work. Who cares if bounds checking is slower? Most of the time
+the single bounds check is insignificant to the overall performance, and in the
 cases where it actually becomes a problem, you can opt-in to use the unchecked
 alternative, when you actually need it.
 
@@ -309,7 +308,7 @@ before, you know how to program, Rust is wrong.. But after embracing "the style
 that pleases the borrow checker" and using Rust's uncommon language features(at
 least uncommon when it comes to mainstream languages), I can admit that the borrow
 checker is usually right, and the code ends up simpler and cleaner as a result. Turns
-out it easier to test and refactor when objects are not carrying mutable references
+out, it's easier to test and refactor when objects are not carrying mutable references
 around or are in complex graphs of relationships.
 
 Once I was no longer fighting the borrow checker and saw him more as an adviser than
@@ -458,7 +457,7 @@ object-oriented. Well, it depends on what you consider object-orientation.
 There is no clear definition(and some hoodlums might argue that this lack of
 clarity is the main issue with OOP in general), but some people reduce it to
 language features like having the concept of "classes", as in bundling data and
-behaviour(with access modifiers), data inheritance and polymorphism, all of which exist in Rust to some
+behavior(with access modifiers), data inheritance and polymorphism, all of which exist in Rust to some
 extent. Structs are basically just classes, inheritance can be replaced with
 composition and polymorphism can be archived via enums, generics and trait
 objects. So Rust offers object-oriented features from that point of view, and might
@@ -478,7 +477,7 @@ indices/ID's into flat containers, and use dedicated context objects, instead of
 references left and right. A reference is usually only temporary.
 
 The difference becomes especially clear in graph-like data structures, where the data needs to keep track of some sort of
-hierarchy. The ["Learn Rust With Entirely Too Many Linked Lists"](https://rust-unofficial.github.io/too-many-lists/index.html)-book is a great resource for these kind of problems.
+hierarchy. The ["Learn Rust With Entirely Too Many Linked Lists"](https://rust-unofficial.github.io/too-many-lists/index.html)-book is a great resource for these kinds of problems.
 
 Generally, I found shoving the entire data as a whole in a flat container(like a Vec)
 and then keeping track of their relationships via optional indices into that
@@ -510,7 +509,7 @@ an import nuisance).
 Rust is the first language that actually makes me search for the "idiomatic
 truth" when being unsure, before I start to think about pros/cons on my own.
 While in other languages, it didn't really matter to me, since everyone
-got their own guidelines.
+had their own guidelines.
 
 Sure, I wasted a lot of time searching the forums, API guidelines and asking
 questions(the community is incredibly helpful and seemingly loves to talk about
@@ -563,7 +562,7 @@ one the biggest complaint that Rust gets: They increase the build times.
 
 The error handling crate
 [thiserror](https://docs.rs/thiserror/latest/thiserror/) is the perfect example.
-It's an incredible handy crate and basically the de-facto standard for writing 
+It's an incredibly handy crate and basically the de facto standard for writing 
 errors in libraries. And one of the crates(together with `anyhow`) recommended to beginners whenever
 they ask about errors. But its dependency on proc-macro can add a few seconds to
 the compile times(3-5 on my machine), just to save a few lines of boilerplate.
@@ -688,7 +687,7 @@ fn good_generic<T: Into<String>>(t: T) {
 }
 ```
 
-The Rust API-guidelines(https://rust-lang.github.io/api-guidelines/interoperability.html#types-eagerly-implement-common-traits-c-common-traits) also encourages being more generous with the implementation of common traits, most of them being derivable. This means that their actual implementation are generated every time the crate is being build. This will add dozens, if not more lines of code for seemingly small structs. 
+The Rust [API-guidelines](https://rust-lang.github.io/api-guidelines/interoperability.html#types-eagerly-implement-common-traits-c-common-traits) also encourages being more generous with the implementation of common traits, most of them being derivable. This means that their actual implementations are generated every time the crate is being built. 
 
 ---
 
@@ -696,7 +695,7 @@ So those were some potentially bad things about Rust, or more accurately, "neces
 evils". They are not strictly bad, and are more like a trade-off, especially
 since most of them are optional or at the very least highly subjective.
 
-Especially if can't let go of your previous programming style, Rust could cause a lot of friction.
+Especially if you can't let go of your previous programming style, Rust could cause a lot of friction.
 On the other hand, if you fully embrace the Rust way of doing things, everything will just flow nicely.
 
 Finally, let's go through the ugly things..
@@ -706,7 +705,7 @@ As much as I like Rust, there are unfortunately some really painful things.
 
 ## Lack of maturity
 As I mentioned before, Rust is opinionated, but whether the opinions are right or wrong
-is only something that time will tell. It is possible that the unified community
+is only something that time will tell. It is unlikely, but possible that the unified community
 might be split because of a difference in opinions at some point. It is also unknown whether
 Rusts runs into its own kind of dependency hell, or if core design decisions
 might get in the way in projects built over a long period of time.
@@ -750,8 +749,8 @@ wishlist.
 As mentioned before, Rust focuses on correctness. There are many tracking
 issues that seem to be stuck for years, because there is no agreement on a solution, or
 because it wouldn't work on some exotic platforms or due to a niche reason. It's
-quickly adding new features that people can agree one, but the "difficult"
-questions seems to be stuck.
+quickly adding new features that people can agree on, but the "difficult"
+questions seem to be stuck.
 
 ## The Borrow Checker Is Not Always Right
 Another problem is, that things that should be possible in theory are not passing the borrow
@@ -845,7 +844,7 @@ Imagine writing a graphics renderer. The graphics resources live on some sort of
 object and you return handles to the caller. You don't want to return a borrow
 nor the full ownership, because it makes storing and cleaning them up more of a
 hassle. A Handle(for all intents and purposes just an ID) is good enough and there is no ownership involved.
-When you want to actually change the resource, you call some sort of getter, to temporary borrow the
+When you want to actually change the resource, you call some sort of getter, to temporarily borrow the
 concrete resource, apply the changes, then release the borrow again. 
 
 ```rust 
@@ -931,7 +930,7 @@ turns goes all the way to the root of your program, touching multiple struct and
 function on the way.
 
 Sync, object safety and async are all feeble and viral as well. They spread
-though your layers, but can break from one moment to another.
+through your layers, but can break from one moment to another.
 You start using the compiler errors as a todo list, working towards the solution, always getting new
 errors while you work through the layers, just to arrive at the final error in
 your core trait, only to realize that it lost its object safety and can't be made
@@ -947,7 +946,7 @@ The current solution might work fine on the current backend with OpenGL, but wha
 oversight in general, since we are just humans? In the worst case, it would require a new solution from scratch.
 
 Some may argue that this kind of strictness leads to overall cleaner code that
-is easier to maintain, I wouldn't disagree with that, but no one would want to rewrite large potions of their code, let alone close to release.. But also, how is the experience on a bigger scale?
+is easier to maintain, I wouldn't disagree with that, but no one would want to rewrite large portions of their code, let alone close to release.. But also, how is the experience on a bigger scale?
 Or with something where the entire project is an iterative process,
 like it is in game development, where features constantly change? Rust just
 forces you to deal with the unknown unknowns at seemingly arbitrary times and
@@ -958,7 +957,7 @@ like aliasing. One example of this, is the popular Macroquad crate where their
 ergonomic intention, a static mutable context, [is unsound and would require a
 rewrite to fix](https://github.com/not-fl3/macroquad/issues/333).
 
-The silver lining is that I found Rust code incredible easy to refactor. 
+The silver lining is that I found Rust code incredibly easy to refactor. 
 Aside from the fact that Rust leads to a simpler design without complex
 dependency graphs, the compiler becomes essentially a todo-list that you just
 work through to finish refactoring.
@@ -972,26 +971,30 @@ It takes a lot of time to switch from the "ownership and lifetime" model to the
 "Oprah handing out mutable references"-style. The cost of the context switch is
 huge.
 
-Rust also learned from the mistakes of its predecessors and added a lot of modern fluff, which you don't want to
-miss anymore. Correctness alone is something that might sound bland on paper, but once
+As stated multiple times now, Rust is opinionated. It is nigh impossible to
+internalize these opinions, move to a different language and not keep following
+those opinions. Rust also learned from the mistakes of its predecessors and added a lot of modern fluff, which you don't want to miss anymore.
+
+Correctness alone is something that might sound bland on paper, but once
 experienced it, it's something you don't really want to program without. Random segfaults or exceptions
 are a test of patience. Dealing with the silly defaults and different programming style/conventions is just tedious.
-It takes away a lot of the fun when you suddenly have to switch to another language. 
-It's not just fun, but also a cost you pay for context switching. Going back
-from/to Rust always took me a while to get used to it. This wasn't nearly as
-much of a problem when I was switching between C++ and C#.
-
-This was a hurdle since I was/am relying on contract work. It's soul crushing to
-see a perfect fit for some iterator-fu, but then having to rely on doing it
+It's soul crushing to see a perfect fit for some iterator-fu or simple enum matching, but then having to rely on doing it
 manually in a more verbose and error-prone way, or run into errors where the
 compiler would have had your back.
+
+It takes away a lot of the fun when you suddenly have to switch to another language. 
+But it's not just about fun, but also the cost you pay for context switching. Going back
+from/to Rust always took me a while to get used to it to hit my usual
+productivity levels. This wasn't nearly as much of a problem when I was switching between C++ and C#.
+
+This was a hurdle since I was/am relying on contract work, though now I am trying to work solely in Rust.
 
 --- 
 
 ## Conclusion 
 
 All in all, even after weighing the cons, Rust just ticks the right boxes for me, and I am looking forward to where
-my journey will take me. I don't see me writing code in another language in the
-foreseeable future. 
+my journey will take me. I don't see myself writing code in another language in the
+foreseeable future. It's not that I dislike C++
 
-Thank you for reading. If you want more, check out my [devlog](/devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this articles, I am currently writing abstraction around OpenGL for the renderer, so take a look if you are interested. 
+Thank you for reading. If you are interested in more, check out my [devlog](/devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this article, I am currently writing abstractions around OpenGL for the renderer, so take a look if you are interested. 
