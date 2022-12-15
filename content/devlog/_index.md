@@ -27,5 +27,6 @@ Ideally, there is a new update every few days.
 
 ## Projects 
 
+
 ### Work in Progress 
 - [Writing the Renderer](/devlog/renderer/)

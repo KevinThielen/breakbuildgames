@@ -6,6 +6,7 @@
   --cheader: #a471a3; //code header
   --chb: #0f0718;
   --chf: #fff;
+  --hrc: #570A73;
 
     .z-code {
        color: var(--chf);
@@ -34,6 +35,7 @@
   --chf: #1d1c22;
   --chb: #ecc797;
   --ccb: #ecc797;
+  --hrc: #5B513D;
 
   .z-code {
      color: var(--chf);
@@ -83,7 +85,7 @@
 
 
 hr {
-    border-color: var(--c2);
+    border-color: var(--hrc);
 }
 
 

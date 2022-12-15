@@ -1,6 +1,6 @@
 +++
 title = "RenderTargets"
-description = "We are going to replace the calls that update our render target. Also colors."
+description = "We are going to replace the GL calls that clean our screen. Also colors!"
 date = 2022-12-10
 weight = 4
 draft = false

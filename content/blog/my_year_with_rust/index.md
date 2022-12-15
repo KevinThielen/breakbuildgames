@@ -13,52 +13,20 @@ toc = true
 keywords = "Rust, Programming, Clippy, Correctness"
 +++
 
-## Summary 
+---
 
-"Dood, it says it's a 40 minute read, I ain't got no time man". I hear you, here
-is the summary of the points. The articles goes into more details and mentions
-examples, but the core essence is:
+<img src="dood.png" width="15%"  style="float:left">
 
-{% note(kind="example", title="Summary") %}
-   **Intro**  
-   Some bearded man on an internet streaming platform talked about the nice
-   things that Rust offered, that went beyond for me irrelevant buzzwords like "safety" or
-   "correctness". While I started to really appreciate them after using
-   Rust for a while, enums with pattern matching, iterator-fu, the lack of null, the amazing tools and tons of quality of life features are what actually convinced me to take a closer look into the language. As a result, I pushed my plans of taking a year off work to make video games back for a bit over a year to learn this language.
-\
-\
-   **The Good**  
-   &#9642; **Rust Does Not Crash**: Rust encourages correctness and the
-    community embraces it. Praise for the strong type system and uniform error
-    handling!  
-   &#9642; **Rust Is Modern**: The tools are amazing and actually got your back. Lots of quality of life features.  
-   &#9642; **Rust Supports My Laziness**: Impactful defaults and having the "bad" things being opt-in rather than opt-out are a huge game changer. When you are fighting the borrow checker, your solution is usually not as clean and simple as it could be.  
-\
-   **The (potentially) Bad**  
-   &#9642; **Rust Is Opinionated**:  Rust can feel restrictive at times. The alternative
-   to common features in other languages often leads to more boilerplate. The plus side is
-   that everyone follows the guideline and tries to write (the same) idiomatic Rust.  
-   &#9642; **Rust Is Not Object Oriented**: Your enjoyment of Rust relies on
-   whether you are willing to adapt and potentially ditch the way you did things
-   in other languages, which is not just limited to OOP. Rust **is** different.  
-   &#9642; **Chasing Idiomatic Rust**:  I notice how I waste(d) a lot of time
-   chasing the idiomatic truth. When a language is opinionated like Rust, you
-   don't want to be the odd one out.    
-   &#9642; **Dependency Hell**: It's not uncommon to end up with hundreds of transient dependencies. This increases build times and risks, but there is also something like an extended standard library.    
-   &#9642; **Bloat**:  Generics and derives can add a surprising amount of lines of code "out of nowhere".   
-\
-   **The Ugly**  
-   &#9642; **Lack Of Maturity**:  Lack of jobs and mature libraries. Also still many
-   unstable and unfinished language features.   
-   &#9642; **The Borrow Checker Is Not Always Right**:  The borrow checker is
-   not infallible. There are some limitations that you need to hack around.  
-   &#9642; **Rewrite It In Rust**: All it takes is a specific requirement 
-   or an unknown to break the entire architecture out of the blue. Trait objects, Sync, lifetimes,
-   and async are all viral and/or feeble.    
-   &#9642; **Switching To Other Languages Feels Off**:  The borrow checker
-   conditions you to write code in a specific way. Once you have embraced Rust's focus
-   on correctness and got used to the fact that the tools got your back, you don't want to miss them anymore.
-{% end %}
+**"A 40 minute read?! I ain't got no time, dood!"** 
+
+
+I hear you. The article contains examples and more details, but [here](#summary) is the summary. 
+
+---
+
+
+
+
 
 ## Intro 
 One day, when I was reluctantly hacking on a web crawler in the Unity game
@@ -95,9 +63,13 @@ for over a year on my personal projects, to learn this supposed to be a "fad" of
 language. Thank you [ToggleBit](https://www.twitch.tv/togglebit) for introducing
 me to Rust :)
 
+
 Now, after a little bit over a year of learning, I decided to share my experience and thoughts
 about Rust, expressing my love for this language, but also trying to balance by
-talking about its issues. Let's start with the good things.
+talking about its issues. This seemed to be a reasonable entry topic for this
+new blog.
+
+Let's start with the good things.
 
 
 
@@ -657,37 +629,6 @@ Personally, I tend to only add the absolute necessary ones, but I "waste" time
 rewriting things from scratch as a result. This pretty much boils down to
 personal preferences.
 
-## Bloat 
-There is also more hidden bloat in Rust. Macros and generics can
-easily generate hundreds if not thousands of lines of code while looking
-harmless. Generics are monomorphic, which means that they are replaced with specialized instances, for every single type that
-is passed to them. This leads to higher compilation time(generation and
-optimization) and binary cost(more instructions). Luckily, the issue can be minimized 
-by splitting the generic part to small functions that convert the generic
-argument into something specific, and then pass it to the shared, longer function. 
-
-```rust 
-//causes literally billion lines of code or something * the number of different T
-fn bad_generic<T: Into<String>>(t: T) {
-    let t_string: String = t.into();
-    //literally billion lines of code or something
-}
-
-fn good_generic<T: Into<String>>(t: T) {
-    //Rust allows you to define structs or functions inside of other functions
-
-    //causes literally billion lines of code, but just once, so it is fine
-    fn loads_of_stuff(t: String) {
-        //literally billion lines of code or something
-    }
-
-    //this cause one line of code * the number of T
-    //a line or two is "nothing". 
-    loads_of_stuff(t.into());
-}
-```
-
-The Rust [API-guidelines](https://rust-lang.github.io/api-guidelines/interoperability.html#types-eagerly-implement-common-traits-c-common-traits) also encourages being more generous with the implementation of common traits, most of them being derivable. This means that their actual implementations are generated every time the crate is being built. 
 
 ---
 
@@ -991,10 +932,52 @@ This was a hurdle since I was/am relying on contract work, though now I am tryin
 
 --- 
 
-## Conclusion 
+# Conclusion 
 
 All in all, even after weighing the cons, Rust just ticks the right boxes for me, and I am looking forward to where
 my journey will take me. I don't see myself writing code in another language in the
-foreseeable future. It's not that I dislike C++
+foreseeable future. 
 
 Thank you for reading. If you are interested in more, check out my [devlog](/devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this article, I am currently writing abstractions around OpenGL for the renderer, so take a look if you are interested. 
+
+
+# Summary 
+{% note(kind="example", title="Summary") %}
+   **Intro**  
+   Some bearded man on an internet streaming platform talked about the nice
+   things that Rust offered, that went beyond for me irrelevant buzzwords like "safety" or
+   "correctness". While I started to really appreciate them after using
+   Rust for a while, enums with pattern matching, iterator-fu, the lack of null, the amazing tools and tons of quality of life features are what actually convinced me to take a closer look into the language. As a result, I pushed my plans of taking a year off work to make video games back for a bit over a year to learn this language.
+\
+\
+   **The Good**  
+   &#9642; **Rust Does Not Crash**: Rust encourages correctness and the
+    community embraces it. Praise for the strong type system and uniform error
+    handling!  
+   &#9642; **Rust Is Modern**: The tools are amazing and actually got your back. Lots of quality of life features.  
+   &#9642; **Rust Supports My Laziness**: Impactful defaults and having the "bad" things being opt-in rather than opt-out are a huge game changer. When you are fighting the borrow checker, your solution is usually not as clean and simple as it could be.  
+\
+   **The (potentially) Bad**  
+   &#9642; **Rust Is Opinionated**:  Rust can feel restrictive at times. The alternative
+   to common features in other languages often leads to more boilerplate. The plus side is
+   that everyone follows the guideline and tries to write (the same) idiomatic Rust.  
+   &#9642; **Rust Is Not Object Oriented**: Your enjoyment of Rust relies on
+   whether you are willing to adapt and potentially ditch the way you did things
+   in other languages, which is not just limited to OOP. Rust **is** different.  
+   &#9642; **Chasing Idiomatic Rust**:  I notice how I waste(d) a lot of time
+   chasing the idiomatic truth. When a language is opinionated like Rust, you
+   don't want to be the odd one out.    
+   &#9642; **Dependency Hell**: It's not uncommon to end up with hundreds of transient dependencies. This increases build times and risks, but there is also something like an extended standard library.    
+\
+   **The Ugly**  
+   &#9642; **Lack Of Maturity**:  Lack of jobs and mature libraries. Also still many
+   unstable and unfinished language features.   
+   &#9642; **The Borrow Checker Is Not Always Right**:  The borrow checker is
+   not infallible. There are some limitations that you need to hack around.  
+   &#9642; **Rewrite It In Rust**: All it takes is a specific requirement 
+   or an unknown to break the entire architecture out of the blue. Trait objects, Sync, lifetimes,
+   and async are all viral and/or feeble.    
+   &#9642; **Switching To Other Languages Feels Off**:  The borrow checker
+   conditions you to write code in a specific way. Once you have embraced Rust's focus
+   on correctness and got used to the fact that the tools got your back, you don't want to miss them anymore.
+{% end %}

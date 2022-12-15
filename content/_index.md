@@ -28,5 +28,5 @@ This site is using [Zola](https://www.getzola.org) and based on the amazing and 
 ## Links 
 - [Devlog](/devlog): Log of my journey, where I share my thoughts, progress, and approach to solving the problems as I encounter them.
 - [Blog](/blog): Random thoughts and ramblings.  
-- [Contribution](/support): Ways on how to contribute to my project and help me.
+- [Contribution & Support](/support): Ways on how to contribute to this project and support me.
 

@@ -19,10 +19,10 @@ of this, which helps me to justify spending more time :)
 
 # Contribute
 If you find any grammar, spelling or factual errors, no matter how small, I
-encourage you to open an issue on [GitHub](github.com), send a pull request, send me a private message on [Reddit](https://www.reddit.com/message/compose/?to=GenusNymphicus), or let me know on any other channel down below. 
+encourage you to open an issue on [GitHub](https://github.com/KevinThielen/breakbuildgames), or send a pull request, send me a private message on using any of my [contact channels](/contact). 
 
 If you want to discuss certain posts or topics, or have any question, you can do so on GitHub as well.
-Just open an issue. Maybe this might also help the one or other person who runs into
+Maybe this might also help the one or other person who runs into
 the same question, or increases the understanding for people who didn't even
 thought about that specific case. Don't feel shy :)
 
@@ -31,7 +31,7 @@ below this paragraph.[^1]
 
 # Support 
 This blog is not running any ads or use affiliate links in any capacity,
-I won't take any sponsors, won't track any data nor put anything behind a paywall or some email list.
+I won't take any sponsors, track any data nor put anything behind a paywall or some email subscription.
 
 All the code and the eventual games are going to be open-source, even the ones
 targeted for Steam or other commercial releases. The repositories are linked in the respective project pages in my Devlog(/devlog). I won't ask for money on any other page except this one.
@@ -41,6 +41,8 @@ Any money donated helps me justifying spending more time on this project.
 I will list the supporters and their contributions below this page.[^1]
 
 So yeah, if you enjoy my content, you can support this little project by donating to any of the following channels:
+
+[BuyMeACoffee](https://www.buymeacoffee.com/genusnymph/)
 
 ---
 
