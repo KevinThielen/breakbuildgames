@@ -686,7 +686,10 @@ issues that seem to be stuck for years, because there is no agreement on a solut
 because it wouldn't work on some exotic platforms or due to a niche reason. It's
 quickly adding new features that people can agree on, but the difficult
 questions seem to be stuck at times, with only an occasional bump being a lost
-soul, asking for the current status.
+soul, asking for the current status. There are only so many skilled volunteers
+after all, who can only work on so many things. That said, I definitely prefer this approach any
+day over rushing half-finished or faulty additions, so I am really grateful to
+all the amazing volunteers out there.  
 
 ## The Borrow Checker Is Not Always Right
 Another problem is, that things that should be possible in theory are not passing the borrow
@@ -954,6 +957,13 @@ my journey will take me. I just don't see myself writing code in another languag
 foreseeable future. 
 
 Thank you for reading. If you are interested in more, check out my [devlog](/devlog), where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this article, I just started and I am currently writing abstractions around OpenGL for the renderer, so feel free to take a look :)  
+
+---
+
+# Addendum 
+
+- [/u/ssokolow](https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0dcajz/?context=3) gives many interesting links and details to some of the
+    mentioned points in this article. I highly recommend checking it out!
 
 
 # Summary 
