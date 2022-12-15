@@ -20,7 +20,7 @@ So let's create an error module.
 
 {% note(title="Why not thiserror?", kind="question") %}
 We could use the [thiserror](https://crates.io/crates/thiserror) crate, it's an amazing crate to avoid a lot of boilerplate, especially when it comes to all the conversion functions.
-However, adding `proc-macro2` as a transient dependency [seems a bit heavy](../../the_bad.md#dependency-hell). We are not
+However, adding `proc-macro2` as a transient dependency [seems a bit heavy](/blog/my-year-with-rust#dependency-hell). We are not
 going to do anything where we need to touch multiple error types or require
 nested errors, nor do we need any conversions, so there is not a lot of
 boilerplate that `thiserror` would save in our particular case.
