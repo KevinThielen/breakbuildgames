@@ -34,7 +34,7 @@ This blog is not running any ads or use affiliate links in any capacity,
 I won't take any sponsors, track any data nor put anything behind a paywall or some email subscription.
 
 All the code and the eventual games are going to be open-source, even the ones
-targeted for Steam or other commercial releases. The repositories are linked in the respective project pages in my Devlog(/devlog). I won't ask for money on any other page except this one.
+targeted for Steam or other commercial releases. I won't ask for money on any other page except this one.
 
 However, it would be foolish to not accept any goodwill by some generous readers.
 Any money donated helps me justifying spending more time on this project. 
