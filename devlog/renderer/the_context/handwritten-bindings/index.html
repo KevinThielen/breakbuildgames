@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+      
+  
+
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>[Excursion] Handwritten GL Bindings | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="How to write the bindings from scratch" />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/" />
+  <meta name="keywords" content="OpenGL, Bindings, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/" />
+  <meta property="og:description" content="How to write the bindings from scratch" />
+  <meta name="twitter:description" content="How to write the bindings from scratch" />
+  <meta property="og:title" content="[Excursion] Handwritten GL Bindings | BreakBuildGames" />
+  <meta name="twitter:title" content="[Excursion] Handwritten GL Bindings | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-02" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+            
+            
+        
+
+        
+
+    
+
+    
+        
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>[Excursion] Handwritten GL Bindings</h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 10 min read<span class="hpad">|</span> December 02, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/opengl/">OpenGL</a>  #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+    <p><span class="admonition note title"> Note </span>
+<span class="admonition note"> This is a simple excursion about writing the previously generated OpenGL
+bindings from scratch. Feel free to just skim through this chapter or skip it
+altogether.  </span></p>
+<p>In the previous chapter we have set up a simple playground for us.</p>
+<p>Before going further into the context creation, let's start with a simple
+excursion about the OpenGL bindings. </p>
+<p>Our playground is currently using automatically generated gl bindings.</p>
+<p>However, the OpenGL spec is huge and many of the functions/types are legacy
+luggage, or at least not needed for our purpose. For example, there are around
+800 lines of constant, while we only need a few dozens of them at best.
+The generated file is a humongous &gt;800kb chunkster.
+So, how much &quot;bloat&quot; are we generating by using a bindings generator over just
+writing what we need? </p>
+<p>Well, let's write some bindings and compare the result :)</p>
+<h3 id="writing-bindings-from-hand"><a class="zola-anchor" href="#writing-bindings-from-hand" aria-label="Anchor link for: writing-bindings-from-hand">Writing Bindings From Hand</a></h3>
+<p>The <a rel="noopener" target="_blank" href="https://github.com/KhronosGroup/OpenGL-Registry/blob/main/xml/gl.xml">gl.xml</a> on the official OpenGL-Registry repository defines everything that is needed.</p>
+<p>Generally, the bindings require 4 parts: </p>
+<ul>
+<li>defining the GL types </li>
+<li>setting the GL constants </li>
+<li>defining the functions</li>
+<li>loading the function pointers</li>
+</ul>
+<p>The easiest thing to start with are the actual function definitions. 
+Our <a rel="noopener" target="_blank" href="https://github.com/KevinThielen/cac_graphics/tree/1f206abc09f326569f3fcf21feddde8fca70c8d0">playground from the previous chapter</a> requires calls to glClear and glClearColor.</p>
+<p>They are defined as this, in the XML-file:</p>
+<div class="code_with_header">
+<div class="codeheader">gl.xml</div>
+<pre data-lang="XML" class="language-XML z-code"><code class="language-XML" data-lang="XML"><span class="z-text z-xml"><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">command</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+     <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">proto</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>void <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>glClear<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">proto</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+     <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">param</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ClearBufferMask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>GLbitfield<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span> <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>mask<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">param</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+     <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">glx</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">type</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>render<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">opcode</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>127<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">/&gt;</span></span>
+<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">command</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">command</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">proto</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>void <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>glClearColor<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">proto</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">param</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ColorF<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>GLfloat<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span> <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>red<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">param</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">param</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ColorF<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>GLfloat<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span> <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>green<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">param</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">param</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ColorF<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>GLfloat<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span> <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>blue<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">param</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">param</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ColorF<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>GLfloat<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">ptype</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span> <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>alpha<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">name</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">param</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">glx</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">type</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>render<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">opcode</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>130<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">/&gt;</span></span>
+<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">command</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+</span></code></pre>
+</div>
+<p>This is a lot of noise. All we need are the return values, the name of the
+function, and types and names of the parameters. Instead of crawling through
+the XML, we could also just be searching for the functions in the
+<a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/">refpages</a> or on
+<a href="docs.gl">docs.gl</a>.</p>
+<pre data-lang="c" class="language-c z-code"><code class="language-c" data-lang="c"><span class="z-source z-c"><span class="z-comment z-line z-double-slash z-c"><span class="z-punctuation z-definition z-comment z-c">//</span>C Specification
+</span><span class="z-storage z-type z-c">void</span> <span class="z-meta z-function z-c"><span class="z-entity z-name z-function z-c">glClear</span></span><span class="z-meta z-function z-parameters z-c"><span class="z-meta z-group z-c"><span class="z-punctuation z-section z-group z-begin z-c">(</span></span></span><span class="z-meta z-function z-parameters z-c"><span class="z-meta z-group z-c">GLbitfield <span class="z-variable z-parameter z-c">mask</span><span class="z-punctuation z-section z-group z-end z-c">)</span></span></span><span class="z-punctuation z-terminator z-c">;</span>
+<span class="z-storage z-type z-c">void</span> <span class="z-meta z-function z-c"><span class="z-entity z-name z-function z-c">glClearColor</span></span><span class="z-meta z-function z-parameters z-c"><span class="z-meta z-group z-c"><span class="z-punctuation z-section z-group z-begin z-c">(</span></span></span><span class="z-meta z-function z-parameters z-c"><span class="z-meta z-group z-c">GLfloat <span class="z-variable z-parameter z-c">red</span><span class="z-punctuation z-separator z-c">,</span> GLfloat <span class="z-variable z-parameter z-c">green</span><span class="z-punctuation z-separator z-c">,</span> GLfloat <span class="z-variable z-parameter z-c">blue</span><span class="z-punctuation z-separator z-c">,</span> GLfloat <span class="z-variable z-parameter z-c">alpha</span><span class="z-punctuation z-section z-group z-end z-c">)</span></span></span><span class="z-punctuation z-terminator z-c">;</span>
+</span></code></pre>
+<p>It's less &quot;correct&quot;, but way easier to read. A worthwhile trade-off.</p>
+<p>Both are void functions, which means they have no return values. <code>glClear</code>
+takes a mask with the type <code>GLbitfield</code> and <code>glClearColor</code> takes in the 4 color
+channels as <code>GLfloat</code>. Just as the XML specifies, but more concise! Great!</p>
+<p>More than that, they also describe the accepted values.
+For example, the parameters for <code>glClear</code> specify the mask argument with: </p>
+<blockquote>
+<p><strong>mask</strong> <br />
+Bitwise OR of masks that indicate the buffers to be cleared. The three masks are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT</p>
+</blockquote>
+<p>So we also know that we require the 3 constants for the buffer bits as well.
+This relation is specified in the XML via the group, but makes finding everything
+that is needed even less convenient than just using the docs.</p>
+<p>Now that we know the types we are going to need, the next step is to define them in our code.</p>
+<p>First we need the &quot;platform&quot; definitions. Things that map OpenGL-types to FFI-compatible Rust types.
+Things like GLint and GLEnum being defined with
+compatible &quot;c types&quot; that will be used for the FFI calls.</p>
+<p>Luckily, there is an official table with a description and the number of bits for each
+type on the <a rel="noopener" target="_blank" href="https://www.khronos.org/opengl/wiki/OpenGL_Type">khronos wiki</a>. The
+alternative would be reading the official specs.</p>
+<table><thead><tr><th>C type</th><th>Bitdepth</th><th>Description</th></tr></thead><tbody>
+<tr><td>GLboolean</td><td>1+</td><td>A value, either GL_TRUE or GL_FALSE</td></tr>
+<tr><td>GLbyte</td><td>8</td><td>Signed, 2's complement binary integer</td></tr>
+<tr><td>GLubyte</td><td>8</td><td>Unsigned binary integer</td></tr>
+<tr><td>GLshort</td><td>16</td><td>Signed, 2's complement binary integer</td></tr>
+<tr><td>GLint</td><td>32</td><td>Unsigned binary integer</td></tr>
+<tr><td>GLuint</td><td>32</td><td>Signed, 2's complement binary integer</td></tr>
+<tr><td>GLenum</td><td>32</td><td>An OpenGL enumarator value</td></tr>
+<tr><td>GLsizeptr</td><td>pointer size</td><td>Non-negative binary integer size for memory offsets and ranges</td></tr>
+<tr><td>GLfloat</td><td>32</td><td>An IEEE-754 floating-point value</td></tr>
+<tr><td>GLbutfield</td><td>32</td><td>A bitfield value</td></tr>
+<tr><td>..</td><td>..</td><td>..</td></tr>
+</tbody></table>
+<p>Which makes it pretty straight forward.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-module z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">types</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span>ffi<span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">GLbitfield</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-storage z-type z-rust">c_uint</span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">GLfloat</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-storage z-type z-rust">c_float</span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>This is by no means exhaustive. As mentioned, the point of this exercise is to
+define just as little as needed and keep adding as we go. <code>GLbitfield</code> and <code>GLfloat</code>
+are all we need for <code>glClear</code> and <code>glClearColor</code>.</p>
+<p>Now, we can also define the constants.
+As mentioned, glClear also defines 3 constants for the clear bits.
+This is where the
+<a rel="noopener" target="_blank" href="https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml">XML</a> is handy. We can just search for the constant definitions and copy the values: </p>
+<pre data-lang="XML" class="language-XML z-code"><code class="language-XML" data-lang="XML"><span class="z-text z-xml"><span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">enums</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">namespace</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>GL<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>AttribMask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">type</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>bitmask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+    ..
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">enum</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">value</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>0x00000100<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">name</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>GL_DEPTH_BUFFER_BIT<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ClearBufferMask,AttribMask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">/&gt;</span></span>
+    ..
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">enum</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">value</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>0x00000400<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">name</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>GL_STENCIL_BUFFER_BIT<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ClearBufferMask,AttribMask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">/&gt;</span></span>
+    ..
+    <span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;</span><span class="z-entity z-name z-tag z-localname z-xml">enum</span> <span class="z-entity z-other z-attribute-name z-localname z-xml">value</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>0x00004000<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">name</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>GL_COLOR_BUFFER_BIT<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span> <span class="z-entity z-other z-attribute-name z-localname z-xml">group</span><span class="z-punctuation z-separator z-key-value z-xml">=</span><span class="z-string z-quoted z-double z-xml"><span class="z-punctuation z-definition z-string z-begin z-xml">&quot;</span>ClearBufferMask,AttribMask<span class="z-punctuation z-definition z-string z-end z-xml">&quot;</span></span><span class="z-punctuation z-definition z-tag z-end z-xml">/&gt;</span></span>
+    ..
+<span class="z-meta z-tag z-xml"><span class="z-punctuation z-definition z-tag z-begin z-xml">&lt;/</span><span class="z-entity z-name z-tag z-localname z-xml">enums</span><span class="z-punctuation z-definition z-tag z-end z-xml">&gt;</span></span>
+</span></code></pre>
+<p>Which translates into this in Rust-land:</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>constants
+</span>    <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">GL_COLOR_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield   <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00004000</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">GL_DEPTH_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield   <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00000100</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">GL_STENCIL_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00000400</span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Now that this is done, let's define all the gl functions and
+their signatures as types for convenience.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">Clear</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-keyword z-other z-rust">extern</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>system<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span> <span class="z-storage z-type z-function z-rust">fn</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>mask<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLbitfield</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">ClearColor</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-keyword z-other z-rust">extern</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>system<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span> <span class="z-storage z-type z-function z-rust">fn</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+        red<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        green<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        blue<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        alpha<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></span></span></code></pre>
+<p>The <code>extern &quot;system&quot;</code> specifies that Rust calls external functions through a foreign function
+interface(FFI). They are in an external library. </p>
+<p>All that is left is to create the function pointers.</p>
+<p>Let's start by defining a struct for the function pointers, that loads the
+functions via some sort of loader function, that uses the &quot;name&quot; to return a
+pointer.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">FnPtr</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>the actual function to call
+</span>        <span class="z-variable z-other z-member z-rust">ptr</span><span class="z-punctuation z-separator z-type z-rust">:</span> <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void,
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>symbol of the function
+</span>        <span class="z-variable z-other z-member z-rust">name</span><span class="z-punctuation z-separator z-type z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-lifetime z-rust">&#39;static</span> <span class="z-storage z-type z-rust">str</span>,
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-entity z-name z-impl z-rust">FnPtr</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-rust">const</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">new</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">name</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-lifetime z-rust">&#39;static</span> <span class="z-storage z-type z-rust">str</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-storage z-type z-rust">Self</span></span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-storage z-type z-rust">Self</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                ptr<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ptr<span class="z-punctuation z-accessor z-rust">::</span></span>null<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+                name<span class="z-punctuation z-separator z-rust">,</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> TODO: error handling :P
+</span>        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">load</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+            <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span>,
+            <span class="z-variable z-parameter z-rust">loader</span><span class="z-punctuation z-separator z-rust">:</span> impl Fn<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">&amp;<span class="z-variable z-parameter z-rust">str</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> -&gt; <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void,
+        </span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-support z-function z-rust">loader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>name</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Now let's define all the functions. They are static mutables, but it's also
+possible to put them into a struct or organize them differently. </p>
+<p>Also, we will define a function that will load all the function pointers we need.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">fn_ptrs</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">pub</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-other z-rust">super</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-storage z-type z-rust">static</span> <span class="z-storage z-modifier z-rust">mut</span> <span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span>FnPtr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">FnPtr<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>glClear<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-storage z-modifier z-rust">pub</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-other z-rust">super</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-storage z-type z-rust">static</span> <span class="z-storage z-modifier z-rust">mut</span> <span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span>FnPtr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">FnPtr<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>glClearColor<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">load_with</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">loader</span><span class="z-punctuation z-separator z-rust">:</span> impl Fn<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">&amp;<span class="z-variable z-parameter z-rust">str</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> -&gt; <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">load</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>loader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+            <span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">load</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>loader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Now it should be clear what that weird proc_address from before was all about:
+The proc_address is just a function that looks up the symbol that we pass to it. 
+It's pretty much (like) taking a loaded dynamic library(.dll) and then getting the addresses of the functions by looking them
+up via their name.</p>
+<p>Finally, we need to &quot;map&quot; the pointers with the concrete function types.
+What good is a pointer if we can't pass arguments to it?</p>
+<p>To do this, we just define the gl functions one last time, &quot;cast&quot; the pointers
+into the concrete function type with a transmute, and then invoke them with arguments.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust">    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">Clear</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">bits</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>&quot;casts&quot; the function pointer inside the CLEAR instance into the
+</span>        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>actual Clear type and invokes it
+</span>        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">transmute<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">_</span>, ClearType<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>bits</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">ClearColor</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+        <span class="z-variable z-parameter z-rust">red</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">green</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">blue</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">alpha</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+    </span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>&quot;casts&quot; the function pointer inside the CLEAR_COLOR instance into the
+</span>        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>actual ClearColor type and invokes it
+</span>        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">transmute<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">_</span>, ClearColorType<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+                red<span class="z-punctuation z-separator z-rust">,</span> green<span class="z-punctuation z-separator z-rust">,</span> blue<span class="z-punctuation z-separator z-rust">,</span> alpha<span class="z-punctuation z-separator z-rust">,</span>
+            </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>There is clearly an opportunity to write a <code>macro_rules!</code> that deals with all
+the boilerplate. However, before going further into this madness, let's compare
+the results with the initial approach at the top. </p>
+<p>Let's not forget to replace the <code>gl::</code> in our <code>main fn</code> with our <code>handmade_gl</code>
+module.</p>
+<h3 id="results"><a class="zola-anchor" href="#results" aria-label="Anchor link for: results">Results</a></h3>
+<p>These are the results after re-building and running the example multiple times
+and taking the averages, running --release with:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">profile</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">release</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">strip</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>symbols<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">lto</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span><span class="z-invalid z-illegal z-trailing z-toml"> </span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">codegen-units</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-numeric z-integer z-toml">1</span><span class="z-invalid z-illegal z-trailing z-toml"> </span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">opt-level</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>s<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>(and bin size running once without any of these flags)</p>
+<table><thead><tr><th>Approach</th><th>Build time (clean / incremental)</th><th>Binary Size without/with stripping</th><th>load_with() time</th></tr></thead><tbody>
+<tr><td>gl generator</td><td>16.47s / 0.86s</td><td>5.2MB / 755kb</td><td>1.6ms</td></tr>
+<tr><td>&quot;handmade&quot;</td><td>14.69s / 0.86s</td><td>4.9MB / 639kb</td><td>7.6µs</td></tr>
+</tbody></table>
+<p>So, the huge caveat is that we only loaded a handful of symbols. 
+Meanwhile, <code>gl_generator</code> loaded &quot;everything&quot;. There is barely any difference and adding more and more functions will reduce
+the gains further. </p>
+<p>Given that the differences are largely negligible in the grand scheme of things, especially when we are going to load
+game assets later anyway, which makes a few 100kb a drop in the bucket, and the whole endeavor nothing more than a
+learning experience. There are also even more things to consider, like fallback
+functions and extensions.</p>
+<p>The 'load_with()' time is more interesting, but even then we are just looking at
+1.6ms when the game is being loaded. It's not something that is noticeable or
+needs to scale.</p>
+<p>Granted, having to define the function pointers manually like this allows us to
+add logs/traces, or add additional validation layers, ideally behind some feature flag. It is
+possible to validate the values in many cases, like glClear accepting a
+GLbitfield, but only accepting the bitwise OR of any of the three clear constants
+we defined above, would make this an ideal candidate for manual validation. 
+Also, before the debug callback function in OpenGL was widely
+supported, this used to be a great opportunity to insert glError polling
+after each call(which is also possible with <code>gl_generator</code> settings). 
+Since we are targeting OpenGL 4.3, we get this all with <code>glDebugMessageCallback</code>,
+which we will add in one of the next chapters.</p>
+<p>Final code:</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span>GlContext<span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">winit<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-path z-rust">event<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>Event<span class="z-punctuation z-separator z-rust">,</span> WindowEvent</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-path z-rust">event_loop<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>ControlFlow<span class="z-punctuation z-separator z-rust">,</span> EventLoop</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-path z-rust">window<span class="z-punctuation z-accessor z-rust">::</span></span>WindowBuilder<span class="z-punctuation z-separator z-rust">,</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-meta z-module z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">handmade_gl</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-module z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">types</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span>ffi<span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">GLbitfield</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-storage z-type z-rust">c_uint</span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">GLfloat</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-storage z-type z-rust">c_float</span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">COLOR_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00004000</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">DEPTH_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00000100</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">STENCIL_BUFFER_BIT</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-hexadecimal z-rust">0x00000400</span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">Clear</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-keyword z-other z-rust">extern</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>system<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span> <span class="z-storage z-type z-function z-rust">fn</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>mask<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLbitfield</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-type z-rust">type</span> <span class="z-entity z-name z-type z-rust">ClearColor</span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-keyword z-other z-rust">extern</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>system<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span> <span class="z-storage z-type z-function z-rust">fn</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+        red<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        green<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        blue<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+        alpha<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat<span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">FnPtr</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-variable z-other z-member z-rust">ptr</span><span class="z-punctuation z-separator z-type z-rust">:</span> <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void,
+        <span class="z-variable z-other z-member z-rust">name</span><span class="z-punctuation z-separator z-type z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-lifetime z-rust">&#39;static</span> <span class="z-storage z-type z-rust">str</span>,
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-entity z-name z-impl z-rust">FnPtr</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-rust">const</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">new</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">name</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-lifetime z-rust">&#39;static</span> <span class="z-storage z-type z-rust">str</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-storage z-type z-rust">Self</span></span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-storage z-type z-rust">Self</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                ptr<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ptr<span class="z-punctuation z-accessor z-rust">::</span></span>null<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+                name<span class="z-punctuation z-separator z-rust">,</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+        <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">load</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+            <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span>,
+            <span class="z-variable z-parameter z-rust">loader</span><span class="z-punctuation z-separator z-rust">:</span> impl Fn<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">&amp;<span class="z-variable z-parameter z-rust">str</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> -&gt; <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void,
+        </span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Option</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-punctuation z-section z-group z-end z-rust">)</span><span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span></span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-support z-function z-rust">loader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>name</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+            <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">is_null</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">then_some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">fn_ptrs</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">pub</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-other z-rust">super</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-storage z-type z-rust">static</span> <span class="z-storage z-modifier z-rust">mut</span> <span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span>FnPtr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">FnPtr<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>glClear<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-storage z-modifier z-rust">pub</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-other z-rust">super</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-storage z-type z-rust">static</span> <span class="z-storage z-modifier z-rust">mut</span> <span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span>FnPtr <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust"><span class="z-keyword z-other z-rust">super</span><span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">FnPtr<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>glClearColor<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">Clear</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">bits</span><span class="z-punctuation z-separator z-rust">:</span> GLbitfield</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">transmute<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">_</span>, Clear<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>bits</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">ClearColor</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+        <span class="z-variable z-parameter z-rust">red</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">green</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">blue</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+        <span class="z-variable z-parameter z-rust">alpha</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLfloat,
+    </span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">transmute<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">_</span>, ClearColor<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>ptr</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>red<span class="z-punctuation z-separator z-rust">,</span> green<span class="z-punctuation z-separator z-rust">,</span> blue<span class="z-punctuation z-separator z-rust">,</span> alpha</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">load_with</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">proc_address</span><span class="z-punctuation z-separator z-rust">:</span> impl Fn<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">&amp;<span class="z-variable z-parameter z-rust">str</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> -&gt; <span class="z-storage z-modifier z-rust">*const</span> <span class="z-meta z-path z-rust">core<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ffi<span class="z-punctuation z-accessor z-rust">::</span></span>c_void</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">load</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>proc_address</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+            <span class="z-meta z-path z-rust">fn_ptrs<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">CLEAR_COLOR</span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">load</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>proc_address</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> event_loop <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">EventLoop<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-rust">let</span> window <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">WindowBuilder<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">build</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>event_loop</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>create a context from the existing winit window
+</span>    <span class="z-storage z-type z-rust">let</span> context <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">GlContext<span class="z-punctuation z-accessor z-rust">::</span></span>create<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+        <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>window<span class="z-punctuation z-separator z-rust">,</span>
+        <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span>GlConfig <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            alpha_bits<span class="z-punctuation z-separator z-rust">:</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span>
+            <span class="z-keyword z-operator z-range z-rust">..</span><span class="z-support z-type z-rust">Default</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>default<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+    <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">make_current</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-meta z-path z-rust">handmade_gl<span class="z-punctuation z-accessor z-rust">::</span></span>load_with<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">|</span></span></span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-variable z-parameter z-rust">symbol</span><span class="z-punctuation z-section z-parameters z-end z-rust">|</span></span> </span><span class="z-meta z-function z-closure z-rust">context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_proc_address</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>symbol</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+       <span class="z-meta z-path z-rust">handmade_gl<span class="z-punctuation z-accessor z-rust">::</span></span>ClearColor<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    event_loop<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">run</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-storage z-modifier z-rust">move</span> <span class="z-keyword z-operator z-bitwise z-rust">|</span>event<span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-rust">_</span><span class="z-punctuation z-separator z-rust">,</span> control_flow<span class="z-keyword z-operator z-bitwise z-rust">|</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-operator z-arithmetic z-rust">*</span>control_flow <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ControlFlow<span class="z-punctuation z-accessor z-rust">::</span></span>Poll<span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-keyword z-control z-rust">match</span> event <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">Event<span class="z-punctuation z-accessor z-rust">::</span></span>WindowEvent <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                event<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">WindowEvent<span class="z-punctuation z-accessor z-rust">::</span></span>CloseRequested<span class="z-punctuation z-separator z-rust">,</span>
+                window_id<span class="z-punctuation z-separator z-rust">,</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span> <span class="z-keyword z-control z-rust">if</span> window_id <span class="z-keyword z-operator z-comparison z-rust">==</span> window<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">id</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span>control_flow <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ControlFlow<span class="z-punctuation z-accessor z-rust">::</span></span>Exit<span class="z-punctuation z-separator z-rust">,</span>
+            <span class="z-meta z-path z-rust">Event<span class="z-punctuation z-accessor z-rust">::</span></span>MainEventsCleared <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                   <span class="z-meta z-path z-rust">handmade_gl<span class="z-punctuation z-accessor z-rust">::</span></span>Clear<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">COLOR_BUFFER_BIT</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+                </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+                context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">swap_buffers</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+            <span class="z-keyword z-operator z-rust">_</span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;opengl&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        4 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a> 
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a class="chapter" href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                    
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/#writing-bindings-from-hand">Writing Bindings From Hand</a>
+                        </div>
+                        
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/#results">Results</a>
+                        </div>
+                        
+                    
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;opengl&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            4 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

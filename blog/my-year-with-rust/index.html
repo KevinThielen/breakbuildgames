@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>My Year With Rust: The Good, The Bad, The Ugly | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="My experience with Rust after a year of using it. The good, but also the bad things." />
+  <link rel="canonical" href="https://breakbuild.dev/blog/my-year-with-rust/" />
+  <meta name="keywords" content="Rust, Programming, Clippy, Correctness, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/blog/my-year-with-rust/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/blog/my-year-with-rust/" />
+  <meta property="og:description" content="My experience with Rust after a year of using it. The good, but also the bad things." />
+  <meta name="twitter:description" content="My experience with Rust after a year of using it. The good, but also the bad things." />
+  <meta property="og:title" content="My Year With Rust: The Good, The Bad, The Ugly | BreakBuildGames" />
+  <meta name="twitter:title" content="My Year With Rust: The Good, The Bad, The Ugly | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-15" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article>
+        <h1><a href="https://breakbuild.dev/blog/my-year-with-rust/">My Year With Rust: The Good, The Bad, The Ugly</a></h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 45 min read<span class="hpad">|</span> December 15, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/blog/">Blog</a>] #<a href="https://breakbuild.dev/tags/rust/">Rust</a> </span>
+
+    <hr />
+<p><strong>&quot;A 40 minute read?! I ain't got no time, dood!&quot;</strong> </p>
+<p>I hear you. The actual article contains examples and more details, but <a href="https://breakbuild.dev/blog/my-year-with-rust/#summary">here</a> is the summary.</p>
+<hr />
+<h2 id="intro"><a class="zola-anchor" href="#intro" aria-label="Anchor link for: intro">Intro</a></h2>
+<p>One day, when I was reluctantly hacking on a web crawler in the Unity game
+engine for some contract work, I turned on some programming stream for some background noise, since
+remote work can feel pretty lonely at times.</p>
+<p>I picked some random streamer because he was rocking a minimalistic Linux setup using Neovim,
+similar to my own. By sheer coincidence, he was just starting his &quot;Teaching Rust to total
+Beginners&quot; stream. However, it didn't take long for his enthusiasm for the language and certain features
+to distract me from my work.</p>
+<p>Everyone knows about the Rust Evangelism Strikeforce. Overly zealous Rust
+programmers, who spread the word of their lord and savior to an almost annoying extent. 
+This was different. He was enthusiastic about the language, but actually showed the neat little
+things the language has to offer, beyond just throwing around keywords I didn't care about.</p>
+<p>Who cares about non-saying things like correctness or safety?
+It's not like they don't matter, but so far I could manage without them just fine.
+It's not like a small wannabe game developer like me really cares so much
+about the common buzzwords around Rust. To be completely honest, I am sure there were 
+some feelings of spite towards this &quot;cult&quot; that just made me not look into the language further, beyond superficially DuckDuckGoing some sample code and calling it verbose or hideous(I mainly blame lifetimes for that). I feel like you only really start to appreciate these keywords once you experienced them firsthand, at least I did.</p>
+<p>Instead, this bearded man talked about enums in combination with pattern matching,
+how there is no null and no inheritance, almost everything is an expression, all the countless quality of life features, modern tools, practical macros and functions for iterators and containers.
+How error messages are actually readable, but more than that, they are actually helpful!
+All that without sacrificing performance.</p>
+<p>Sorry, Mr. Webcrawler, you have to wait, I am being converted right now! </p>
+<p>I didn't expect this random streamer to be the impulse that made me procrastinate
+for over a year on my personal projects, to learn this supposed to be a &quot;fad&quot; of a programming
+language. Thank you <a rel="noopener" target="_blank" href="https://www.twitch.tv/togglebit">ToggleBit</a> for introducing
+me to Rust :)</p>
+<p>Now, after a little bit over a year of learning, I decided to share my experience and thoughts
+about Rust, expressing my love for this language, but also trying to balance it by
+talking about its issues. This seemed to be a reasonable entry topic for this
+new blog.</p>
+<p>Let's start with the good things.</p>
+<h2 id="the-good"><a class="zola-anchor" href="#the-good" aria-label="Anchor link for: the-good">The Good</a></h2>
+<p>I always feel that reducing Rust to its safety aspect is doing the language a
+disservice. While safety might be important for big corporations, a small-time
+game developer like me doesn't really care about it. For me, Rust is so much more than just safety.</p>
+<p>Here are my favorite things about Rust.</p>
+<h3 id="rust-does-not-crash"><a class="zola-anchor" href="#rust-does-not-crash" aria-label="Anchor link for: rust-does-not-crash">Rust Does Not Crash</a></h3>
+<p>Okay, this is an exaggeration, but it is somewhat true, especially for safe Rust.
+The truth is probably closer that Rust gives me a huge amount of confidence.
+When it compiles, it generally works.
+It won't protect you from all kinds of logic errors, but it prevents a whole class of errors
+from happening and turns many into compile time rather than runtime ones.</p>
+<p>I admit, when I first started with Rust, correctness was not really a big concern. 
+The program should run of course, but crashing or bugs are not the end of the world most
+of the time, especially when it comes to games. They just happen.</p>
+<p>However, correctness is something that I really started to appreciate after using
+Rust for a while. It really grew on me to a point where I don't want to miss it
+anymore. </p>
+<p>The strong type system in addition to the ownership and lifetime rules just
+get rid of an entire class of runtime errors. There is no null, hidden implicit conversions,
+use after free or move, or shared mutable state, at least for the most part.</p>
+<p>Errors can often even be recognized almost right after writing a line of code, because they don't pass the compiler.
+RustAnalyzer is also doing an amazing job here. This is a huge productivity boost.<br />
+This is by no means unique to Rust and you get something similar in any modern
+IDE for most relevant languages. The big difference is that Rust's strict rules,
+be it ownership or type safety, just catches a lot more, to a point where it's
+rare to not get suspicious when it compiles without any complaints. </p>
+<p>Rust also forces you to handle all code paths. You have to be explicit about things
+that can fail. A function doesn't just randomly throw some exception when something goes
+wrong. Instead, it returns a <code>Result</code> that the caller has to check for errors and
+handle them, or it returns an <code>Option</code> if there might not be a return value at all.
+You just can't accidentally call a function on a &quot;null&quot; object. Part of the type
+safety is that null is not a valid state. A value might be optional, but then Rust
+forces you to deal with both cases.</p>
+<p>Panic exists, but there is always a non-panicking alternative. 
+Instead of indexing a slice that might be out of bounds, you can call
+<code>my_slice.get(index)</code>. Instead of <code>foo.unwrap()</code>, you just handle the Result,
+etc.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-control z-rust">if</span> <span class="z-storage z-type z-rust">let</span> <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>my_value</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> my_slice<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>index</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>do something with the value
+</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+<span class="z-keyword z-control z-rust">match</span> <span class="z-support z-function z-rust">fallible_function</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-support z-type z-rust">Ok</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>my_value</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>do something with the return value,
+</span>    <span class="z-support z-type z-rust">Err</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>error</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>handle the error
+</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>or some nice helpers
+</span><span class="z-storage z-type z-rust">let</span> output <span class="z-keyword z-operator z-assignment z-rust">=</span> container<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>index</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap_or</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>default_value</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>On the first glance this seems more verbose, but in reality, the code to
+handle this is something that should be probably written all the time in other languages, often ending up with even more verbosity.
+The difference is that Rust forces you to write it, while in other languages,
+you often end up procrastinating and might even ignore or forget about the
+non-optimal paths. 
+Since Rust expects you to deal with these cases, it has quality of life features to
+make this easier(like the ?-operator).</p>
+<p>Just to clarify, panicking is not inherently bad. 
+Some people might want to crash for severe logic errors in the code right away, to prevent some bigger problems.
+My main point is that panicking is opt-in. It's a conscious decision. Not
+something that just happens because you forgot to deal with potential errors.
+I am certain that this changes how programmers deal with error handling in general. When you have to do
+something with the error anyway, be it handling it or just crashing, most will
+automatically pick the choice that provides the better experience. 
+The side-effect is that the program ends up being more correct, because the potential
+error cases are explicit. Nothing just silently fails or
+is null.</p>
+<p>Even the Rust community itself has a strong sense of correctness and soundness, which
+you will notice in third party crates, but also in the tools. Rustacians
+actually keep asking for idiomatic solutions to a point where the term
+&quot;idiomatic Rust&quot; has almost become a meme, but that is another point.</p>
+<p>Then there are the <code>unsafe</code> blocks. They stick out like a sore thumb and
+automatically attract special attention, especially when something actually goes
+wrong. Luckily, they are not throwing all of Rust guarantees out of the window, which
+make them still safer than other languages, but this is the world of FFI (calling C code, or code that can expose a C ABI), pointer dereferencing, and messing with mutable static variables among a few other things.
+The usual suspects you want to look at when something goes really wrong.
+Separating these bad boys from the rest does not only reduce the cognitive
+overhead when working inside these blocks, but it makes finding the causes for
+issues much easier. They are usually as small as they can be, and often
+usually sit inside safe wrappers. </p>
+<h3 id="rust-is-modern"><a class="zola-anchor" href="#rust-is-modern" aria-label="Anchor link for: rust-is-modern">Rust is Modern</a></h3>
+<p>After treading through the hell that is CMake or &quot;manually traversing transient dependencies in NuGet to hunt for standard 2.0 versions because of Unity&quot;, Cargo, Rust's package manager and build tool, was a change. Turns out, adding dependencies can actually be easy. </p>
+<p>Not just dependency management, but also building for various platforms,
+cross compiling from Linux to Windows or even to WebAssembly is straightforward.</p>
+<p>But Cargo is not where Rust stops. Documentation, linting, formatting, LSP integration, are
+among the best from the languages that I have used so far.</p>
+<p>Clippy, Rust's linter, really helps to simplify code, making it more idiomatic, and also educates the user with links that
+explain the rationale behind the suggestions. I even opt-in for a stricter set of
+warnings, because it is <em>that</em> helpful. </p>
+<p>Rust-analyzer, an implementation of the Language Server Protocol, has countless code actions and makes navigation work like a charm. Some really amazing people keep diligently working on it to a point, where I always look forward to the update every Monday. There are far more code actions than one could remember. From inlining functions, to expanding macros or inserting raw JSON - just looking at the options it provides is always a surprise. </p>
+<p>There are many more helpful tools for testing, benchmarking, profiling, an
+interpreter that detects undefined behavior(<a rel="noopener" target="_blank" href="https://github.com/rust-lang/miri">miri</a>) and much more.
+And the best of all, most of them are pretty much the de facto standard in Rust. Not
+only do they work really well together, but since most of them essentially come with Rust, or are at least expected to be used, they increase the baseline quality of the code in general. Library maintainers are for example expected to fix at least the default clippy lints.</p>
+<p>But it's not just the tools, there are also many quality of life features in the language itself.
+So many little handy helpers that you would not even expect from a high level language. 
+Helpful macros that can embed bytes directly into the binary(useful for
+assets in small games, like game jam entries), formatting strings, things that deal
+with boilerplate like derives and the mentioned ?-operator for bubbling up errors.</p>
+<p>But my favorite are the iterators. There are just <em>so</em> many useful helper
+functions that make things easier to read and maintain. For example, to flip an image, that is to make the origin bottom left instead of top
+left, is as easy as: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>image_bytes is some container that stores each channel in order, e.g: [r1, g1, b1, a1, r2, g2, b2, a2,..]
+</span>image_bytes
+    <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">chunks</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">4</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> image_width</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>turn the raw bytes into rows
+</span>    <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">rev</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>                  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>reverses the order of the rows
+</span>    <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">flatten</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>              <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>turns the rows back into raw bytes
+</span></span></code></pre>
+<p>And this comes without additional costs. &quot;Zero cost abstractions&quot; often
+sounds misleading, but iterators are generally at least as fast as
+manually writing for-loops. <code>flatten()</code> and its friends are probably my
+favorite, turning nested &quot;arrays&quot; into a single flat one.</p>
+<p>So, when I am not sure how I want to do something, I skim through the
+<a rel="noopener" target="_blank" href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator docs</a> and almost always find some new useful little helper. The same is true for containers and even basic types.</p>
+<p>The actual useful error messages and lack of legacy luggage(for now) are the cherry on
+top.</p>
+<h3 id="rust-supports-my-laziness"><a class="zola-anchor" href="#rust-supports-my-laziness" aria-label="Anchor link for: rust-supports-my-laziness">Rust Supports My Laziness</a></h3>
+<p>I am lazy, but I would argue this is true for most programmers. 
+Code would be much safer and easier to maintain if everyone
+would be const correct, pay attention to the critical sections, write tests, 
+wouldn't go for low effort hacks, properly handle errors and would actually use proper tools. 
+From my experience, programmers in general tend to go the path of least
+resistance. </p>
+<p>Even a super diligent and enthusiastic programmer will get tired. Some after years of bending to unreasonable client requests, like a web crawler in a fricking game engine, while for
+others the lunch break is enough to reach their breaking point. </p>
+<p>This is why defaults are impactful.</p>
+<p>&quot;More work to do the better thing&quot; often just turns into
+procrastination. &quot;I do it once I am done&quot;, but then often just forgotten or a seemingly more important thing,
+needs to be done first. It's not just shared mutable state, but also unsafe hacks, or disabling the warnings, that are generally more work in Rust.</p>
+<p>Some things that are universally bad are even forbidden. You just can't
+have uninitialized values or forget handling the error case.</p>
+<p>I hate riding the &quot;Rust good, C++ bad&quot; train. I'm picking on it because it is just the language I'm most
+familiar with, not because I dislike it or anything, I like it as much any other C++
+programmer who has a love-hate relationship with it. However, having switch cases be
+fallthrough, auto generated functions you often want to manually
+delete(copy/assignment), non-destructive move, unsafe, mutable variables in general,
+or unchecked indexing in arrays, be the default, feels just wrong and often
+causes issues.</p>
+<p>Heck, it's not even a problem exclusive to C++ or new/intermediate devs, but even experienced
+programmers in other languages suffer from bad defaults. A couple months ago, there was a tweet by a C veteran who worked decades for companies like Valve, Oculus and Intel:</p>
+<p><img src="https://breakbuild.dev/blog/my-year-with-rust/c_lul.png" alt="c_lul.png" /></p>
+<p>The replies mentioned how <code>-Wimplicit-fallthrough</code>, would have caught it right
+away or depending on the compiler, it might have been part of <code>-Wall</code>, <code>-Wextra</code>,
+etc.(not sharing the rest of this tweet chain, cause the discussion kinda
+went south after the suggestions). The point is, that even industry veterans are
+sitting there, missing things that should/could have been the default. Wasting
+three days on something that not just Rust, but useful defaults in general, would just have prevented.</p>
+<p>Why do programmers need to opt-in to <code>-Wall</code> and friends in the first place? And why would they even spit
+out warnings for system headers? I get that some warnings might be
+subjective or report false positives, nothing wrong with those being optional, but an uninitialized value, the classic
+<code>if (a = b) {}</code>, wrong format character in printf, or even wrongly formatted inline ifs, are objectively bad.
+There is no reason to not check for them by default, at least in debug builds.
+Warnings being opt-in just means that the people who care about them will be
+flooded with warnings for the code they didn't write and just end up missing the warning they care about.. defeating their whole purpose. Rust goes even a step further and makes you &quot;hardcode&quot; the lints that should be followed on a crate or module level, and opt-in to the exceptions for those lints on a case-by-case basis.</p>
+<p>People who need the objectively &quot;worse&quot;, rare or unsafe/unchecked options should actually opt-in to them, rather than making the &quot;better&quot; or safer option more work. Who cares if bounds checking is slower? Most of the time
+the single bounds check is insignificant to the overall performance, and in the
+cases where it actually becomes a problem, you can opt-in to use the unchecked
+alternative, when you actually need it. The bonus point is, that you only have
+to be really careful in the few exceptions where you need it.</p>
+<p>As mentioned, Rust generally follows the philosophy that the &quot;bad&quot; things are opt-in rather than opt-out, but it goes even a step further and its fundamental design turns
+complex solutions into a fight with the borrow checker. Especially when starting
+you might think your solution is fine, it was fine in the language you used
+before, you know how to program, Rust is wrong.. But after embracing &quot;the style
+that pleases the borrow checker&quot; and using Rust's uncommon language features(at
+least uncommon when it comes to mainstream languages), I can admit that the borrow
+checker is usually right, and the code ends up simpler and cleaner as a result. Turns
+out, it's easier to test and refactor when objects are not carrying mutable references
+around or are in complex graphs of relationships.</p>
+<p>Once I was no longer fighting the borrow checker and saw him more as an adviser than
+a hurdle, Rust became bliss.</p>
+<p>Rust is opinionated, yes, but having an &quot;enforced&quot; standard with naming
+conventions and all, makes sure everyone writes the same code. It's super simple
+to read other people's code, because you are already familiar with the common
+idioms and naming conventions, and clippy will make sure the code is as simple
+and idiomatic as it should be.</p>
+<hr />
+<p>All in all, I found Rust just incredible fun to write. The combination of
+matches and enums, the flexibility of traits, the fact that almost everything is an expression, that
+the tools actually got your back, errors are caught early or are even prevented
+altogether, and the impactful defaults make Rust just fun and kinda just makes 
+you strive for the idiomatic solution. </p>
+<p>However, not everything is great, not even in Rust. There are ugly things and
+things that are not strictly good. So let's dive into those.</p>
+<h1 id="the-potentially-bad"><a class="zola-anchor" href="#the-potentially-bad" aria-label="Anchor link for: the-potentially-bad">The (Potentially) Bad</a></h1>
+<p>The following things are not strictly bad. They are either necessary &quot;evils&quot; or highly
+subjective. Most of them are even optional.</p>
+<h2 id="rust-is-opinionated"><a class="zola-anchor" href="#rust-is-opinionated" aria-label="Anchor link for: rust-is-opinionated">Rust Is Opinionated</a></h2>
+<p>While I considered it a good thing above, and I think the net result is
+definitely positive, there are some arguably bad parts to Rusts opinions and
+depending on personal preferences, they can weight differently.</p>
+<p>Compared to a language like C++, which pretty much follows the philosophy &quot;do
+whatever you want, I don't care&quot;, Rust can feel restrictive.</p>
+<p>Things like inheritance, function overloading or even default arguments are not supported by design. </p>
+<p>Inheritance is replaced with composition. One could argue that composition is pretty much superior in all cases, but it generally leads to more boilerplate. 
+You often end up forwarding functions to the components, unless you want to(or can) make
+them publicly accessible. That said, this is not an issue exclusive to
+composition, but also true for tuple structs in general(often used for the <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/rust-by-example/generics/new_types.html">newtype
+idiom</a>).
+Hopefully, Rust will have some way to flatten fields at some point to increase
+the ergonomics. </p>
+<p>Function overloading can be somewhat replaced via trait implementations: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-module z-rust"><span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">foo</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-trait z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-trait z-rust">trait</span> <span class="z-entity z-name z-trait z-rust">Foo</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">bar</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-variable z-parameter z-rust">self</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+    <span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust">Foo <span class="z-keyword z-other z-rust">for</span></span><span class="z-meta z-impl z-rust"> <span class="z-entity z-name z-impl z-rust">str</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">bar</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-variable z-parameter z-rust">self</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-support z-macro z-rust">println!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>I am a str<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    <span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust">Foo <span class="z-keyword z-other z-rust">for</span></span><span class="z-meta z-impl z-rust"> <span class="z-entity z-name z-impl z-rust">i32</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">bar</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-variable z-parameter z-rust">self</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-support z-macro z-rust">println!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>I&#39;m not :(<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">foo<span class="z-punctuation z-accessor z-rust">::</span></span>Foo<span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>fart<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">bar</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>I am a str
+</span>    <span class="z-constant z-numeric z-integer z-decimal z-rust">0_</span><span class="z-storage z-type z-numeric z-rust">i32</span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">bar</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>I&#39;m not :(
+</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>this also works
+</span>    <span class="z-meta z-path z-rust">Foo<span class="z-punctuation z-accessor z-rust">::</span></span>bar<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>foo<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-meta z-path z-rust">Foo<span class="z-punctuation z-accessor z-rust">::</span></span>bar<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-constant z-numeric z-integer z-decimal z-rust">32</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>It works for many cases where the number of arguments is the same and the types
+just differ, but it requires importing the trait into scope. More complex cases
+require associated types(to have an &quot;arbitrary&quot; number of parameters) and are just
+not possible cleanly, without involving some From-hacks and tuples.
+The advantage is similar to Rust's alternative to traditional operator
+overloading, which also uses traits: Once you understand the purpose of the trait, you know what happens
+inside the function. There should be no hidden surprise.
+There won't be some street tough who decides that % is a valid
+operator to overload for the vector cross product...</p>
+<p>Default arguments and even overloading to some extent(especially for &quot;constructors&quot;), can be replaced via the builder pattern or just config structs.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">Window</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>...
+</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">WindowBuilder</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>optional fields..
+</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> window <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">WindowBuilder<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> 
+        <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">resizeable</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-language z-rust">false</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>.. bunch of other settings that differ from the defaults
+</span>        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>   or are optional
+</span>        <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">create</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">Dimension<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1024</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">768</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>mandatory fields can be added
+</span>                                             <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>here or in the Builder Constructor
+</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+</span></code></pre>
+<p>So far, I haven't missed traditional overloading yet, even though that the lack of them leads to some weird automatically generated bindings, like this
+comically humongous chunk of <a rel="noopener" target="_blank" href="https://docs.rs/web-sys/latest/web_sys/struct.MouseEvent.html#method.init_mouse_event_with_can_bubble_arg_and_cancelable_arg_and_view_arg_and_detail_arg_and_screen_x_arg_and_screen_y_arg_and_client_x_arg_and_client_y_arg_and_ctrl_key_arg_and_alt_key_arg_and_shift_key_arg_and_meta_key_arg_and_button_arg_and_related_target_arg">a fn in web-sys</a>, which even used to break the formatting on docs.rs(scroll horizontally to take in the beauty in its entirety):</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">init_mouse_event_with_can_bubble_arg_and_cancelable_arg_and_view_arg_and_detail_arg_and_screen_x_arg_and_screen_y_arg_and_client_x_arg_and_client_y_arg_and_ctrl_key_arg_and_alt_key_arg_and_shift_key_arg_and_meta_key_arg_and_button_arg_and_related_target_arg</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+    <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-variable z-parameter z-rust">self</span>,
+    <span class="z-variable z-parameter z-rust">type_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-type z-rust">str</span>,
+    <span class="z-variable z-parameter z-rust">can_bubble_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">cancelable_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">view_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Option</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">&amp;</span>Window<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>,
+    <span class="z-variable z-parameter z-rust">detail_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i32</span>,
+    <span class="z-variable z-parameter z-rust">screen_x_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i32</span>,
+    <span class="z-variable z-parameter z-rust">screen_y_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i32</span>,
+    <span class="z-variable z-parameter z-rust">client_x_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i32</span>,
+    <span class="z-variable z-parameter z-rust">client_y_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i32</span>,
+    <span class="z-variable z-parameter z-rust">ctrl_key_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">alt_key_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">shift_key_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">meta_key_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">bool</span>,
+    <span class="z-variable z-parameter z-rust">button_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">i16</span>,
+    <span class="z-variable z-parameter z-rust">related_target_arg</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Option</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">&amp;</span>EventTarget<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>
+</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust">
+</span></span></code></pre>
+<p>There are also strict style, versioning and naming guidelines, API references and more or less
+forced tools that tell you about the more &quot;idiomatic&quot; usage. You are free to stray away from the defaults, but be sure to face a huge backlash if you ever interact or share your code with others. </p>
+<p>This is not necessarily a bad thing. Coming from C++, where everyone and their
+mom uses their own conventions, subset of the language, and manage their own list of STL-thing to avoid or even re-implement.
+From &quot;C with operator overloading&quot; to template metaprogramming, &quot;modern C++ version XX&quot; ,traditional OOP and everything in between, it is actually a welcoming change to see similar code written in all projects. Maybe this is because Rust is still young and there are not many things that people are disagreeing with yet. The biggest debate I have seen so far is about whether to use mod.rs or the new foo.rs when it comes to submodules, &quot;foo&quot;.to_string() vs &quot;foo&quot;.into() vs &quot;foo&quot;.to_owned() vs String::from(&quot;foo&quot;), and kebab-case vs snake_case for crate names, which are all pretty harmless in the grand scheme of things.</p>
+<p>Some people still have their preferences, like minimizing
+dependencies, no-panic-policies, or the reliance on generics, but they rarely affect the structure of the code. The overall code will still look pretty much the same. </p>
+<p>Though, there is also the argument to be made about whether Rust makes the aforementioned &quot;bad&quot; things, like shared mutable state, a bit too cumbersome for cases where you actually need them.</p>
+<h2 id="rust-is-not-object-oriented"><a class="zola-anchor" href="#rust-is-not-object-oriented" aria-label="Anchor link for: rust-is-not-object-oriented">Rust Is Not Object Oriented</a></h2>
+<p>The biggest cultural clash for many is probably the fact that Rust is not
+object-oriented. Well, it depends on what you consider object-orientation.
+There is no clear definition(and some hoodlums might argue that this lack of
+clarity is the main issue with OOP in general), but some people reduce it to
+language features like having the concept of &quot;classes&quot;, as in bundling data and
+behavior(with access modifiers), data inheritance and polymorphism, all of which exist in Rust to some
+extent. Structs are basically just classes, inheritance can be replaced with
+composition and polymorphism can be archived via enums, generics and trait
+objects. So Rust offers object-oriented features from that point of view, and might
+be considered object-oriented.</p>
+<p>However, if you look at it as actually orienting your code
+around objects and applying the GoF design patterns, following object-oriented
+design as it is commonly used and taught(having a bunch of &quot;is-a&quot; or &quot;has-as&quot;
+relationships, because &quot;it makes sense for the nouns&quot;), it becomes more of a way
+to solve problems and organizing code than a set of language features. 
+This kind of OOP will cause you a hard time in Rust, no matter where you stand on the OOP debate.</p>
+<p>No matter how you label the language or define the programming paradigms, Rust encourages grouping data based on purpose, ownership, lifetimes and the problems you want to solve.</p>
+<p>You pass around &quot;references&quot; only when needed with the required mutability, store
+indices/ID's into flat containers, and use dedicated context objects, instead of storing direct
+references left and right. A reference is often only temporary.</p>
+<p>The difference becomes especially clear in graph-like data structures, where the data needs to keep track of some sort of
+hierarchy. The <a rel="noopener" target="_blank" href="https://rust-unofficial.github.io/too-many-lists/index.html">&quot;Learn Rust With Entirely Too Many Linked Lists&quot;</a>-book is a great resource for these kinds of problems.</p>
+<p>Generally, I found shoving the entire data as a whole in a flat container(like a Vec)
+and then keeping track of their relationships via optional indices into that
+container to be a great workaround, and I would argue that this even has some advantages
+over the classic approach.</p>
+<p>The bottom line is, your enjoyment of Rust relies on whether you are willing to adapt and
+potentially ditch the way you did things in other languages, which is not necessarily
+limited to OOP, but to whatever patterns and paradigms you are familiar with.
+Rust <strong>is</strong> different. </p>
+<h2 id="chasing-idiomatic-rust"><a class="zola-anchor" href="#chasing-idiomatic-rust" aria-label="Anchor link for: chasing-idiomatic-rust">Chasing Idiomatic Rust</a></h2>
+<p>As mentioned previously, &quot;idiomatic Rust&quot; is a very common phrase,
+especially amongst beginners, to a point where it almost is a meme. 
+When the language, ecosystem and the surrounding community &quot;share&quot; an opinion,
+you might be afraid to just tackle the problem on your own, at least this was(and still is
+to some extent) true for me. Instead of just doing something, I waste time
+essentially bikeshedding, or researching &quot;idiomatic&quot; solutions. What should be
+exported in the lib.rs, what should be reachable via the submodules? foo/mod.rs vs
+foo.rs as sibling of foo/? A single huge trait vs multiple smaller ones(that add
+the noise of having to almost always import them all together)? How to organize assets in the repo for
+examples and tests? Should crates in a workspace share a common prefix? Which
+Clippy lints can I ignore?(especially when it comes to number casting and
+&quot;stuttering&quot; like texture::Data vs texture::TextureData, where the former is
+an import nuisance).</p>
+<p>Rust is the first language that actually makes me search for the &quot;idiomatic
+truth&quot; when being unsure, before I start to think about pros/cons on my own.
+While in other languages, it didn't really matter to me, since everyone
+had their own guidelines.</p>
+<p>Sure, I wasted a lot of time searching the forums, API guidelines and asking
+questions(the community is incredibly helpful and seemingly loves to talk about
+best practices), but the Result is that this definitely increased the base
+quality(at least in my code), but more importantly, reading, interacting with and using other people's code becomes pretty straight forward. There are far fewer inconsistencies.</p>
+<h2 id="dependency-hell"><a class="zola-anchor" href="#dependency-hell" aria-label="Anchor link for: dependency-hell">Dependency Hell</a></h2>
+<p>Without a doubt, adding dependencies to a Rust project is as simple as writing
+the name and version(or wild card) in your Cargo.toml. No need to resort to
+headers-only libraries, copying the source files into your project,
+writing/looking for CMake files(or FindPackage), or building
+a separate project to build the binaries for an &quot;old&quot; version, so you don't have to crawl through
+NuGet manually to grab dependencies, because the game engine you are using
+forked the runtime which only supports .net standard 2.0 dependencies...</p>
+<p>A simple, unified dependency manager and build tool, that actually solves most problems, is definitely great, but also comes with some
+caveats.</p>
+<p>Some might argue that this causes an over reliance on dependencies in the
+community. A fairly low level graphics program using winit + wgpu can end up with 100-200 transient
+dependencies. This is just from running the hello-triangle example:</p>
+<p><img src="https://breakbuild.dev/blog/my-year-with-rust/wgpu.gif" alt="dependency_hell.gif" /></p>
+<p>It's basically impossible to audit them all. There could be
+malicious code or just incompatible licenses in any of them and you need to
+trust that everyone in this chain at least vetted their direct
+dependencies. There are some movements and tools for &quot;trusted&quot; dependencies,
+like <a rel="noopener" target="_blank" href="https://mozilla.github.io/cargo-vet/index.html">cargo vet</a> and general
+dependency validation(licenses, sources..) via <a rel="noopener" target="_blank" href="https://embarkstudios.github.io/cargo-deny/index.html">cargo-deny</a>, but the
+situation is far from ideal. It's not close to npm-kinda-bad at least.
+Though, it's not like C++ is super transparent either, since dependencies often rely on system libraries and
+packages that are not immediately clear. Or things are commonly
+re-written from scratch, so you end up with a dozen different
+String-reimplementations or something in a single project.</p>
+<p>Another issue is that the community itself tends to recommend existing crates
+to answer questions. &quot;How to do X?&quot; &quot;Here is crate Y&quot;. While the intention might
+be &quot;here is a crate that does what you want, you can take a look and see how they did it&quot;,
+the result seems to be that the crates are just taken as they are and added as dependency. </p>
+<p>There is nothing wrong with using dependencies per se. They are often tested,
+maintained by multiple people and can solve many problems in a timely manner.
+Rust also goes a long way to solve many problems with additive features(and
+unification) and version compatibility to reduce them as much as it can.
+However, aside from the mentioned risks, dependencies are also not without a cost and are often the main reason for
+one the biggest complaint that Rust gets: They increase the build times.</p>
+<p>The error handling crate
+<a rel="noopener" target="_blank" href="https://docs.rs/thiserror/latest/thiserror/">thiserror</a> is the perfect example.
+It's an incredibly handy crate and basically the de facto standard for writing 
+errors in libraries. And one of the crates(together with <code>anyhow</code>) recommended to beginners whenever
+they ask about errors. But its dependency on proc-macro can add a few seconds to
+the compile times(3-5 on my machine), just to save a few lines of boilerplate.</p>
+<p>Basically to write this: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">derive</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">Error<span class="z-punctuation z-separator z-rust">,</span> Debug</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+<span class="z-meta z-enum z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-enum z-rust">enum</span> <span class="z-entity z-name z-enum z-rust">GraphicsError</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">error</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>failed to create context: {0}<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+    FailedToCreateContext<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-support z-type z-rust">String</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">error</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>shader compilation failed { message }<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+    ShaderCompilation <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        message<span class="z-punctuation z-separator z-rust">:</span> <span class="z-support z-type z-rust">String</span><span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">error</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>unknown error<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+    Unknown<span class="z-punctuation z-separator z-rust">,</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>instead of this: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>disclaimer, this is just to illustrate the example,
+</span><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>the actual content is not important
+</span>
+<span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">ShaderCompilation</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-variable z-other z-member z-rust">message</span><span class="z-punctuation z-separator z-type z-rust">:</span> String,
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">derive</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">Debug</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+<span class="z-meta z-enum z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-enum z-rust">enum</span> <span class="z-entity z-name z-enum z-rust">GraphicsError</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    FailedToCreateContext<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-support z-type z-rust">String</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    ShaderCompilation<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>ShaderCompilation</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    Unknown<span class="z-punctuation z-separator z-rust">,</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">error<span class="z-punctuation z-accessor z-rust">::</span></span>Error <span class="z-keyword z-other z-rust">for</span></span><span class="z-meta z-impl z-rust"> <span class="z-entity z-name z-impl z-rust">GraphicsError</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust">Display <span class="z-keyword z-other z-rust">for</span></span><span class="z-meta z-impl z-rust"> <span class="z-entity z-name z-impl z-rust">GraphicsError</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">fmt</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-variable z-parameter z-rust">self</span>, <span class="z-variable z-parameter z-rust">f</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">fmt<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust">Formatter<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>&#39;<span class="z-keyword z-operator z-rust">_</span><span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">fmt<span class="z-punctuation z-accessor z-rust">::</span></span>Result</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-control z-rust">match</span> <span class="z-variable z-language z-rust">self</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-storage z-type z-rust">Self</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>FailedToCreateContext<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>cause</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-support z-macro z-rust">write!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">f,</span><span class="z-meta z-group z-rust"> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>failed to create
+            context: <span class="z-constant z-other z-placeholder z-rust">{cause}</span><span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span> 
+            <span class="z-storage z-type z-rust">Self</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>ShaderCompilation <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span> comp </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-support z-macro z-rust">write!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">f,</span><span class="z-meta z-group z-rust"> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>shader compilation
+            failed <span class="z-constant z-other z-placeholder z-rust">{}</span><span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-separator z-rust">,</span> comp<span class="z-punctuation z-accessor z-dot z-rust">.</span>message<span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+            <span class="z-storage z-type z-rust">Self</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>Unknown <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-support z-macro z-rust">write!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust">f,</span><span class="z-meta z-group z-rust"> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>unknown error<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+</span></code></pre>
+<p>Is the <code>thiserror</code> solution much cleaner? Without a doubt, and this doesn't even touch
+its other useful features, especially all the different conversions it can
+generate automatically, which would result in much more boilerplate. Is it worth up to 5 seconds clean compile time? This is highly subjective, and especially for smaller crates I would argue no.</p>
+<p>Don't get me wrong, I'm not saying to avoid crates or <code>thiserror</code> in
+general. If you already rely on proc-macro, <code>thiserror</code> is basically free. It
+also doesn't really impact incremental build time nearly as much, and there are a bunch of
+helpful features(automatically creating From conversions) that makes it more
+usable in bigger projects. I just wanted to illustrate the not so obvious cost of crates, that often offer
+only marginal comfort.</p>
+<p>It might just be a few more seconds, but I found that each extra second adds
+another second where I might get potentially distracted(who just sits there waiting for the
+build to finish?), often losing track of what I was doing.</p>
+<p>Another cost when it comes to dependencies is the size. Rust's binaries
+are notoriously bloated unless you strip them, especially the debug ones. It doesn't
+help that cargo caches aggressively, and you often end up with artifacts from
+previous versions. <a rel="noopener" target="_blank" href="https://lib.rs/crates/cargo-prune">cargo prune</a> and <a rel="noopener" target="_blank" href="https://lib.rs/crates/cargo-sweep">cargo sweep</a> are helpful tools to solve this issue, but my local workspace is multiple GB in size, despite the final bin being just a couple
+MB. </p>
+<p>That said, one huge advantage of Rust's dependencies are the de facto standard crates. 
+Things like <a rel="noopener" target="_blank" href="https://crates.io/crates/log">log</a>, and, especially but not exclusively for graphics programming, <a rel="noopener" target="_blank" href="https://crates.io/crates/raw-window-handle">raw-window-handle</a>. Small, bridging crates
+that allow you to use and swap out whatever implementations you want in the
+executable, as long as they are implementing the traits. They add a nice layer of
+abstraction without requiring any additional effort.</p>
+<p>Not just the bridges, but also <code>Serde</code>, <code>Nom</code>, <code>rand</code> and many
+more are widespread, and any relevant crate supports them(where
+applicable), often via optional feature-flags. They are like an extended std.</p>
+<p>There are also some issue when it comes to name and typosquatting on crates.io,
+the main crate repository for dependencies, and the lack of namespaces is also
+frustrating(though the <a rel="noopener" target="_blank" href="https://github.com/rust-lang/rfcs/pull/3243">latter</a> is currently being worked on).</p>
+<p>Ultimately, you are in charge on how many dependencies you actually want to add. 
+Personally, I tend to only add the absolute necessary ones, but I &quot;waste&quot; time
+rewriting things from scratch as a result. This pretty much boils down to
+personal preferences.</p>
+<hr />
+<p>So those were some potentially bad things about Rust, or more accurately, &quot;necessary
+evils&quot;. They are not strictly bad, and are more like a trade-off, especially
+since most of them are optional or at the very least highly subjective.</p>
+<p>Especially if you can't let go of your previous programming style, Rust could cause a lot of friction.
+On the other hand, if you fully embrace the Rust way of doing things, everything will just flow nicely.</p>
+<p>Finally, let's go through the ugly things..</p>
+<h1 id="the-ugly"><a class="zola-anchor" href="#the-ugly" aria-label="Anchor link for: the-ugly">The Ugly</a></h1>
+<p>As much as I like Rust, there are unfortunately some really painful things.</p>
+<h2 id="lack-of-maturity"><a class="zola-anchor" href="#lack-of-maturity" aria-label="Anchor link for: lack-of-maturity">Lack of maturity</a></h2>
+<p>As I mentioned before, Rust is opinionated, but whether the opinions are right or wrong
+is only something that time will tell. It is unlikely, but possible that the unified community
+might be split because of a difference in opinions at some point, splitting the ecosystem as certain other language did.
+It is also unknown whether Rusts runs into its own kind of dependency hell, or if core design decisions
+might get in the way in projects built over a long period of time.
+There is simply no history of gigantic software using Rust for a decade.</p>
+<p>The lack of mature libraries is also a common complaint. Many crates just seem to be afraid
+of hitting the 1.0 milestone. There are many breaking changes and everything
+seems to be constantly changing. There is a lot of work in progress, but very
+few crates that are actually production ready. Rust <strong>is</strong> fairly new.</p>
+<p>Another issue caused by Rust's novelty is that there is a lack of jobs. I like
+Rust, I want to work with Rust, but comparing the list of jobs with something like C++ is still disappointing, especially after filtering out scam-tech. Let alone when you want to work in a certain niche(game development) and/or work fully remotely.</p>
+<p>Time will solve this issue, especially since Rust has proven that it is here to stay. A
+little over a year ago, it looked far more uncertain, but with Rust having
+its roots now into many big tech companies, the Linux kernel and many drivers
+being re-written in Rust, it won't just
+fizzle out in a couple of years, so I expect(and hope) the job situation will work itself
+out. Unfortunately, right now it's still a desert.</p>
+<p>The language itself also has some holes. Rust offers many useful features with its 
+lifetimes, traits, and it's typesystem, but I am constantly hitting unstable
+features or outright forbidden operations when trying to use them together in
+certain contexts. GATs(generics on associated types) are now stable and were one of the things where you just wanted to try to use the existing language tools when you ran into a certain problem, only to be rejected by the compiler.</p>
+<p>Or you want to make a function constant(so it can be executed during compile time), only to be greeted by &quot;requires feature const_fn_floating_point_arithmetic&quot;.</p>
+<p>Then you see some neat little iterator function in the docs, something like
+<a rel="noopener" target="_blank" href="https://doc.rust-lang.org/std/primitive.slice.html#method.as_chunks">as_chunks</a> or ways to get a slice from an iterator,
+only to get a warning that it is an experimental feature.</p>
+<p>Some useful features are also missing. Be it generic specialization, proper
+custom allocator support that goes beyond changing the global one(there is WIP
+though on the std collections), there doesn't
+seem to be something like placement new(there used to be a feature, but it seems to be
+abandoned for the new <a rel="noopener" target="_blank" href="https://github.com/PoignardAzur/placement-by-return/blob/placement-by-return/text/0000-placement-by-return.md">placement by return
+RFC</a>). 
+Static asserts(without some weird hacks), and variadic templates are also on my
+wishlist.</p>
+<p>As mentioned before, Rust focuses on correctness. There are many tracking
+issues that seem to be stuck for years, because there is no agreement on a solution, or
+because it wouldn't work on some exotic platforms or due to a niche reason. It's
+quickly adding new features that people can agree on, but the difficult
+questions seem to be stuck at times, with only an occasional bump being a lost
+soul, asking for the current status. There are only so many skilled volunteers
+after all, who can only work on so many things. That said, I definitely prefer this approach any
+day over rushing half-finished or faulty additions. So a little shout out to all
+the amazing volunteers out there, who made Rust what it is!</p>
+<h2 id="the-borrow-checker-is-not-always-right"><a class="zola-anchor" href="#the-borrow-checker-is-not-always-right" aria-label="Anchor link for: the-borrow-checker-is-not-always-right">The Borrow Checker Is Not Always Right</a></h2>
+<p>Another problem is, that things that should be possible in theory are not passing the borrow
+checker.</p>
+<p>This is not to be confused with &quot;fighting the borrow checker&quot; to please its
+strict requirements, but more about the borrow checker actually being wrong or
+being unable to process the information.</p>
+<p>Most commonly it's something like a &quot;getter&quot;, that keeps borrowing the
+owning struct. While fields borrow the struct only partially, functions will
+borrow the entire struct for the duration of the returned borrow.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">MegaStruct</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-variable z-other z-member z-rust">a</span><span class="z-punctuation z-separator z-type z-rust">:</span> String,
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-variable z-other z-member z-rust">b</span><span class="z-punctuation z-separator z-type z-rust">:</span> String,
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-entity z-name z-impl z-rust">MegaStruct</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">get_a</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> String</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>a
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">get_b</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> String</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>b
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> foo <span class="z-keyword z-operator z-assignment z-rust">=</span> MegaStruct <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        a<span class="z-punctuation z-separator z-rust">:</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>fart<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">to_string</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+        b<span class="z-punctuation z-separator z-rust">:</span> <span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>foo<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">to_string</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>doesn&#39;t work
+</span>    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>let a = foo.get_a();  //a keeps borrowing foo
+</span>    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>let b = foo.get_b();  //b can&#39;t borrow foo anymore
+</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>println!(&quot;{a} {b}&quot;); // E: cant borrow foo as mutable more than once at a time
+</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>this does work, because it only borrows foo partially
+</span>    <span class="z-storage z-type z-rust">let</span> a <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> foo<span class="z-punctuation z-accessor z-dot z-rust">.</span>a<span class="z-punctuation z-terminator z-rust">;</span>     <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>borrows only the field a in foo
+</span>    <span class="z-storage z-type z-rust">let</span> b <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> foo<span class="z-punctuation z-accessor z-dot z-rust">.</span>b<span class="z-punctuation z-terminator z-rust">;</span>     <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>borrows only the field b in foo
+</span>    <span class="z-support z-macro z-rust">println!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span><span class="z-constant z-other z-placeholder z-rust">{a}</span> <span class="z-constant z-other z-placeholder z-rust">{b}</span><span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Read the next point for two workarounds for this particular issue :)</p>
+<p><span class="admonition note title"> Edit </span>
+<span class="admonition note"> Actually, this &quot;limitation&quot; makes total sense. Rust is explicit where it matters
+and there is no way to express the partial borrow with the function signature. 
+It's unreasonable to expect programmers to peek inside the fn implementation
+just to confirm whether a partial borrow happens or not :)<br />
+<br>
+Thanks <a rel="noopener" target="_blank" href="https://www.reddit.com/user/llogiq/">/u/llogiq</a>, for pointing this out!<br />
+<a rel="noopener" target="_blank" href="https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0c3te7/?context=3">See also</a>  </span></p>
+<p>Another common scenario are matches(and other diverging code paths) inside a function: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">MegaStruct</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-modifier z-rust">pub</span> <span class="z-variable z-other z-member z-rust">data</span><span class="z-punctuation z-separator z-type z-rust">:</span> <span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Vec</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-support z-type z-rust">String</span><span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>,
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+<span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-entity z-name z-impl z-rust">MegaStruct</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">get_or_insert</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span>, <span class="z-variable z-parameter z-rust">index</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-storage z-type z-rust">usize</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-keyword z-operator z-rust">&amp;</span>String</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-control z-rust">match</span> <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>data<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>index</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>E: immutable borrow occurs here
+</span>            <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>value</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> value<span class="z-punctuation z-separator z-rust">,</span>    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>E: returning this value requires self.data for &#39;1
+</span>            <span class="z-support z-type z-rust">None</span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>data<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">push</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>new value<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">to_string</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>E: mutable borrow occurs here
+</span>                <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>data<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>data<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">len</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>Note: unreachable!(); here, or an &quot;is_some()&quot; check at the start
+</span>        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>are hacks around this particular issue
+</span>    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>The immutable borrow of the field could in theory be released for None 
+branch, because it's not used inside of it, but instead re-borrows the field as 
+mutable. However, the complainer, as it is right now, sees the borrow for the entirety
+of the match.</p>
+<p>There is work in progress to lift the
+limitations(<a rel="noopener" target="_blank" href="https://rust-lang.github.io/polonius/what_is_polonius.html">Polonius</a>), and the borrow checker will become smarter with time, but it can be a nuisance.</p>
+<h2 id="rewrite-it-in-rust"><a class="zola-anchor" href="#rewrite-it-in-rust" aria-label="Anchor link for: rewrite-it-in-rust">Rewrite it in Rust</a></h2>
+<p>This is arguably the most frustrating problem in my opinion.</p>
+<p>When starting a new project, I find myself trying out different
+approaches, just to see how it all works out. Rust often requires rewrites or
+changes early, especially during the problem exploration or prototyping phase, which
+automatically guides you towards a simple and clean foundation, and it is arguably one of its
+strengths, but sometimes you encounter fundamental issues mid-development.</p>
+<p>Changes in the requirement, or just new knowledge about the problem space, can potentially break the entire architecture. You might be happy with the solution, and everything is working fine, but then you encounter a case
+where everything falls apart. I am sure this is something that just comes with
+experience, and I encounter this not nearly as much anymore as I did when I was a few
+months into the language, but it can still be a brutal issue. </p>
+<p>Imagine writing a graphics renderer. The graphics resources live on some sort of context
+object and you return handles to the caller. You don't want to return a borrow
+nor the full ownership, because it makes storing and cleaning them up more of a
+hassle. A Handle(for all intents and purposes just an ID) is good enough and there is no ownership involved.
+When you want to actually change the resource, you call some sort of getter, to temporarily borrow the
+concrete resource, apply the changes, then release the borrow again. </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>A shader is basically just a program living and running on the GPU
+</span><span class="z-storage z-type z-rust">let</span> fancy_shader<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust">Handle<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>Shader<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">create_shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>fancy_source</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-keyword z-control z-rust">if</span> <span class="z-storage z-type z-rust">let</span> <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_shader_mut</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>fancy_shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    shader<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">set_variable</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>color<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">Color<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">RED</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></code></pre>
+<p>All working fine. 
+Then you work through the implementation, adding meshes, render 3D objects, got
+some fancy camera action going,
+etc. ..but then you encounter a case where you need to deal with cross-resource
+references: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-control z-rust">if</span> <span class="z-storage z-type z-rust">let</span> <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_shader_mut</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>fancy_shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>BOOM: can&#39;t borrow as immutable because context is already borrowed as mutable
+</span>    <span class="z-keyword z-control z-rust">if</span> <span class="z-storage z-type z-rust">let</span> <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>amazing_texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>  
+        shader<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">set_texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>texture<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span><span class="z-punctuation z-separator z-rust">,</span> texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></code></pre>
+<p>There seems to be no way to get a reference to the texture and pass it to the
+shader. In theory, it would be possible to use <code>context.textures.get()</code> and
+<code>context.shaders.get_mut()</code> for the partial borrow, but unfortunately the whole
+context abstracts the ugly side of OpenGL, Vulkan and other graphics
+abstractions away, so the only way to &quot;enforce&quot; the fields is through getters in
+the context trait(excluding the approach with generic Wrapper and associated types on the Context
+trait for brevity). This is basically where we accidentally run into one of the mentioned limitations, but it
+could be any other issue.</p>
+<p>Maybe it is possible to pass the texture handle to the shader instead? 
+Nope, the shader can't turn the handle into a concrete texture without the
+context. This might sound like a case for good ol' <code>Rc&lt;RefCell&gt;</code>, but it would require a complete rewrite, potentially even abandoning the Handles in the first place. </p>
+<p>Another way could be to expose this function on the context itself, instead of getting the
+resources one by one, we write an unified function on the context that returns
+both at once, or just forwards the intended operation:</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-impl z-rust"><span class="z-storage z-type z-impl z-rust">impl</span> </span><span class="z-meta z-impl z-rust"><span class="z-entity z-name z-impl z-rust">Context</span> </span><span class="z-meta z-impl z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> return both as a single tuple
+</span>    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">get_shader_mut_and_texture</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span>
+        <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span>,
+        <span class="z-variable z-parameter z-rust">shader_handle</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust">Handle<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>Shader<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>,
+        <span class="z-variable z-parameter z-rust">texture_handle</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust">Handle<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>Texture<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>,
+    </span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Option</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> Shader<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>, <span class="z-meta z-generic z-rust"><span class="z-support z-type z-rust">Option</span><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-keyword z-operator z-rust">&amp;</span>Texture<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>shaders<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_mut</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>shader_handle</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>textures<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>texture_handle</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+    }
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>Or: no need to borrow anything for the caller. Just forwards the call
+</span>    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>using the fields directly.
+</span>    <span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">set_shader_texture</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> <span class="z-variable z-parameter z-rust">self</span>, <span class="z-variable z-parameter z-rust">shader_handle</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust">Handle<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>Shader<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span>, <span class="z-variable z-parameter z-rust">texture_handle</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-generic z-rust">Handle<span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>Texture<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-control z-rust">if</span> <span class="z-storage z-type z-rust">let</span> <span class="z-support z-type z-rust">Some</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>shader</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>shaders<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>shader_handle</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            shader<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">set_texture</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-variable z-language z-rust">self</span><span class="z-punctuation z-accessor z-dot z-rust">.</span>textures<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>texture_handle</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+
+}
+</span></span></span></span></span></span></code></pre>
+<p>Great, this fixed the problem.. but now this one little exception sticks out
+from the rest. There might be even additional cases in the future, so it's better to
+move all the functions to the context right now, just so they are consistent.
+After all, it would be a usability nightmare to find <code>set_variable</code> in the shader, but <code>set_texture</code>
+in the context, even though both should just update a value on the shader.</p>
+<p>The other alternative, splitting the borrow into a &quot;double getter&quot; works better
+for this example, but we could face an explosion of combinations with varying
+mutability and different fields.</p>
+<p>This example is still fairly simple, and should be recognized early in development, but imagine a breaking issue like this potentially being layers deep, involving lifetimes and being in later stages in a project.. </p>
+<p>All it takes is an oversight or a sudden change in requirements that could blow
+up the existing solution. The borrow checker is not wrong in this case, but it
+still gets in the way.</p>
+<p>&quot;Rewrite it in Rust&quot; from a whole different perspective.
+To be fair, this is true in programming in general, but Rust is stricter and
+more opinionated, so that easy hacks and workarounds are much, much, more work
+and sometimes impossible.</p>
+<p>Not just the restrictions, but also the explicitness can sieve through layers of
+code. Maybe your struct needs to be annotated with a lifetime now, which then in
+turns goes all the way to the root of your program, touching multiple struct and
+function on the way.</p>
+<p>Sync, object safety and async are all feeble and viral as well. They spread
+through your layers, but can break from one moment to another.
+You start using the compiler errors as a todo list, working towards the solution, always getting new
+errors while you work through the layers, just to arrive at the final error in
+your core trait, only to realize that it lost its object safety and can't be made
+into a trait object anymore.</p>
+<p>Perhaps there are some performance targets that can't be reached or platform limitations with
+the current approach that would require changes, which then just snowball through the modules.</p>
+<p>As I mentioned, I am sure that experience will help alleviate this issue,
+and good coding practices minimize the impact, ideally just limiting it
+to the affected modules, but there are always some unknown unknowns in a project.
+The current solution might work fine on the current backend with OpenGL, but what about Vulkan? On a different platform like Wasm or the Nintendo Switch? Or just some fancy rendering technique in a game? Possibly just an
+oversight in general, since we are just humans? In the worst case, it would require a new solution from scratch.</p>
+<p>Some may argue that this kind of strictness leads to overall cleaner code that
+is easier to maintain, I wouldn't disagree with that, but no one would want to rewrite large portions of their code, let alone close to release.. But also, how is the experience on a bigger scale?
+Or with something where the entire project is an iterative process,
+like it is in game development, where features constantly change? Rust just
+forces you to deal with the unknown unknowns at seemingly arbitrary times and
+could potentially throw you a wrench into your plans at any day.</p>
+<p>It's not just the borrow checker, but also potential soundness issues,
+like aliasing. One example of this, is the popular Macroquad crate where their
+ergonomic intention, a static mutable context, <a rel="noopener" target="_blank" href="https://github.com/not-fl3/macroquad/issues/333">is unsound and would require a
+rewrite to fix</a>.</p>
+<p>The silver lining is that I found Rust code incredibly easy to refactor. 
+Aside from the fact that Rust leads to a simpler design without complex
+dependency graphs, the compiler becomes essentially a todo-list that you just
+work through to finish refactoring. That said, I am interested in how this all
+looks in practice when I work on some bigger scale projects during my next year,
+with more experience.</p>
+<h2 id="switching-to-other-languages-feels-off"><a class="zola-anchor" href="#switching-to-other-languages-feels-off" aria-label="Anchor link for: switching-to-other-languages-feels-off">Switching To Other Languages Feels Off</a></h2>
+<p>I know. This sounds like <a rel="noopener" target="_blank" href="https://www.reddit.com/r/rustjerk/">/r/rustjerk</a> content, feel free to skip over
+this part, but my point is not that Rust is superior, but more that it can causes changes in general, at least it did to me. Rust just does so many things differently.</p>
+<p>Being conditioned to please the borrow checker will just change how you approach problems and write code in general.
+It takes a lot of time to switch from the &quot;ownership and lifetime&quot; model to the
+&quot;Oprah handing out mutable references&quot;-style. The cost of the context switch is
+huge.</p>
+<p>As stated multiple times now, Rust is opinionated. It is nigh impossible to
+internalize these opinions, move to a different language and not keep practicing them. Rust also learned from the mistakes of its predecessors and added a lot of modern fluff, which you don't want to miss anymore.</p>
+<p>Correctness alone is something that might sound bland on paper, but once
+experienced it, it's something you don't really want to program without. Random segfaults or exceptions
+are a test of patience. Dealing with the silly defaults and different programming style/conventions is just tedious.
+It's soul crushing to see a perfect fit for some iterator-fu or simple enum matching, but then having to rely on doing it
+manually in a more verbose and error-prone way, or run into errors where the
+compiler would have had your back.</p>
+<p>It takes away a lot of the fun when you suddenly have to switch to another language. 
+But it's not just about fun, but also the cost you pay for context switching. Going back
+from/to Rust always took me a while to get used to it to hit my usual
+productivity levels. This wasn't nearly as much of a problem when I was switching between C++ and C#.</p>
+<p>This was a hurdle since I was/am relying on contract work, though now I am trying to work solely in Rust, so I might avoid this issue in the future.</p>
+<hr />
+<h1 id="conclusion"><a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">Conclusion</a></h1>
+<p>All in all, even after weighing the cons, Rust just ticks the right boxes for me, and I am looking forward to where
+my journey will take me. I just don't see myself writing code in another language in the
+foreseeable future. </p>
+<p>Thank you for reading. If you are interested in more, check out my <a href="/devlog">devlog</a>, where I am building a commercial game in Rust from scratch, sharing my thoughts and progress along the way. As of the release of this article, I just started and I am currently writing abstractions around OpenGL for the renderer, so feel free to take a look :)</p>
+<hr />
+<h1 id="addendum"><a class="zola-anchor" href="#addendum" aria-label="Anchor link for: addendum">Addendum</a></h1>
+<ul>
+<li>The user <a rel="noopener" target="_blank" href="https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0dcajz/?context=3">/u/ssokolow</a> gives many interesting links and details to some of the
+points mentioned in this article. I highly recommend checking it out!</li>
+</ul>
+<h1 id="summary"><a class="zola-anchor" href="#summary" aria-label="Anchor link for: summary">Summary</a></h1>
+<p><span class="admonition example title"> Summary </span>
+<span class="admonition example"> <strong>Intro</strong><br />
+Some bearded man on an internet streaming platform talked about the nice
+things that Rust offered, that went beyond for me irrelevant buzzwords like &quot;safety&quot; or
+&quot;correctness&quot;. While I started to really appreciate them after using
+Rust for a while, enums with pattern matching, iterator-fu, the lack of null, the amazing tools and tons of quality of life features are what actually convinced me to take a closer look into the language. As a result, I pushed my plans of taking a year off work to make video games back for a bit over a year to learn this language.
+<br />
+<br />
+<strong>The Good</strong><br />
+▪ <strong>Rust Does Not Crash</strong>: Rust encourages correctness and the
+community embraces it. Praise for the strong type system and uniform error
+handling!<br />
+▪ <strong>Rust Is Modern</strong>: The tools are amazing and actually got your back. Lots of quality of life features in the language itself.<br />
+▪ <strong>Rust Supports My Laziness</strong>: Impactful defaults and having the &quot;bad&quot; things being opt-in rather than opt-out are a huge game changer. When you are fighting the borrow checker, your solution is usually not as clean and simple as it could be.<br />
+<br />
+<strong>The (potentially) Bad</strong><br />
+▪ <strong>Rust Is Opinionated</strong>:  Rust can feel restrictive at times. The alternative
+to common features in other languages often leads to more boilerplate. The plus side is
+that everyone follows the guideline and tries to write (the same) idiomatic Rust.<br />
+▪ <strong>Rust Is Not Object Oriented</strong>: Your enjoyment of Rust relies on
+whether you are willing to adapt and potentially ditch the way you did things
+in other languages, which is not just limited to OOP. Rust <strong>is</strong> different.<br />
+▪ <strong>Chasing Idiomatic Rust</strong>:  I notice how I waste(d) a lot of time
+chasing the idiomatic truth. When a language is opinionated like Rust, you
+don't want to be the odd one out.<br />
+▪ <strong>Dependency Hell</strong>: It's not uncommon to end up with hundreds of transient dependencies. This increases build times and risks, but there is also something like an extended standard library.<br />
+<br />
+<strong>The Ugly</strong><br />
+▪ <strong>Lack Of Maturity</strong>:  Lack of jobs and mature libraries. Also still many
+unstable and unfinished language features.<br />
+▪ <strong>The Borrow Checker Is Not Always Right</strong>:  The borrow checker is
+not infallible. There are some limitations that you need to hack around.<br />
+▪ <strong>Rewrite It In Rust</strong>: All it takes is a specific requirement 
+or an unknown to break the entire architecture out of the blue. Trait objects, Sync, lifetimes,
+and async are all viral and/or feeble.<br />
+▪ <strong>Switching To Other Languages Feels Off</strong>:  The borrow checker
+conditions you to write code in a specific way. Once you have embraced Rust's focus
+on correctness and got used to the fact that the tools got your back, you don't want to miss them anymore.  </span></p>
+
+<p><b><a href="#">Back to top</a></b></p>
+    </article>
+    <div class="toc" aria-hidden="true">
+      <div class="toc-sticky">
+        <h3>Index</h3>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#intro">Intro</a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#the-good">The Good</a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rust-does-not-crash"><small>- Rust Does Not Crash</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rust-is-modern"><small>- Rust is Modern</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rust-supports-my-laziness"><small>- Rust Supports My Laziness</small></a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#the-potentially-bad">The (Potentially) Bad</a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rust-is-opinionated"><small>- Rust Is Opinionated</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rust-is-not-object-oriented"><small>- Rust Is Not Object Oriented</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#chasing-idiomatic-rust"><small>- Chasing Idiomatic Rust</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#dependency-hell"><small>- Dependency Hell</small></a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#the-ugly">The Ugly</a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#lack-of-maturity"><small>- Lack of maturity</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#the-borrow-checker-is-not-always-right"><small>- The Borrow Checker Is Not Always Right</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#rewrite-it-in-rust"><small>- Rewrite it in Rust</small></a>
+        </div>
+        <div class="toc-item-child">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#switching-to-other-languages-feels-off"><small>- Switching To Other Languages Feels Off</small></a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#conclusion">Conclusion</a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#addendum">Addendum</a>
+        </div>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/blog/my-year-with-rust/#summary">Summary</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+<span class="topout">
+<span class="topleft"> </span><a href="#" class="top" title="Back to Top"><i class="svgs svgh angu"></i></a>
+</span>
+</body>
+</html>

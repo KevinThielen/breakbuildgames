@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+      
+  
+
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Buffers | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="How to store data for our triangle on the GPU with OpenGL. Hello Vertex Buffer Objects." />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/" />
+  <meta name="keywords" content="OpenGL, Vertex Buffer, VBO, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/" />
+  <meta property="og:description" content="How to store data for our triangle on the GPU with OpenGL. Hello Vertex Buffer Objects." />
+  <meta name="twitter:description" content="How to store data for our triangle on the GPU with OpenGL. Hello Vertex Buffer Objects." />
+  <meta property="og:title" content="Buffers | BreakBuildGames" />
+  <meta name="twitter:title" content="Buffers | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-03" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+            
+            
+        
+
+         
+         
+        
+       
+        
+            
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>Buffers</h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 8 min read<span class="hpad">|</span> December 03, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/opengl/">OpenGL</a>  #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+    <p>First and foremost, we need buffers. 
+Buffers are &quot;dumb&quot; blobs of data living in the memory of the graphics
+device <sup class="footnote-reference"><a href="#1">1</a></sup>. </p>
+<p>They can contain vertices, indices, but also shader variables and
+more.</p>
+<p>The only important things for now are the vertices.
+Vertices(plural of Vertex), are essentially single points in 3D space. 
+Multiple vertices make up a geometric shape(usually 3 vertices become a single triangle). 3D objects are generally made out of many triangles. A quad is made out of 2 touching triangles. That said, a vertex isn't just about the position in 3D space, but also about other per-vertex data, like the color, or texture coordinates, but more about that later.</p>
+<p>In OpenGL, those blobs of data are stored as buffer objects. 
+The most basic thing we need are so called &quot;Vertex Buffer Objects&quot;, or VBO's in
+short. Buffer objects that contain the vertex data.</p>
+<blockquote>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> That said, the driver is free to use the memory however it wants, and can even allocate on the stack and heap, so there is no guarantee where the memory will be ultimately allocated. What is certain is that our GPU can access the data.</p>
+</blockquote>
+<p>So let us create a simple function in our <code>playground.rs</code> to create our vertex
+buffer. This is our &quot;safe abstraction&quot; over the unsafe FFI calls for now. </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>create our vertex buffer object
+</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vbo</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>In OpenGL, objects are referenced via their &quot;names&quot;, which are just unsigned integers.
+To create a buffer, we just need to call <code>gl::GenBuffers</code>. In OpenGL, most
+create-functions are pluralized and accept arrays. Also, because of C(and cross
+platform support in general), most
+functions don't have a direct return value(especially the ones that can return arrays),
+to put the responsibility of memory management to the caller.</p>
+<p>So to use <code>GenBuffers</code> we need to pass something that can contain the GLuints
+for the count we pass to it. </p>
+<p>Generally, generating as many buffers as we need at once is theoretically better
+for the performance, but in reality, you are unlikely to measure a difference on
+a modern machine even when generating thousands of buffers.
+So for now, we just generate a single buffer every time we call this function.</p>
+<p>We are also technically required to delete the buffer at some point, by calling
+<code>gl::DeleteBuffers</code>. However, we feel young and invincible, and blindly
+trust our OS to clean up this mess once the context is destroyed. This is just
+the playground to explore OpenGL and will be refactored into proper abstractions
+once the triangle is there, so we just take a mental note. </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vbo</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> buffer <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenBuffers<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> buffer</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    buffer
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>A single buffer without any data is frankly quite boring, so we need to shove some data into it. 
+This is now where the biggest difference between the previously mentioned <code>DSA</code>
+of OpenGL &gt;= 4.5 and the traditional &quot;modern&quot; OpenGL lies: We need to bind our
+buffer to some global state machine before we can use it.</p>
+<p>If we look at <a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml">gl::BindBuffer</a>, we will notice that we need to specify a target and the buffer. Since our buffer is going to hold our vertex data, we need to use the nonsensical named <code>GL_ARRAY_BUFFER</code> target. The other targets are not relevant for now.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenBuffers<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> buffer</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>bind the buffer to our global context to the ARRAY_BUFFER &quot;slot&quot;
+</span>    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindBuffer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">ARRAY_BUFFER</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>buffer</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></code></pre>
+<p>Now, to actually write data to it, we need to call
+<a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBufferData.xhtml">glBufferData</a>.</p>
+<p>Notice how it doesn't require our buffer as a parameter, but instead relies on the
+&quot;target&quot;. This is the global state machine at work. Also, the same page in the
+references shows us mockingly the bindless &quot;glNamedBufferData&quot; version, just to
+shatter our dreams at the bottom with the version support table. </p>
+<p>Anyway, the following two parameters are just &quot;dynamic C-Array&quot;-style arguments.
+One is the size of the data as a whole and the other is the pointer to the first
+element of our data blob. Keep in mind that the data needs to be either a slice
+of a C compatible type or a struct with <code>repr(C)</code>. </p>
+<p>Finally, we need to pass in some usage flags. While modern drivers are able to make
+the decision based on actual usage, it is still recommended to follow the
+spec. There is no restriction or guarantee about the actual usage, it is merely
+a hint.</p>
+<p>The usage flag is made out of 2 parts, the access and the frequency.</p>
+<p>For the access there are the following three values: </p>
+<ul>
+<li><strong>DRAW</strong>: The user can only write data to the buffer, but they can't read from it.</li>
+<li><strong>READ</strong>: The user can only read the data from the buffer, but they can't write to it.</li>
+<li><strong>COPY</strong>: The user can't neither read nor write data to the buffer. Only OpenGL can. </li>
+</ul>
+<p>Some nifty reader might notice that there is no case for &quot;The user can upload
+data to the buffer and the user can read from it&quot;. The alternative is to create two buffers, one for
+reading and one for writing and then let OpenGL copy the content from to the
+other. </p>
+<p>The frequency is the other half of the flags, which has also three values: </p>
+<ul>
+<li><strong>STATIC</strong>: Set the data only once</li>
+<li><strong>DYNAMIC</strong>: Set/Change the data occasionally</li>
+<li><strong>STREAM</strong>: Set/Change the data constantly</li>
+</ul>
+<p>OpenGL defines constants for all combinations of these flags.
+For our buffer, we want to set it but never read it(<code>DRAW</code>), and we only want to
+set it once(<code>STATIC</code>). So our usage argument is the constant <code>STATIC_DRAW</code>.<br />
+If we were to have a terrain that changes occasionally based on a texture for
+example, we would use <code>DYNAMIC_COPY</code> to occasionally let OpenGL take another
+OpenGL object(a texture) to provide the data for the buffer. Though, the line between
+DYNAMIC and STREAM is not 100% defined. </p>
+<p>But again, these are only hints, so nothing prevents us from using STATIC_COPY,
+while we set the data every frame manually, except potentially horrible
+performance.</p>
+<p>For our vbo, we set the data from a generic slice.
+Instead of caring about the usage hints, we just focus on the STATIC_DRAW, since
+we only want to draw a triangle.</p>
+<p><span class="admonition note title"> Note </span>
+<span class="admonition note"> We don't need to care for the lifetime of
+our data, because it is uploaded to our buffer right away. 
+Generally, OpenGL doesn't block, but just queues commands up until we 
+call glFlush, which then executes whatever is in the queue asynchronously.
+Our context calls implicitly glFinish on swap_buffers, which is the same as
+glFlush, with the addition that it blocks until the commands are actually
+finished  </span></p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>take in any data
+</span><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>WARNING: T must conform the C layout
+</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vbo</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>T<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">data</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span>[T]</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> buffer <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>the size of our blob is the size of a single element(T) * the counts of T in our slice
+</span>    <span class="z-storage z-type z-rust">let</span> data_size <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">size_of<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span>T<span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> data<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">len</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenBuffers<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> buffer</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindBuffer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">ARRAY_BUFFER</span><span class="z-punctuation z-separator z-rust">,</span> buffer</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BufferData<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+            <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">ARRAY_BUFFER</span><span class="z-punctuation z-separator z-rust">,</span>
+            data_size<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">try_into</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>we need to cast usize to &quot;isize&quot;, panicking is fine in our playground
+</span>            data<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">as_ptr</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">cast</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>          <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>the pointer to our first element in our slice
+</span>            <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">STATIC_DRAW</span><span class="z-punctuation z-separator z-rust">,</span>
+        </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    buffer
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>This function is in theory not safe anymore. Our buffer data requires us to conform
+to the C layout, alignment and all. This is not a problem for the native types,
+which are tightly packed, but more for custom struct and similar, which require
+<code>repr(C)</code>. To make it safe later, we will either use a trait bound or only
+accept certain slices(e.g. &amp;[u8]).</p>
+<p>Now that we can create our buffer, we call this function with the data of 4
+vertices in our main, right before our <code>event_loop.run</code>.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">rustfmt</span>::<span class="z-variable z-annotation z-rust">skip</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>skip the default formatting to make it cleaner
+</span><span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">QUAD_VERTICES</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-storage z-type z-rust">f32</span><span class="z-punctuation z-separator z-rust">;</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">4</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>     X,    Y,   Z    Position
+</span>    <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> bottom left
+</span>    <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span>  <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> top left
+</span>     <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span>  <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> top right
+</span>     <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> bottom right
+</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-storage z-type z-rust">let</span> vbo <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-support z-function z-rust">create_vbo</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-constant z-other z-rust">QUAD_VERTICES</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>We created our vertex buffer with 4 vertices, each with a single position in 3D
+space. </p>
+<p>The OpenGL coordinate system goes from -1.0 to 1.0 on all three axes. These are
+the normalized device coordinates, or in short NDC. The origin
+is the center of the window, bottom left is -1.0 on the X and Y axes, while top
+right is 1.0 for both. Try to grab your screen and your arm points to the
+negative Z axis, which means the positive Z axis is going towards us.
+The whole space discussion is arguably boring and I am not nearly enough trained
+in math to explain this correctly and there are already pretty nifty resources, so look at
+<a rel="noopener" target="_blank" href="https://learnopengl.com/Getting-started/Coordinate-Systems">learnopengl.com</a> or DuckDuckGo for the actual details.</p>
+<p>The important thing is that our vertices sit at a distance of 0.1 on the X and Y axes away from the border of our window.
+If we were to set the Z value to 1.0, our vertices would be as close to the
+screen as possible before leaving it and a Z below -1.0 would mean they are
+&quot;behind&quot; our screen.</p>
+<p>Why 4 vertices when we want to draw a triangle?
+Well, find out in the next episode of &quot;Hello Triangle&quot; ;)</p>
+
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        6 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;vertex-attributes&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a> 
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a class="chapter" href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                    
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            6 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;vertex-attributes&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+
+  
+    
+    
+    
+    
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Project Setup | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="Devlog about game development in Rust and random rants" />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/project_setup/" />
+  <meta name="keywords" content="BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/project_setup/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/project_setup/" />
+  <meta property="og:description" content="Devlog about game development in Rust and random rants" />
+  <meta name="twitter:description" content="Devlog about game development in Rust and random rants" />
+  <meta property="og:title" content="BreakBuildGames" />
+  <meta name="twitter:title" content="BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+        
+        
+    
+
+     
+         
+        
+
+    
+
+    
+        
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>Project Setup</h1>
+        
+        
+        
+        <span class="s95"> Kevin<span class="hpad">|</span> 4 min read<span class="hpad">|</span> December 01, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+            <p>It makes sense that the first thing to do is actually setting up the project.
+I want to talk about my personal global settings first.</p>
+<h2 id="personal-settings"><a class="zola-anchor" href="#personal-settings" aria-label="Anchor link for: personal-settings">Personal Settings</a></h2>
+<p>Inside my project directory, but outside the actual workspaces and projects, I have a <code>.cargo/config.toml</code> for &quot;global&quot; configurations on my machine.</p>
+<p>Things like the linker(I'm using <a rel="noopener" target="_blank" href="https://github.com/rui314/mold">mold</a>), but
+also the current build target. </p>
+<p>I found that mold helps with link times, but
+your mileage may vary. However, specifying the target is a one stone two
+birds kinda thing. It makes my editor less annoying when trying to write code
+for another platform, because it is  marked as inactive otherwise. Not only is this
+more noise, but it also disables the inline errors.</p>
+<p>Basically, turning this: </p>
+<p><img src="https://breakbuild.dev/devlog/renderer/project_setup/chapter/../setup_ra_wasm.png" alt="ra" /></p>
+<p>Into this:
+<img src="https://breakbuild.dev/devlog/renderer/project_setup/chapter/../setup_ra_no_wasm.png" alt="no_ra" /></p>
+<p>I'm using Neovim and its LSP with RustAnalyzer, so no clue if other setups run into similar problems.</p>
+<p>There might be other ways, but the other benefit is to work around a specific <a rel="noopener" target="_blank" href="https://github.com/rust-lang/cargo/issues/9239">cargo issue</a>, that
+would force a full rebuild of the dependencies when building for different
+platforms, when rust flags are involved(e.g., when using the mold linker above).
+Having this config outside the actual project workspaces makes sure that I don't pollute the actual repositories
+with personal settings. Cargo crawls through the current and parent directories(and its own home) and considers all <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/cargo/reference/config.html">configs</a> for the build. </p>
+<p>Another benefit is that it makes calls to run, check, test and build, use the specified
+target by default. It's still possible to pass the --target argument to cargo,
+but most of the time I tend to stick with a specific target for a while before
+moving on, so this switch is just more comfortable.</p>
+<p>So my personal config file outside the actual projects looks like this:</p>
+<div class="code_with_header">
+<div class="codeheader">~/projects/.cargo/config.toml</div>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">build</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>see https://github.com/rust-lang/cargo/issues/9239#issuecomment-792600349</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>just comment in the &quot;current&quot; target</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>target = &quot;x86_64-unknown-linux-gnu&quot;  #own machine, Arch btw</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">target</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>wasm32-unknown-unknown<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>Mold</span>
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">target</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">x86_64-unknown-linux-gnu</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">linker</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>clang<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">rustflags</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>-C<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-separator z-array z-toml">,</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>link-arg=-fuse-ld=/usr/bin/mold<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+</span></code></pre>
+</div>
+<h2 id="creating-the-workspace"><a class="zola-anchor" href="#creating-the-workspace" aria-label="Anchor link for: creating-the-workspace">Creating The Workspace</a></h2>
+<p>After coming up with a cool name, the next step is to actually create the
+workspace for all the graphics packages we are going to write. 
+Splitting the renderer into multiple packages will help with the incremental
+build times later, because cargo just needs to rebuild what has changed.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell">cac for cacatuidae, the family of the magnificent cockatiels, and cockatoos</span><span class="z-comment z-line z-number-sign z-shell">
+</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cargo</span></span><span class="z-meta z-function-call z-arguments z-shell"> new<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>lib</span> cac_graphics</span>
+</span></code></pre>
+<p>There is no new --workspace in cargo yet, but --lib makes sure that the
+generated .gitignore adds the <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries">Cargo.lock
+file</a>. Alternatively, we just use the one provided default one, when we create a new repository on GitHub, which works as well.</p>
+<p>Then we remove the src directory, and replace the content of the Cargo.toml with a workspace definition.</p>
+<p>One thing I also always do when dealing with heavy IO(like game assets), is to add an opt-level for debug builds(dev profile). It doesn't really affect build times, but without it, a large glTF-scene can take minutes instead of seconds to load. I found out about it when I played around with bevy, thanks to <a rel="noopener" target="_blank" href="https://bevy-cheatbook.github.io/pitfalls/performance.html#why-is-this-necessary">the incredible unofficial cheat book</a>. I pretty much end up enabling optimizations in all game related projects at some point, where I am almost considering adding it to my personal .cargo/config. Because profile settings in a workspace are only taken from the root, we can do this now once, for all future binaries in this workspace.</p>
+<p>So for now, my workspace only contains the directory .git, a .gitignore and the
+Cargo.toml with the content: </p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/Cargo.toml</div>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">workspace</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">members</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-punctuation z-definition z-array z-end z-toml">]</span><span class="z-invalid z-illegal z-trailing z-toml"> </span>
+
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> To avoid unbearable long loading times for assets,</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> it is required to at least have a minor opt-level</span>
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">profile</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">dev</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">opt-level</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-numeric z-integer z-toml">1</span>
+</span></code></pre>
+</div>
+<hr />
+<p><a rel="noopener" target="_blank" href="https://github.com/KevinThielen/cac_graphics/tree/4d882cae0f728db1d3266b34c683f811b2be1e9c">Link to the repository</a></p>
+
+        
+    
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        1 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                  <a class="chapter" href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a>
+                  
+
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            1 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

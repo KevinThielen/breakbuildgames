@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+<article>
+
+<h1 id="devlog"><a class="zola-anchor" href="#devlog" aria-label="Anchor link for: devlog">Devlog</a></h1>
+<p>If you want the full background, read the <a href="/devlog/motivation/">motivation</a> behind all
+of this. The short story is that I want to make my own games in my own engine using Rust,
+because it's fun.</p>
+<p>This devlog is me logging my process, thoughts, and decisions during
+this journey.</p>
+<p>It's basically just me trying to solve my problems at hand, voicing my thoughts,
+and probably me refactoring multiple times. Writing these down after the fact,
+with the &quot;perfect code&quot; would kinda go against my intentions of showing a
+transparent and genuine process.</p>
+<p>Ideally, there is a new update every few days.</p>
+<h2 id="projects"><a class="zola-anchor" href="#projects" aria-label="Anchor link for: projects">Projects</a></h2>
+<h3 id="work-in-progress"><a class="zola-anchor" href="#work-in-progress" aria-label="Anchor link for: work-in-progress">Work in Progress</a></h3>
+<ul>
+<li><a href="/devlog/renderer/">Writing the Renderer</a></li>
+</ul>
+
+   <div >
+      <div>
+        <h2><span >Recent Updates</span></h2>
+        <hr>
+        <p>
+        <span class="timedate"><time datetime="2022-12-10">December 10, 2022</time></span>
+        
+
+             
+                 <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">RenderTargets</a>
+             
+             [
+                 <a href="/tags/opengl/">OpenGL</a>
+                 <a href="/tags/context/">Context</a>
+                 <a href="/tags/renderer/">Renderer</a> ]
+
+             <div> We are going to replace the GL calls that clean our screen. Also colors! </div> </p>
+        <hr>
+        <p>
+        <span class="timedate"><time datetime="2022-12-09">December 09, 2022</time></span>
+        
+
+             
+                 <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">GLFW</a>
+             
+             [
+                 <a href="/tags/opengl/">OpenGL</a>
+                 <a href="/tags/context/">Context</a>
+                 <a href="/tags/renderer/">Renderer</a> ]
+
+             <div> We are going to try our current context abstraction with GLFW, which is a non-Rusty alternative. </div> </p>
+        <hr>
+        <p>
+        <span class="timedate"><time datetime="2022-12-08">December 08, 2022</time></span>
+        
+
+             
+                 <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">Error Handling</a>
+             
+             [
+                 <a href="/tags/opengl/">OpenGL</a>
+                 <a href="/tags/context/">Context</a>
+                 <a href="/tags/renderer/">Renderer</a> ]
+
+             <div> We weaseled our way out of error handling so far. Now is the time to do it right! </div> </p>
+      </div>
+      </div>
+<nav class="pagination">
+
+    
+    
+    
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;page&#x2F;2&#x2F;">Next ›</a>
+    
+    
+</nav>
+</article>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

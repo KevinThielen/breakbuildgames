@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+      
+  
+
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Vertex Attributes | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="We are going to tell OpenGL how to interpret our buffer data." />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/" />
+  <meta name="keywords" content="OpenGL, Vertex Array, Vertex Array Object, VAO, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/" />
+  <meta property="og:description" content="We are going to tell OpenGL how to interpret our buffer data." />
+  <meta name="twitter:description" content="We are going to tell OpenGL how to interpret our buffer data." />
+  <meta property="og:title" content="Vertex Attributes | BreakBuildGames" />
+  <meta name="twitter:title" content="Vertex Attributes | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-04" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+            
+            
+        
+
+         
+         
+        
+       
+        
+            
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>Vertex Attributes</h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 14 min read<span class="hpad">|</span> December 04, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/opengl/">OpenGL</a>  #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+    <p>Now that we filled our buffers, we need to tell OpenGL how to
+interpret the data. We do this with Vertex Array Objects(VAO's).</p>
+<p>VAO's basically explain which vertex attribute <sup class="footnote-reference"><a href="#1">1</a></sup> uses data
+from what buffer and how the data needs to be interpreted. In short: It makes
+the per-vertex input variables in our shader read the data from our buffers.</p>
+<p>To illustrate, a VAO tells the graphics device for example:
+&quot;Vertex Attribute 0 is in Buffer 1, begins at position BYTE_OFFSET, it has 3 components(x, y, z) of the type F32, and the offset between each vertex is STRIDE_BYTES&quot;.</p>
+<p>This allows us to store the data in the buffers however we want. We could shove
+it all into a single buffer, defining one vertex at a time <code>[position0, color0, normal0, position1, color1, normal1, ..]</code>, which is also known as interleaving, group them
+per attribute <code>[position0, position1, .., color0, color1, .., normal0, normal1, ..]</code>, or have
+the attributes in any other order/position in one or more buffer objects. That
+said, it is not possible to take a single attribute(like the positions) and split
+it into multiple buffers. Generally, interleaving is better than
+non-interleaving, because the GPU can just take all attributes that belong to
+the vertex it wants to draw, by visiting a single memory location(since they are next to
+each other), rather than going to multiple different ones, taking one at a time.
+However, interleaving is often more effort and requires manually processing the
+vertex data to store them in a wanted format, which is also why many engines
+convert 3D-Assets into a custom format.</p>
+<p>It is important to note that there is no direct relationship between models/meshes and VAOs. The VAO just stores the sources of our vertex streams and their layouts.
+We could have all vertices from all our models/meshes inside a single buffer and use the same VAO for all of them.
+In that case we just need to pass to our future draw call the index of the first vertex of the mesh we want to draw, in addition to the number of vertices that
+belong to that mesh, but more about that later.</p>
+<p>There can only be one active VAO at a time.
+In compatibility profiles, there is a default VAO(with the name &quot;0&quot;), while in core
+profiles, binding the VAO 0 will tell our context that we have no VAO currently
+bound at all.</p>
+<blockquote>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> Vertex Attributes are per-Vertex data. Things like the position, color, texture coordinate and normals of a vertex</p>
+</blockquote>
+<p>So, as before, we start with a function in our playground.rs </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>creates the vertex array object
+</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vao</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Creating the actual object is almost exactly as creating the buffer objects, plural
+and all, with the difference that we call <code>glGenVertexArrays</code> instead of <code>glGenBuffers</code>.
+We also bind the vao right away, since we need it shortly after:</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust">    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> vao <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenVertexArrays<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindVertexArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    vao
+</span></code></pre>
+<p>And again, we are technically supposed to delete the objects manually with
+<code>glDeleteVertexArrays</code>.</p>
+<p>Now we only need to describe the data we laid out in our buffer.</p>
+<p>There are two ways to do this, the old &quot;modern&quot; way and the new way since we are
+using OpenGL 4.3.</p>
+<h2 id="the-old-modern-way"><a class="zola-anchor" href="#the-old-modern-way" aria-label="Anchor link for: the-old-modern-way">The Old &quot;Modern&quot; Way</a></h2>
+<p>Let's start with the old way with <a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml">glVertexAttribPointer</a>, as it is common since OpenGL 3.3.
+There are 3 different functions that convert our data into different types. 
+<code>glVertexAttribPointer</code> is the one we are mainly going to use, which
+produces floating point values, <code>glVertexAttribIPointer</code> generates integers and
+<code>glVertexAttribLPointer</code> creates doubles. All of them can produce the values as
+scalars(single value) or vectors<sup class="footnote-reference"><a href="#2">2</a></sup>. We will just
+look at <code>glVertexAttribPointer</code> for now, that is the float variant of these
+functions.</p>
+<blockquote>
+<p><sup class="footnote-reference"><a href="#2">2</a></sup> To clarify, these have nothing to do with the Vec data structure.<br />
+They are mathematical vectors. A 2 dimensional vector, or in short vec2 has an X and a Y value, while a vec3 also has an additional Z and a vec4 also has an additional W value.</p>
+</blockquote>
+<p>Just to recall, this is our buffer data: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">rustfmt</span>::<span class="z-variable z-annotation z-rust">skip</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>  <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>skip the default formatting to make it cleaner
+</span><span class="z-storage z-type z-rust">const</span> <span class="z-constant z-other z-rust">QUAD_VERTICES</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-storage z-type z-rust">f32</span><span class="z-punctuation z-separator z-rust">;</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">4</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span> <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>     X,    Y,   Z    Position
+</span>    <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> bottom left
+</span>    <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span>  <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> top left
+</span>     <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span>  <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> top right
+</span>     <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-arithmetic z-rust">-</span><span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">9</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> bottom right
+</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>So we need to tell OpenGL that our previously created buffer has the data for
+the positions, which are interleaved(unintentionally, because we just have positions
+for now), start at byte 0, and each position is made out
+of 3 F32 components. Additionally, we need to bind the attribute to an index,
+so that the shader will later be able to access them.</p>
+<p>The first parameter for the <code>glVertexAttribPointer</code>, is the index, which has a non-saying description: </p>
+<blockquote>
+<p>Specifies the index of the generic vertex attribute to be modified.</p>
+</blockquote>
+<p>Generally when working with new OpenGL functions, I skim through the error-section at
+the bottom of the <a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml">docs</a>(more about error handling later).</p>
+<pre class="z-code"><code><span class="z-text z-plain">GL_INVALID_VALUE is generated if index is greater than or equal to GL_MAX_VERTEX_ATTRIBS.    
+GL_INVALID_VALUE is generated if size is not 1, 2, 3, 4 or (for glVertexAttribPointer), GL_BGRA.   
+GL_INVALID_ENUM is generated if type is not an accepted value.   
+GL_INVALID_VALUE is generated if stride is negative.  
+GL_INVALID_OPERATION is generated if size is GL_BGRA and type is not GL_UNSIGNED_BYTE, GL_INT_2_10_10_10_REV or GL_UNSIGNED_INT_2_10_10_10_REV.  
+GL_INVALID_OPERATION is generated if type is GL_INT_2_10_10_10_REV or GL_UNSIGNED_INT_2_10_10_10_REV and size is not 4 or GL_BGRA.  
+GL_INVALID_OPERATION is generated if type is GL_UNSIGNED_INT_10F_11F_11F_REV and size is not 3.  
+GL_INVALID_OPERATION is generated by glVertexAttribPointer if size is GL_BGRA and normalized is GL_FALSE.  
+GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the pointer argument is not NULL.  
+</span></code></pre>
+<p>We don't need to understand most of them, but just by skimming we get a sense of
+the allowed values for the arguments. We will immediately find an important piece
+of information:</p>
+<blockquote>
+<p>GL_INVALID_VALUE is generated if index is greater than or equal to GL_MAX_VERTEX_ATTRIBS.</p>
+</blockquote>
+<p>In other words, our index must be less than GL_MAX_VERTEX_ATTRIBS.
+What is this magic constant? Well, it's hardware dependent. Generally, it is 16
+on most machines, but to check for ourselves, we can look at the associated gets
+at the bottom of the doc, which leads us to the docs with the different get functions.
+Which <code>Get</code> we use doesn't matter, but looking at the description for our
+constant, we will find: </p>
+<blockquote>
+<p>GL_MAX_VERTEX_ATTRIBS<br />
+data returns one value, the maximum number of 4-component generic vertex attributes accessible to a vertex shader.<br />
+The value must be at least 16.</p>
+</blockquote>
+<p>So we know that 16 is a safe assumption. To check for our hardware we can inspect
+the value ourself: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> max_attributes <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GetIntegerv<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">MAX_VERTEX_ATTRIBS</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> max_attributes<span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-support z-macro z-rust">println!</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>max_attributes}<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>prints 16
+</span></span></span></code></pre>
+<p>Which means that we can only have 16 different vertex attributes, which then
+occupy the locations 0 - 15. </p>
+<p>The next parameter is the confusingly named <code>size</code>. It has nothing to do with
+size, but is just the number of components for a specific attribute. Our position
+has an X, Y and Z value, so it has 3 components(it's a vec3) to describe the position of a
+single vertex. It could be 1, 2, 3, 4 or a special constant GL_BGRA(only
+relevant for Direct3D compatibility).</p>
+<p>The type will usually be floating point, which is also the case for our position.
+However, there are more types available like basic types like <code>GL_BYTE</code>, <code>GL_INT</code>, to more esoteric ones like <code>GL_INT_2_10_10_10_REV</code>. The latter is relevant for attributes like normals, which don't need the whole bit depth available, but
+could store their components in a single 32 bit value(10 bits each for X, Y and Z and 2
+bits for a potential W) . However,
+<code>glVertexAttribPointer</code> will always convert integers to floats! We would need to
+use <code>glVertexAttribIPointer</code> to get integers.</p>
+<p>The normalized parameter is only relevant if our vertex input data is made out of 
+integers. If it's false, it will convert them via a c-style cast to floats, taking the values as they are, &quot;putting a .0 behind them&quot;.
+If it's true, it will map signed values from [-max, max] to [-1.0, 1.0] and
+unsigned ones from [0, max] to [0.0, 1.0], with the power of math. The actual
+math behind it depends on the OpenGL version. So as an example, it will
+turn the byte 128 into either 128.0(GL_FALSE), or 0.5(GL_TRUE).
+For floating points(as with our position), it is irrelevant.</p>
+<p>The stride value describes the bytes between each subsequent value of the
+attribute. So basically the bytes between position_for_vertex_0 and
+position_for_vertex_1, .. It is a constant, so the stride must be the same for
+all values for an attribute in the vertex stream. Since we only have our position for now, we are
+running into a special case where the data is tightly packed, but also
+interleaved. So to make things simple, we just use a stride of 0. A stride of 0
+means that OpenGL should figure it out(by making the stride essentially the size
+of the byte size of a single vertex attribute value).</p>
+<p>Finally, we come to the &quot;pointer&quot; attribute, which is an awkward pointer because
+this function is being reused. It was used to pass the pointer to vertex data
+before vertex buffers were invented, but in &quot;modern&quot; OpenGL it's just a relative byte offset to
+the first value of our attribute inside that buffer. Our buffer starts with
+our positions, so this is just another 0, albeit an awkwardly cast one, or just
+a null pointer.</p>
+<p>So in code, it means: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribPointer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FLOAT</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FALSE</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ptr<span class="z-punctuation z-accessor z-rust">::</span></span>null<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> alternative with &quot;proper&quot; casting
+</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribPointer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FLOAT</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FALSE</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span> <span class="z-keyword z-operator z-rust">as</span> <span class="z-storage z-type z-rust">*const</span> <span class="z-storage z-type z-rust">usize</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">cast</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>  
+</span></code></pre>
+<p>However, to finally use it, we need to enable it.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>EnableVertexAttribArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>This is necessary to make the attribute actually being recognized by the shader
+later. Both of these functions are state associated with our bound VAO.</p>
+<p>One final step is missing.
+How does the VAO know which buffer to use? </p>
+<p>We need to bind a buffer as <code>GL_ARRAY_BUFFER</code> target, before we call glVertexAttribPointer!
+Afterwards, we can unbind the VBO or bind a completely different one, or keep it
+bound, the VAO won't change the binding, unless we also call <code>glVertexAttribPointer</code>
+again.</p>
+<p>So it makes sense to pass the vbo to our function to bind it(even if it is already
+bound since we never unbound it), just to avoid potential issues with the global
+state machine(we don't want to accidentally bind the wrong VBO).</p>
+<p>So the final function should look like this:</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vao</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">vbo</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> vao <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenVertexArrays<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindVertexArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindBuffer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">ARRAY_BUFFER</span><span class="z-punctuation z-separator z-rust">,</span> vbo</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>            
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribPointer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FLOAT</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FALSE</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">ptr<span class="z-punctuation z-accessor z-rust">::</span></span>null<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>EnableVertexAttribArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    vao
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Also, let us not forget to actually call this function with our vbo: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>..
+</span>    <span class="z-storage z-type z-rust">let</span> vbo <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-support z-function z-rust">create_vbo</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-constant z-other z-rust">QUAD_VERTICES</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-rust">let</span> vao <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-support z-function z-rust">create_vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>vbo</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>..
+</span></span></code></pre>
+<p>That's it! Also, notice how we never specified the vertex count nor byte size
+for the attribute. They only have a start in the buffer. Only when we draw later
+will we tell OpenGL how many vertices we want to draw.</p>
+<h2 id="the-new-way"><a class="zola-anchor" href="#the-new-way" aria-label="Anchor link for: the-new-way">The New Way</a></h2>
+<p>As we noticed, OpenGL relies on the global state machine to make the association
+with a buffer and a vertex attribute. Not just that, but the attribute
+definition, or the vertex layout as a whole, is directly tied to the storage. 
+If we have two different buffers for two different meshes, with the same
+layout(just the positions packed together), we would need to do the whole
+<code>glVertexAttribPointer</code> nonsense again. Surely, there must be a way to just define the layout separately from the actual data, right? 
+Well, enter OpenGL 4.3.</p>
+<p>OpenGL 4.3 introduced a new set of functions that split the data source from
+the attribute layout. Instead of the <code>glVertexAttribPointer</code>, we call
+<a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribFormat.xhtml">glVertexAttribFormat</a> to describe the attribute. This function comes with the same set of friends, the &quot;normal&quot;, the L and the I variants, just as its predecessor.</p>
+<p>The parameters are the same as before. We specify the attribute index, the
+components, the type and whether it is normalized. The only difference is that
+the stride parameter is gone and lo and behold, we don't need to cast for the
+relative offset anymore. It takes in a <code>GLuint</code> instead of a weird pointer.
+Also, it is not a relative offset into the buffer anymore, but a relative offset
+to the start of the attribute itself.</p>
+<p>Simple example: 
+Imagine we have a jumbo-buffer containing the vertex attributes for a &quot;Mr.
+Potatohead&quot; at the start of the buffer, followed by lots of nonsense, then the
+data for a magnificent &quot;Robert E. O. Speedwagon&quot;-model. Both use the same
+layout, that is the first attribute in their layout is the position, then their
+normals, then their color, etc.. So the <code>relativeoffset</code> for their position is both 0, for their normals is the byte size of the position attribute(s), and their color is the byte size of the positions and the normals. 
+Where the actual Potatohead and the Speedwagon start is done later.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>old
+</span><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, 0, std::ptr::null());
+</span><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>new
+</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribFormat<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FLOAT</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FALSE</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>Unfortunately the documentation is a bit wonky, since it describes relativeoffset as: </p>
+<blockquote>
+<p>The distance between elements within the buffer.</p>
+</blockquote>
+<p>It is more correct later in the docs: </p>
+<blockquote>
+<p>relativeoffset is the offset, measured in basic machine units of the first element relative to the start of the vertex buffer binding this attribute fetches from.</p>
+</blockquote>
+<p>OpenGL is weird.</p>
+<p>Now, to specify the Buffer, we need to call <a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindVertexBuffer.xhtml">glBindVertexBuffer</a>.</p>
+<p>Important to notice is that <code>bindingindex</code> has nothing to do with our attribute
+index. Instead, we will bind our buffer to this index.</p>
+<p>Then we just specify our buffer(no more need to bind it anymore!).
+Then the offset to the first element in the buffer for out layout. 
+This is what points to the first attribute of Potatohead or Speedwagon in our
+jumbo buffer, and we still don't need to use a pointer, isn't that amazing?</p>
+<p>Finally, there is the stride again, keeping its meaning. It tells how many
+bytes are between the different vertices. That is the bytes between Position0
+and Position1, and so on.
+The great thing about the stride being decoupled from the attribute format, is that we
+set it on a per-buffer base. Some buffers store them interleaved, others don't,
+our format doesn't care how it's stored, it is something that the buffer binding
+should take care of.</p>
+<p>One bummer is that a stride of 0 doesn't mean packed anymore, but we are now
+required to pass it to the function ourselves. One benefit is that a stride of
+zero means really zero, so we could provide &quot;default values&quot; for layouts that
+don't provide the attributes. They wouldn't &quot;advance&quot; anymore.</p>
+<p>So for us it means: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>the distance to the next vertex is always size of a single position(3 * size of f32).
+</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindVertexBuffer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> vbo<span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">size_of<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-storage z-type z-rust">f32</span><span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">as</span> <span class="z-storage z-type z-rust">i32</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> 
+</span></code></pre>
+<p>The only step missing is to tell OpenGL which <code>bindingindex</code> belongs to which
+attribute. So we just call
+<a rel="noopener" target="_blank" href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribBinding.xhtml">glVertexAttribBinding</a>.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribBinding<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>attribute 0 uses the buffer at bindingindex 0
+</span></span></code></pre>
+<p>Keep in mind that we still need to enable the attribute, just like before.
+So the function using the new way looks like this: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">create_vao</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">vbo</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">types<span class="z-punctuation z-accessor z-rust">::</span></span>GLuint</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> vao <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>GenVertexArrays<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">1</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindVertexArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>vao</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>EnableVertexAttribArray<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribFormat<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FLOAT</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">FALSE</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>VertexAttribBinding<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> 
+
+        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>BindVertexBuffer<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> vbo<span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">mem<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">size_of<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-generic z-rust"><span class="z-punctuation z-definition z-generic z-begin z-rust">&lt;</span><span class="z-storage z-type z-rust">f32</span><span class="z-punctuation z-definition z-generic z-end z-rust">&gt;</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">as</span> <span class="z-storage z-type z-rust">i32</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span> 
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    vao
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>I know, this looks boring with just one attribute. It will all unfold once we
+add more attributes later, but let us first draw this dang triangle by executing
+funny programs on our GPU that are called shaders :)</p>
+
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;buffers&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        7 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;shaders&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a> 
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a class="chapter" href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                    
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/#the-old-modern-way">The Old &quot;Modern&quot; Way</a>
+                        </div>
+                        
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/#the-new-way">The New Way</a>
+                        </div>
+                        
+                    
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;buffers&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            7 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;shaders&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

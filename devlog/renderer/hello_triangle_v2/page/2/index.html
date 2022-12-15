@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+
+  
+    
+    
+    
+    
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Hello Triangle V2 | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="Devlog about game development in Rust and random rants" />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/page/2/" />
+  <meta name="keywords" content="BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/page/2/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/page/2/" />
+  <meta property="og:description" content="Devlog about game development in Rust and random rants" />
+  <meta name="twitter:description" content="Devlog about game development in Rust and random rants" />
+  <meta property="og:title" content="BreakBuildGames" />
+  <meta name="twitter:title" content="BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+         
+         
+        
+       
+        
+
+        
+
+        
+              
+        
+
+    
+
+    
+
+    
+        
+        
+    
+
+     
+         
+         
+         
+        
+       
+        
+            
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>Hello Triangle V2</h1>
+        
+        
+        
+        <span class="s95"> Kevin<span class="hpad">|</span> 2 min read<span class="hpad">|</span> December 07, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/opengl/">OpenGL</a>  #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+            <p>We just yeeted all of our code into our playground, didn't care
+about error handling, validating any input, nor care about cleaning up
+our resources and we have some potentially unsound holes in our design.
+That we also have gl calls in our main loop is just the tip of the iceberg.</p>
+<p>However, this is how I generally like to tackle new things in programming: Explore the
+problem in some throwaway program, then once I have a better idea of what I
+need, I start thinking about proper data organization and abstractions.
+I feel like Rust's strict ownership rules really encourage this kind of
+thinking, or you end up <a href="/blog/my-year-with-rust#rewrite-it-in-rust">rewriting your code later</a>.</p>
+<p>Even when coming up with the API, the playground can serve as a way to get a feel for the ergonomics and usability. What good is an abstraction when we have to store or refer to our context as <code>RenderContext&lt;Context=OpenGL, Texture=GLTexture, Buffer=GLBuffer, ..&gt;</code> or store resources as concrete implementation dependent types, like a <code>OpenGLBuffer</code>, so that swapping our backend will force us to change the fields in dozens of structs, or we end up with heavy generics all over the place? </p>
+<p>So let's go back to our triangle, and do it properly this time!</p>
+
+        
+    
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;shaders&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        9 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle_v2&#x2F;gl-context&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a> 
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                  <a class="chapter" href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a>
+                  
+
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle&#x2F;shaders&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            9 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;hello_triangle_v2&#x2F;gl-context&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

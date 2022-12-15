@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>The Context | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="Adding the first package to our workspace, and creating a little playground for us." />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/the_context/chapter/" />
+  <meta name="keywords" content="Playground, Context, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/the_context/chapter/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/the_context/chapter/" />
+  <meta property="og:description" content="Adding the first package to our workspace, and creating a little playground for us." />
+  <meta name="twitter:description" content="Adding the first package to our workspace, and creating a little playground for us." />
+  <meta property="og:title" content="The Context | BreakBuildGames" />
+  <meta name="twitter:title" content="The Context | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-01" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article>
+        <h1><a href="https://breakbuild.dev/devlog/renderer/the_context/chapter/">The Context</a></h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 5 min read<span class="hpad">|</span> December 01, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+
+    <p>Now that we got our workspace set up, it is time to add the first member, the graphics context. We add a new library package inside our workspace by calling: </p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cargo</span></span><span class="z-meta z-function-call z-arguments z-shell"> new<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>lib</span> context</span>
+</span></code></pre>
+<p>and adding it into the members field of the <code>Cargo.toml</code> in the root.</p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/Cargo.toml</div>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">workspace</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">members</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>context<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+</span></code></pre>
+</div>
+<p><span class="admonition note title"> Note </span>
+<span class="admonition note"> It is also possible to just have a single directory called &quot;crates&quot; and glob
+all members automatically with <code>members = [&quot;crates/*&quot;]</code>, but I just prefer adding them
+explicitly.  </span></p>
+<p>The context could be seen as &quot;hardware abstraction layer&quot;, &quot;GfxDevice&quot; or similar thing. It is just used as a wrapper around the underlying
+graphics API's and allows us using OpenGL, Vulkan and whatever else under a unified API to communicate with the graphics hardware. It's not going to do any fancy ordering, render passes, materials, or other high level
+things, those will be part of the core renderer crate. </p>
+<p>The main purposes of this Context are: </p>
+<ul>
+<li>storing and reading blobs of data on the GPU)</li>
+<li>specify the vertex layout</li>
+<li>compile shaders and set shader specific variables</li>
+<li>draw the vertex layout with a specific shader</li>
+</ul>
+<p>Basically everything that OpenGL and friends provide, just in a safe wrapper.</p>
+<p>This might sound awfully similar to the problem that <a rel="noopener" target="_blank" href="https://github.com/gfx-rs/wgpu">wgpu</a> solves, and since we are using Rust, we might as well use it. </p>
+<p>However, the reason I decided to go with our own abstraction is the ability to make our own opinionated decisions. I also have more fun writing and understanding the low-level API's :).</p>
+<p>That said, I also plan to add wgpu as a possible backend as part of this context
+abstraction at some point.</p>
+<p>I am already somewhat comfortable with OpenGL, so it will be the main focus for
+now. Though, I won't go into all the details of it, but try to give some summaries where necessary. <a rel="noopener" target="_blank" href="https://learnopengl.com/">learnopengl.com</a> does a far better
+job than I ever could when it comes to learning materials for OpenGL. </p>
+<p>The attentive reader might have noticed that I didn't say anything about
+windows. The reason is that our Context should work with
+<a rel="noopener" target="_blank" href="https://crates.io/crates/winit">winit</a>, <a rel="noopener" target="_blank" href="https://crates.io/crates/glfw">glfw</a>
+and anything else that supports a way to create a graphics context. This gives
+us a lot of flexibility later, especially when targeting different platforms. We
+can have separate binaries with their own platform specific requirements(some
+need to be non-blocking, for example), without making a potentially unergonomic sacrifice in our Renderer. We will basically never take ownership of the main loop.</p>
+<h2 id="setting-up-the-playground"><a class="zola-anchor" href="#setting-up-the-playground" aria-label="Anchor link for: setting-up-the-playground">Setting Up The Playground</a></h2>
+<p>I found that Rust highly encourages an exploratory style of programming, where you reach for quick and dirty solutions, to
+understand your problems and your data, before you discard that junk to do it
+properly again. Otherwise, we will end up frequently <a href="/blog/my-year-with-rust#rewrite-it-in-rust">rewriting it in Rust later</a>, rather than sooner.</p>
+<p>So I often start with a basic &quot;playground.rs&quot; in the examples directory that is not checked into the
+version control system, where I just &quot;sketch&quot; different solutions until I am
+content. This also helps with figuring out an ergonomic API.</p>
+<p>For this, we need some dev-dependencies, which we add to our <code>context/Cargo.toml</code>.</p>
+<p><a rel="noopener" target="_blank" href="https://crates.io/crates/winit">winit</a> to create a simple window, <a rel="noopener" target="_blank" href="https://crates.io/crates/env_logger">env_logger</a> to have some basic logging support later and <a rel="noopener" target="_blank" href="https://crates.io/crates/anyhow">anyhow</a> for error bubbling.
+If you have any other preferences, feel free to use those instead. None of them
+will be directly tied to our library later, and the user is free to pick whatever
+they prefer. It's just what we will be using for this playground, our examples,
+and tests.</p>
+<p>While we are at it, let's also add <a rel="noopener" target="_blank" href="https://crates.io/crates/log">log</a> as a dependency for our crate, because we will definitely end up using it later. It's like part of the &quot;extended standard library&quot;, crates that are the de facto standard. Log just allows us to log, without knowing about any specific logging implementation (like the aforementioned env_logger).</p>
+<p>I don't need winit's Wayland support on my dev machine for testing, so I disabled it and
+only enable X11. This will reduce the total dependencies from 130 to &quot;just&quot; 48,
+cold build times from 54.71s to 18.74s, and more importantly incremental build
+times from 2.16s to just 0.82s for me. Looking at the features the crates provide and only enabling the
+one you actually require, makes a huge difference :) 
+The drawback is that we need to pass it as command line argument when we are
+trying to run our tests on Wayland later.</p>
+<p>The final Cargo.toml like this for now(we will modify the package stuff later):</p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/context/Cargo.toml</div>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">package</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">name</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>context<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">version</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>0.1.0<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">edition</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>2021<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">dependencies</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>logging abstraction</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">log</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>0.*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">dev-dependencies</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>error handling</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">anyhow</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>1.*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>logging implementation</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">env_logger</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>0.*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>window creation</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">winit</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-inline-table z-begin z-toml">{</span> <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">version</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>0.*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-separator z-inline-table z-toml">,</span> <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">default-features</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">false</span><span class="z-punctuation z-separator z-inline-table z-toml">,</span> <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">features</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span><span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>x11<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span> <span class="z-punctuation z-definition z-inline-table z-end z-toml">}</span><span class="z-invalid z-illegal z-trailing z-toml">  </span>
+</span></code></pre>
+</div>
+<p>Now, we yoink winit's example code from their readme, put it into
+<code>cac_graphics/context/examples/playground.rs</code> and run the example.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cargo</span></span><span class="z-meta z-function-call z-arguments z-shell"> run<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>example</span> playground</span>
+</span></code></pre>
+<p>It opens an empty window without displaying anything, which makes sense.</p>
+<p><span class="admonition warn title"> Note </span>
+<span class="admonition warn"> It's possible that you won't see anything, because on some window
+managers the window only appears when its content is actually updated/drawn to.  </span></p>
+<p>The next step would be to create an actual graphics context to load and call some
+graphics functions.</p>
+<p>But let us talk about our target graphics API first.</p>
+<hr />
+<p><a rel="noopener" target="_blank" href="https://github.com/KevinThielen/cac_graphics/tree/1f206abc09f326569f3fcf21feddde8fca70c8d0">Link to the repository</a><br />
+<em>(We only added the playground.rs to the repository to make sharing easier)</em></p>
+
+<p><b><a href="#">Back to top</a></b></p>
+    </article>
+    <div class="toc" aria-hidden="true">
+      <div class="toc-sticky">
+        <h3>Index</h3>
+        <div class="toc-item">
+          <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/chapter/#setting-up-the-playground">Setting Up The Playground</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+<span class="topout">
+<span class="topleft"> </span><a href="#" class="top" title="Back to Top"><i class="svgs svgh angu"></i></a>
+</span>
+</body>
+</html>

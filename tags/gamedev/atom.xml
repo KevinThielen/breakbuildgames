@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>BreakBuildGames - GameDev</title>
+	<subtitle>Devlog about game development in Rust and random rants</subtitle>
+	<link href="https://breakbuild.dev/tags/gamedev/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://breakbuild.dev"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2022-11-28T00:00:00+00:00</updated>
+	<id>https://breakbuild.dev/tags/gamedev/atom.xml</id>
+	<entry xml:lang="en">
+		<title>My Motivation</title>
+		<published>2022-11-28T00:00:00+00:00</published>
+		<updated>2022-11-28T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://breakbuild.dev/devlog/motivation/" type="text/html"/>
+		<id>https://breakbuild.dev/devlog/motivation/</id>
+		<content type="html">&lt;h2 id=&quot;history-time&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#history-time&quot; aria-label=&quot;Anchor link for: history-time&quot;&gt;History Time&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Microsoft_XNA&quot;&gt;XNA&lt;&#x2F;a&gt; used to be a popular game development environment made by Microsoft,
+used for games like Terraria, Bastion, Fez, Stardew Valley and many more. It was probably the main tool used by aspiring indie game developers back then, and even nowadays, developers use it or its many successors to make new games.
+However, XNA itself was announced to be discontinued almost exactly 10 years ago.&lt;&#x2F;p&gt;
+&lt;p&gt;As one of the many wannabe game developers back then, I was looking for alternatives. To
+avoid wasting time on some proprietary technology again, I spent some time
+learning C++ and dove into OpenGL and Direct3D. &lt;&#x2F;p&gt;
+&lt;p&gt;I had a blast and finished some tiny game jam entries.&lt;&#x2F;p&gt;
+&lt;span width=&quot;100%&quot;&gt;
+&lt;img src=&quot;rubix.gif&quot; width=&quot;50%&quot;  style=&quot;float:left&quot;&gt;&lt;img src=&quot;growing.gif&quot; width=&quot;50%&quot;&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;My productivity tanked, but I had fun!&lt;&#x2F;p&gt;
+&lt;p&gt;However, I thought playing around wouldn&#x27;t bring me closer to my goals of making
+my own commercial games, so I switched to this new rising engine that most XNA
+refugees I knew were using. The &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;unity.com&#x2F;&quot;&gt;Unity game engine&lt;&#x2F;a&gt;. It was(and probably still is)
+the king of prototyping and cross-platform support. Working with it was blazingly fast.
+It locked some advanced features behind a paywall, but I thought I should stick with it to get paid
+doing what I love. Their pricing changed shortly after, making the entire engine
+essentially free(except for the dark mode..), and their new improved 2D workflow cemented my
+decision.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;chasing-the-fun&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#chasing-the-fun&quot; aria-label=&quot;Anchor link for: chasing-the-fun&quot;&gt;Chasing the fun&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Even though it worked out, I was getting paid doing freelance game development work, something was missing. 
+That Unity was kinda on a decline didn&#x27;t help. I don&#x27;t want to go into details,
+or bash the engine, it is still a perfectly valid choice and probably the best
+one for productivity and jobs.
+However, adding many(unfinished) features, some of which split the ecosystem, made working with it a drag.
+Things that used to be pretty much instantaneous, like opening a project or entering play
+mode, started to take a while. 
+Stuff like that just took away the fun for me.&lt;&#x2F;p&gt;
+&lt;p&gt;Meanwhile, I had some toy projects to distract me from the accumulating
+frustrations I had with Unity.&lt;&#x2F;p&gt;
+&lt;p&gt;Nothing fancy, just a little renderer in C++ and now modern OpenGL.&lt;&#x2F;p&gt;
+&lt;video autostart=&quot;false&quot; controls=&quot;true&quot; width=&quot;100%&quot; &#x2F;&gt;
+&lt;source src=&quot;day0.mp4&quot; type=&quot;video&#x2F;mp4&quot;&gt;
+(Sorry, here should have been a cute little video. Looks like it&#x27;s not supported
+in your Browserino. Sad.)
+&lt;&#x2F;video&gt;
+&lt;p&gt;&lt;span style=&quot;display: flex; justify-content: center&quot;&gt;&lt;em&gt;(Did I mention that I am a weeb?)&lt;&#x2F;em&gt; &lt;&#x2F;span&gt;&lt;&#x2F;p&gt;
+&lt;video autostart=&quot;false&quot; controls=&quot;true&quot; width=&quot;100%&quot; &#x2F;&gt;
+&lt;source src=&quot;day2.mp4&quot; type=&quot;video&#x2F;mp4&quot;&gt;
+(Sorry, here should have been a cute little video. Looks like it&#x27;s not supported
+in your Browserino. Sad.)
+&lt;&#x2F;video&gt;
+&lt;p&gt;I had fun! &lt;&#x2F;p&gt;
+&lt;p&gt;I decided to save up some money to take a year off work, doing the
+cowards&#x27; version of &amp;quot;quitting your job to follow your dreams&amp;quot;: The version where you are still
+available for previous clients or referrals, but are just not actively looking for new ones.&lt;&#x2F;p&gt;
+&lt;p&gt;Ideally, I would finish some tiny games in my custom engine and hope to reach
+ramen-profitability(enough to pay my living expenses).
+If not, I could always go back to doing Webcrawlers in Unity(and other
+similar fun sounding stuff..). But at least I gave it a shot.&lt;&#x2F;p&gt;
+&lt;p&gt;I could have made up countless arguments for being in control, moral reasons,
+learning experience, or just preservation, but ultimately, going with a custom engine just boils down to fun for me.
+Using the language and tools I like, with my preferred workflow, and actually understanding the interesting little details sounds like bliss.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;motivation&#x2F;bob_ross.png&quot; alt=&quot;bob_ross&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;span style=&quot;display: flex; justify-content: center&quot;&gt;&lt;em&gt;(source: &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;http:&#x2F;&#x2F;abstrusegoose.com&#x2F;467&quot;&gt;http:&#x2F;&#x2F;abstrusegoose.com&#x2F;467&lt;&#x2F;a&gt;)&lt;&#x2F;em&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;As it happened, my journey got slightly delayed after listening to some random
+bearded man who converted me to the church of &lt;a href=&quot;&#x2F;blog&#x2F;my-year-with-rust&quot;&gt;Rust&lt;&#x2F;a&gt; on
+some online streaming platform.&lt;&#x2F;p&gt;
+&lt;p&gt;Even though my endeavor got pushed back by a whole year, hyperinflation is imminent, writing a custom engine and open sourcing the games are not the best preconditions for a sustainable &amp;quot;business&amp;quot;, I am finally going to take the jump and give it a try. &lt;&#x2F;p&gt;
+&lt;p&gt;This &lt;a href=&quot;&#x2F;devlog&quot;&gt;devlog&lt;&#x2F;a&gt; is just me logging my journey.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

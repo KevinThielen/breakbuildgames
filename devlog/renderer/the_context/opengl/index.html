@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="https://breakbuild.dev/theme.min.js" integrity="sha384-IpIaa84kOKgkF5EJ0fD/kBe2wtIIsIB60ANGmuJxeA0dz5bSRfwBwp2/QybtQpU2"></script>
+  <link rel="stylesheet" href="https://breakbuild.dev/abridge-switcher.css?h=c850f5392cbd40b6d06752342d3fd5ceefa08d529af137d89832f0456e26ff53" />
+  <link rel="stylesheet" href="https://breakbuild.dev/admonition.css?h=4f1563f2b8b131b01eee4c96c3b24251cb33fdc554a2f32e4fc318bd0003b61b" />
+  <link rel="stylesheet" href="https://breakbuild.dev/bb_theme.css?h=44a9366bb950a993c71b7a48aa821f3f8158e79071f5e54837481ab9d9fe009d" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <script defer src="https://breakbuild.dev/abridge-bundle.min.js?h=37498d9c4974c65842b240d9f1cef717c2795597e3b707943dd94a29747139ac" integrity="sha384-2H4hnvq/t69174LPq4L1BX6QutFOgSDmKluRZQMzNjNn93Eu67vH7wtZCeCelqL3"></script>
+  <meta name="base" content="https://breakbuild.dev" />
+  <link rel="alternate" type="application/atom+xml" title="Atom/RSS Feed" href="https://breakbuild.dev/atom.xml" />
+  
+ 
+  
+      
+  
+
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>OpenGL | BreakBuildGames</title>
+  <meta name="author" content="Kevin" />
+  <meta name="copyright" content="BreakBuildGames" />
+  <meta name="description" content="Which OpenGL version to target and how." />
+  <link rel="canonical" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/" />
+  <meta name="keywords" content="OpenGL, BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" />
+  <meta property="og:url" content="https://breakbuild.dev/devlog/renderer/the_context/opengl/" />
+  <meta name="twitter:url" content="https://breakbuild.dev/devlog/renderer/the_context/opengl/" />
+  <meta property="og:description" content="Which OpenGL version to target and how." />
+  <meta name="twitter:description" content="Which OpenGL version to target and how." />
+  <meta property="og:title" content="OpenGL | BreakBuildGames" />
+  <meta name="twitter:title" content="OpenGL | BreakBuildGames" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:image" content="https://breakbuild.dev/banner.png" />
+  <meta property="og:site_name" content="BreakBuildGames" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2022-12-02" />
+  <meta name="twitter:site" content="@GenusNymphicus" />
+  <meta name="twitter:creator" content="@GenusNymphicus" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="msapplication-TileColor" content="#333333" />
+  <link rel="manifest" href="https://breakbuild.dev/site.webmanifest" />
+  <link rel="mask-icon" href="https://breakbuild.dev/logo.svg" color="#ff9900" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://breakbuild.dev/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://breakbuild.dev/favicon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://breakbuild.dev/favicon16.png" />
+  <noscript><link rel="stylesheet" href="https://breakbuild.dev/nojs.css" /></noscript>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://breakbuild.dev/"><img src="https://breakbuild.dev/logo.svg" alt="BreakBuildGames" width="160" height="128" /></a></h1></div>
+      <div>
+        <ul><li> <h2><a href="https://breakbuild.dev">About</a></h2> </li><li> <h2><a href="https://breakbuild.dev/blog/">Blog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/devlog/">Devlog</a></h2> </li><li> <h2><a href="https://breakbuild.dev/support/">Support</a></h2> </li><li> <h2><a href="https://breakbuild.dev/tags/">Tags</a></h2> </li><li class="js"><i type="reset" id="mode" class="svgs adjust"></i></li></ul>
+      </div>
+      <div>
+        <form autocomplete=off class="js" name="goSearch" id="searchbox">
+          <div class="searchd">
+            <input id="searchinput" type="text" placeholder="Search" title="Search" />
+            <button type="submit" title="Search"><i class="svgs search"></i></button>
+          </div>
+          <div><div id="suggestions"></div></div>
+        </form>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+        
+
+    
+
+    
+
+    
+
+    
+          
+     
+         
+         
+         
+        
+       
+        
+
+        
+            
+            
+        
+
+         
+         
+        
+       
+        
+            
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+    
+
+    
+
+    
+
+     
+         
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+         
+         
+        
+       
+        
+
+        
+
+        
+
+<article>
+    <h1>OpenGL</h1>
+        <span class="s95"> Kevin<span class="hpad">|</span> 12 min read<span class="hpad">|</span> December 02, 2022<span class="hpad">|</span> [<a href="https://breakbuild.dev/categories/devlog/">Devlog</a>] #<a href="https://breakbuild.dev/tags/opengl/">OpenGL</a>  #<a href="https://breakbuild.dev/tags/context/">Context</a>  #<a href="https://breakbuild.dev/tags/renderer/">Renderer</a> </span>
+    <h2 id="why-opengl"><a class="zola-anchor" href="#why-opengl" aria-label="Anchor link for: why-opengl">Why OpenGL</a></h2>
+<p>OpenGL development has been mostly abandoned for Vulkan nowadays, so why would
+anyone still want to target OpenGL? </p>
+<p>For starters, it is widely supported, and the drivers are matured. It's also way
+simpler than Vulkan, but also makes cross-platform support way easier. It is
+possible to target Desktops, Web Browsers and mobile devices with almost the same
+subset.</p>
+<p>However, the goal of this context abstraction is to be graphics API agnostic
+anyway, so it is always possible to add another one and will even be required
+for console support at some point. However, I also want to write a
+<a rel="noopener" target="_blank" href="https://wgpu.rs/">wgpu</a> backend in the near future, just to test the
+&quot;flexibility&quot; of the context and compare the performance differences.
+Adding Vulkan later is also not off the table either.</p>
+<p>So in short, OpenGL is a great entry-level API which runs almost everywhere,
+which makes it an ideal candidate for our first game.</p>
+<p>I am also a bit more familiar with OpenGL than the other graphics API's, so I
+hope to hit the point where we can start with the actual game sooner :)</p>
+<h2 id="opengl-versions"><a class="zola-anchor" href="#opengl-versions" aria-label="Anchor link for: opengl-versions">OpenGL Versions</a></h2>
+<p>Since we are going to use OpenGL, the first thing we should think about is about the OpenGL version we want to
+target. While it is possible to target multiple versions with a single backend and infest our code base with <code>if's</code> to pick the better alternative when supported, it adds an unnecessary overhead and bloat. Instead, we can target a specific version, poll some extensions when needed(for example, debug callback is a great extension in 3.3 to poll for), and when needed, just implement a different backend altogether for
+another version. Let's say to have a dedicated 3.3 backend and a separate 4.6 one.</p>
+<p>Which version we want to target depends first and foremost on the &quot;OpenGL flavor&quot;
+we are aiming for. There are basically 3.</p>
+<ul>
+<li>
+<p><strong>Legacy OpenGL</strong><br />
+Also known as &quot;fixed function pipeline&quot; or &quot;immediate mode OpenGL&quot;, is a straightforward way to draw things, but comes with a worse performance. You will end up with
+far more API calls, need to send more data around, and is not nearly as flexible as the programmable pipeline.
+It's the OpenGL-style that uses <code>glBegin</code>, <code>glEnd</code>, <code>glMatrixMode</code>, etc., and
+was deprecated with the release of OpenGL 3.0</p>
+</li>
+<li>
+<p><strong>&quot;Modern&quot; OpenGL</strong><br />
+This is the &quot;programmable pipeline&quot;, where you mostly deal with shaders,
+programs that run on the GPU in various stages of the process, and uses vertex
+array objects to store the format of vertex data. This is pretty much OpenGL
+3.0 - 4.4.</p>
+</li>
+<li>
+<p><strong>Bindless OpenGL</strong><br />
+Bindless is about &quot;Direct State Access&quot;(DSA). This changes the previous way of globally binding objects to the context to
+&quot;named&quot; access. Functions take in the object that they are going to manipulate
+instead of relying on global state, where the latter often leads to
+accidentally querying or changing the state of the wrong object. This leads
+not only to fewer errors, but also to more efficiency(no need to constantly
+bind things or keep track of the current bindings).
+This is pretty much OpenGL &gt;= 4.5.</p>
+</li>
+</ul>
+<p>There are also the core and the compatibility profiles, where the latter just enabled
+support for the fixed function pipeline in the newer versions, though they don't
+work with programmable pipeline ones(so it's not really possible to mix both
+ways). OpenGL features are generally additive, so this profile split was a
+way to separate the &quot;new&quot; OpenGL from the legacy luggage.</p>
+<p>Which versions of these flavors we want to use depends on the functionality that
+we need from the API and the available support on the target platform. 3.3 is a solid choice for a wide range of hardware and
+driver maturity, but handy functions like compute shaders came with 4.3. Apple
+devices also stopped support for OpenGL versions above 4.1.
+Realistically speaking, most Desktop systems support the decade old 4.5 according to the <a rel="noopener" target="_blank" href="https://store.steampowered.com/hwsurvey">steam
+hardware survey</a>. More than 90% support
+DX-12 capable hardware, which is pretty much the same hardware that supports
+4.5.</p>
+<p>Extensions can muddle this choice further, because it is possible to create
+an older context, but get the &quot;newer&quot; functionality via extensions.
+So frankly speaking, it is kinda messy.</p>
+<p>But which one to pick?
+Legacy OpenGL is an easy no for our purposes, because it doesn't make use of any modern hardware. 
+The question between &quot;modern&quot; and bindless OpenGL is more difficult.
+Bindless makes things easier and more efficient, but &quot;modern&quot; supports a wider
+range of hardware. Since our goal is to support WebGL, non-bindless makes a lot of
+sense. Also, arguably, we would just pick Vulkan if we need state-of-the-art efficiency.</p>
+<p>OpenGL 4.3 Core seems to be the best bet for us. It has a great overlap with GLes3, which is used as base for WebGL2,
+has compute shaders and debug callbacks. Historically, GLes3.0 was created from
+a subset of OpenGL 3.3, but OpenGL 4.3 includes functionality to increase the
+compatibility between them. It might be a bummer to be unable to support macOS,
+but frankly speaking, I don't care about this developer-unfriendly platform.</p>
+<h2 id="creating-the-context"><a class="zola-anchor" href="#creating-the-context" aria-label="Anchor link for: creating-the-context">Creating the context</a></h2>
+<p>Before we can do any fancy OpenGL calls, we need to create an OpenGL context.
+We are going to use the <a rel="noopener" target="_blank" href="https://crates.io/crates/raw-gl-context">raw-gl-context</a> crate.
+It works with <code>RawWindowHandle</code>'s, so it's pretty straight forward with <code>winit</code>.</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>create a context from the existing winit window
+</span><span class="z-storage z-type z-rust">let</span> context <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">GlContext<span class="z-punctuation z-accessor z-rust">::</span></span>create<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+    <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>window<span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span>GlConfig <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        alpha_bits<span class="z-punctuation z-separator z-rust">:</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span>
+        version<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">4</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+        profile<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">Profile<span class="z-punctuation z-accessor z-rust">::</span></span>Core<span class="z-punctuation z-separator z-rust">,</span>
+        <span class="z-keyword z-operator z-range z-rust">..</span><span class="z-support z-type z-rust">Default</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>default<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>actually use the context
+</span>context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">make_current</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>Let's not forget to add it to our <code>Cargo.toml</code>.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">dev-dependencies</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">raw-gl-context</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>0.*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p><span class="admonition note title"> Note </span>
+<span class="admonition note"> Note: On my machine, X11 requires zero alpha bits in the context creation with Nvidia drivers. 
+In theory, just using the default should be fine. It's a <a rel="noopener" target="_blank" href="https://github.com/glowcoil/raw-gl-context/issues/2">known issue</a> with some
+workarounds, but since I don't need alpha bits for now, it is a problem for
+future me.  </span></p>
+<p>That's it.</p>
+<p>Creating an OpenGL-context using the Core profile, requesting the version 4.3,
+then &quot;activating&quot; the context. Activating means making the OpenGL-context the
+current context of the calling thread. A thread can only have one context being bound,
+and a context can only be bound to a single thread at a time. This makes
+multi-threading in OpenGL a major pain, so we will use an alternative to
+bypass this issue later.</p>
+<p>Finally, in our event_loop, we will call </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust">context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">swap_buffers</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>to swap the front with the back buffer. The details are not important, but to
+put it simply, it &quot;updates&quot; the content of the screen. We are generally drawing
+to the back buffer, but the window displays the front buffer. So to actually see
+what we have drawn, we swap them. We haven't drawn anything yet, so the screen is
+just black. <code>swap_buffers</code> waits for the issued calls to be finished before it
+swaps. Keep in mind, this is just a minimalistic explanation and in reality, it
+is not uncommon for having more than two buffers(e.g. triple-buffering) or
+<code>swap_buffers</code> blocking until the monitor refreshes before swapping(vsync).</p>
+<h2 id="generating-the-bindings"><a class="zola-anchor" href="#generating-the-bindings" aria-label="Anchor link for: generating-the-bindings">Generating the Bindings</a></h2>
+<p>Now that we have an OpenGL-context, we can load the OpenGL functions.
+The easiest way is to use any bindings generator, which loads the function
+pointers we need for us.</p>
+<p>We can use a web-service like <a rel="noopener" target="_blank" href="https://gen.glad.sh/">glad</a> to download the files
+with the bindings, write a simple <code>build.rs</code> that uses
+<a rel="noopener" target="_blank" href="https://crates.io/crates/gl_generator">gl_generator</a> or use any of the already
+generated bindings like <a rel="noopener" target="_blank" href="https://crates.io/crates/gl">gl</a>(OpenGL 4.6 Core),
+<a rel="noopener" target="_blank" href="https://crates.io/crates/gl33">gl33</a>(OpenGL 3.3).</p>
+<p>We will go with <code>gl_generator</code> for no reason in particular.
+The example code shows creating a <code>build.rs</code> in the project and uses the output
+directory environment variable to include it into the modules, but since this
+should pretty much never change, we can create a simple throwaway project to generate
+the bindings just once, and copy them into our project. Feel free to stick with
+the version as described in the docs, where you re-generate the bindings
+every time they change/you create a new clean build. I just think that the
+extra build.rs in our project is unnecessary noise, especially once we
+need to generate other bindings. The drawback is that we have now a 27K lines of
+code, &gt;800kb monster in our repo.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell">in some empty dir </span><span class="z-comment z-line z-number-sign z-shell">
+</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cargo</span></span><span class="z-meta z-function-call z-arguments z-shell"> new<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>lib</span> gl_bindings</span>
+</span></code></pre>
+<p>add <code>gl_generator</code> as build dependency:</p>
+<div class="code_with_header">
+<div class="codeheader">gl_bindings/Cargo.toml</div>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">build-dependencies</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span>OpenGL Context Creation</span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">gl_generator</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>*<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+</div>
+<p>Now we create a <code>build.rs</code> in the root of the project:</p>
+<div class="code_with_header">
+<div class="codeheader">gl_bindings/build.rs</div>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">std<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">fs<span class="z-punctuation z-accessor z-rust">::</span></span>File<span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">gl_generator<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>Api<span class="z-punctuation z-separator z-rust">,</span> Fallbacks<span class="z-punctuation z-separator z-rust">,</span> GlobalGenerator<span class="z-punctuation z-separator z-rust">,</span> Profile<span class="z-punctuation z-separator z-rust">,</span> Registry</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> <span class="z-storage z-modifier z-rust">mut</span> file <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">File<span class="z-punctuation z-accessor z-rust">::</span></span>create<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-string z-quoted z-double z-rust"><span class="z-punctuation z-definition z-string z-begin z-rust">&quot;</span>gl43_core.rs<span class="z-punctuation z-definition z-string z-end z-rust">&quot;</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-meta z-path z-rust">Registry<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">Api<span class="z-punctuation z-accessor z-rust">::</span></span>Gl<span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">4</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">Profile<span class="z-punctuation z-accessor z-rust">::</span></span>Core<span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-path z-rust">Fallbacks<span class="z-punctuation z-accessor z-rust">::</span></span>All<span class="z-punctuation z-separator z-rust">,</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">write_bindings</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>GlobalGenerator<span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> file</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+</div>
+<p>Building the project with <code>cargo build</code> should now create a file with the name <code>gl43_core.rs</code> in
+the project root.</p>
+<p><code>gl_generator</code> also allows us to adjust the generated bindings. The <code>GlobalGenerator</code>
+allows us to access OpenGL functions from anywhere in the project(that has
+access to the gl43_core module), without passing some context around. This makes
+things far simpler for us. We are not going to expose the gl lib to the public
+and we will use a different way to tie the lifetime to the actual gl context.</p>
+<p>We just copy the generated file into the src dir of our context member.(don't forget to delete the throwaway <code>gl_bindings</code> project afterwards, it's just clutter on our hard drive now)</p>
+<p>To access the bindings from our playground, we need to modify the existing
+<code>lib.rs</code> on our src directory. While we are at, we remove the existing content,
+and for the sake of our sanity, we will just mute clippy for the gl module,
+because we will get 2k warnings otherwise. We do that by adding some <code>allow</code>
+attributes right before we declare the module, or to avoid noise in our source
+files, we add the &quot;module wide&quot; attributes at the top of the gl43_core.rs, which
+can take a while depending on how great our text editor deals with huge files.
+Also, while we are dealing with lints, let's add the stricter <code>pedantic</code> and the
+experimental <code>nursery</code> lints to our crate, just because Clippy is <strong>that</strong> useful. </p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/context/src/lib.rs</div>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#!</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">warn</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">clippy::pedantic</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+<span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#!</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">warn</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">clippy::nursery</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+
+<span class="z-meta z-module z-rust"><span class="z-storage z-modifier z-rust">pub</span> <span class="z-storage z-type z-module z-rust">mod</span> <span class="z-entity z-name z-module z-rust">gl43_core</span><span class="z-punctuation z-terminator z-rust">;</span></span>
+</span></code></pre>
+</div>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/context/src/gl43_core.rs</div>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#!</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">allow</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">clippy::pedantic</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+<span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#!</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">allow</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">clippy::nursery</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+<span class="z-meta z-annotation z-rust"><span class="z-punctuation z-definition z-annotation z-rust">#!</span><span class="z-punctuation z-section z-group z-begin z-rust">[</span><span class="z-variable z-annotation z-rust">allow</span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust">clippy::all</span></span><span class="z-meta z-annotation z-parameters z-rust"><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span><span class="z-punctuation z-section z-group z-end z-rust">]</span></span>
+</span></code></pre>
+</div>
+<p>Fun fact, <code>allow(clippy::all)</code> doesn't disable all lints. Pedantic and nursery
+lints, both of which we added to our <code>lib.rs</code>, must be disabled additionally.
+Alternatively, we could manually enable the warnings for the lints we care
+about, like <a rel="noopener" target="_blank" href="https://github.com/EmbarkStudios/rust-ecosystem/blob/main/lints.rs">how EmbarkStudios does
+it</a>.</p>
+<p>Now we need to modify our <code>examples/playground.rs</code>, to alias the gl module with a
+more ergonomic name.</p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/context/examples/playground.rs</div>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">context<span class="z-punctuation z-accessor z-rust">::</span></span>gl43_core <span class="z-keyword z-operator z-rust">as</span> gl<span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+</div>
+<p>Finally, we can load the OpenGL functions right after we made our context
+current: </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust">context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">make_current</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>load_with<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">|</span></span></span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-variable z-parameter z-rust">symbol</span><span class="z-punctuation z-section z-parameters z-end z-rust">|</span></span> </span><span class="z-meta z-function z-closure z-rust">context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_proc_address</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>symbol</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></code></pre>
+<p>The bindings generated with <code>gl_generator</code> expose a load_with function that will load the function pointers of our OpenGL functions one by one. </p>
+<p>Now, we can test it by calling the following 2 OpenGL functions in our playground.</p>
+<p>Before the event_loop.run(..) </p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>set a clear color for later
+</span><span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>ClearColor<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></code></pre>
+<p>and before swap_buffers()</p>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> clear the &quot;screen&quot; with the previously set clear color
+</span><span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>Clear<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">COLOR_BUFFER_BIT</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></code></pre>
+<p>Because they are just function pointers, calling functions over FFI(basically calling non-Rust
+functions), they need to be in unsafe blocks.
+Unsafe might sound dangerous and scary, but it just means that Rust can't guarantee that these
+functions follow its safety principles, so the burden is on the programmer.
+Basically  just another day for any C++ programmer, just limited to a handful
+lines of code.</p>
+<p>The final playground should look like this:</p>
+<div class="code_with_header">
+<div class="codeheader">cac_graphics/context/examples/playground.rs</div>
+<pre data-lang="rust" class="language-rust z-code"><code class="language-rust" data-lang="rust"><span class="z-source z-rust"><span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">context<span class="z-punctuation z-accessor z-rust">::</span></span>gl43_core <span class="z-keyword z-operator z-rust">as</span> gl<span class="z-punctuation z-terminator z-rust">;</span>
+
+<span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span>GlContext<span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-keyword z-other z-rust">use</span> <span class="z-meta z-path z-rust">winit<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-meta z-path z-rust">event<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>Event<span class="z-punctuation z-separator z-rust">,</span> WindowEvent</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-path z-rust">event_loop<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>ControlFlow<span class="z-punctuation z-separator z-rust">,</span> EventLoop</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    <span class="z-meta z-path z-rust">window<span class="z-punctuation z-accessor z-rust">::</span></span>WindowBuilder<span class="z-punctuation z-separator z-rust">,</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+<span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">main</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+    <span class="z-storage z-type z-rust">let</span> event_loop <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">EventLoop<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    <span class="z-storage z-type z-rust">let</span> window <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">WindowBuilder<span class="z-punctuation z-accessor z-rust">::</span></span>new<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">build</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>event_loop</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>create a context from the existing winit window
+</span>    <span class="z-storage z-type z-rust">let</span> context <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">GlContext<span class="z-punctuation z-accessor z-rust">::</span></span>create<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>
+        <span class="z-keyword z-operator z-bitwise z-rust">&amp;</span>window<span class="z-punctuation z-separator z-rust">,</span>
+        <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span>GlConfig <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            alpha_bits<span class="z-punctuation z-separator z-rust">:</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span>
+            version<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-integer z-decimal z-rust">4</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-integer z-decimal z-rust">3</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+            profile<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">raw_gl_context<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-meta z-path z-rust">Profile<span class="z-punctuation z-accessor z-rust">::</span></span>Core<span class="z-punctuation z-separator z-rust">,</span>
+            <span class="z-keyword z-operator z-range z-rust">..</span><span class="z-support z-type z-rust">Default</span><span class="z-meta z-path z-rust"><span class="z-punctuation z-accessor z-rust">::</span></span>default<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span><span class="z-punctuation z-separator z-rust">,</span>
+    </span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+    <span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">unwrap</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>actually use the context
+</span>    context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">make_current</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>load the OpenGL functions with the context
+</span>    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>load_with<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">|</span></span></span><span class="z-meta z-function z-closure z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-variable z-parameter z-rust">symbol</span><span class="z-punctuation z-section z-parameters z-end z-rust">|</span></span> </span><span class="z-meta z-function z-closure z-rust">context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">get_proc_address</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>symbol</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+
+    <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span>red and alpha channels as 1.0, rest as 0.0
+</span>        <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>ClearColor<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">0.</span><span class="z-constant z-numeric z-float z-rust">0</span><span class="z-punctuation z-separator z-rust">,</span> <span class="z-constant z-numeric z-float z-rust">1.</span><span class="z-constant z-numeric z-float z-rust">0</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+
+    event_loop<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">run</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-storage z-modifier z-rust">move</span> <span class="z-keyword z-operator z-bitwise z-rust">|</span>event<span class="z-punctuation z-separator z-rust">,</span> <span class="z-keyword z-operator z-rust">_</span><span class="z-punctuation z-separator z-rust">,</span> control_flow<span class="z-keyword z-operator z-bitwise z-rust">|</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+        <span class="z-keyword z-operator z-arithmetic z-rust">*</span>control_flow <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ControlFlow<span class="z-punctuation z-accessor z-rust">::</span></span>Poll<span class="z-punctuation z-terminator z-rust">;</span>
+
+        <span class="z-keyword z-control z-rust">match</span> event <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+            <span class="z-meta z-path z-rust">Event<span class="z-punctuation z-accessor z-rust">::</span></span>WindowEvent <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                event<span class="z-punctuation z-separator z-rust">:</span> <span class="z-meta z-path z-rust">WindowEvent<span class="z-punctuation z-accessor z-rust">::</span></span>CloseRequested<span class="z-punctuation z-separator z-rust">,</span>
+                window_id<span class="z-punctuation z-separator z-rust">,</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span> <span class="z-keyword z-control z-rust">if</span> window_id <span class="z-keyword z-operator z-comparison z-rust">==</span> window<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">id</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-keyword z-operator z-arithmetic z-rust">*</span>control_flow <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">ControlFlow<span class="z-punctuation z-accessor z-rust">::</span></span>Exit<span class="z-punctuation z-separator z-rust">,</span>
+            <span class="z-meta z-path z-rust">Event<span class="z-punctuation z-accessor z-rust">::</span></span>MainEventsCleared <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                <span class="z-storage z-modifier z-rust">unsafe</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+                    <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> clear the &quot;screen&quot;
+</span>                    <span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span>Clear<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-meta z-path z-rust">gl<span class="z-punctuation z-accessor z-rust">::</span></span><span class="z-constant z-other z-rust">COLOR_BUFFER_BIT</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+                </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+            <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> &quot;update&quot; the screen
+</span>                context<span class="z-punctuation z-accessor z-dot z-rust">.</span><span class="z-support z-function z-rust">swap_buffers</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+            <span class="z-keyword z-operator z-rust">_</span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+</div>
+<p>If everything works, there should now be a window with a red background when
+running the example. And we can dive into the next steps.</p>
+<p>Understanding the gl calls above is not important for now, the main thing is to
+just test whether OpenGL works. If it fails, there might be some system
+dependencies missing, but simply said <code>glClear(GL_COLOR_BUFFER_BIT)</code> clears the &quot;screen&quot;, in a color that
+we specify with <code>glClearColor</code>.</p>
+<p><span class="admonition note title"> Note </span>
+<span class="admonition note"> I will use the OpenGL notation when referring to the functions in text,
+instead of the Rust notation with the module as namespace. The reason for that
+is that it makes finding the docs easier, but also less dependent on the
+OpenGL bindings solution(and imports). E.g. glClear(GL_COLOR_BUFFER_BIT) instead of 
+gl::Clear(gl::COLOR_BUFFER_BIT)  </span></p>
+<p>Now we can get our hands dirty.</p>
+<hr />
+<p><a rel="noopener" target="_blank" href="https://github.com/KevinThielen/cac_graphics/tree/048006de8aff8ee33708ec41d078f2ca86e8c3c0">Link to the repository</a></p>
+
+
+<nav>
+    
+    <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;">←</a>
+    
+    <span style="padding-left: 2rem; padding-right: 2rem">
+        3 / 13
+    </span>
+    
+    <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;handwritten-bindings&#x2F;">→</a>
+    
+</nav>
+
+</article>
+
+
+
+<div class="toc" aria-hidden="true">
+  <div class="toc-sticky">
+    <div class="toc-item">
+
+        
+            <a class = "chapter_header" href="https://breakbuild.dev/devlog/renderer/">Writing the Renderer</a>
+        
+
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/project_setup/">1 Project Setup</a> 
+                
+            </div>
+            
+             
+                 
+                
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/">2 The Context</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a class="chapter" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/">2.1 OpenGL</a> 
+                    
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/#why-opengl">Why OpenGL</a>
+                        </div>
+                        
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/#opengl-versions">OpenGL Versions</a>
+                        </div>
+                        
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/#creating-the-context">Creating the context</a>
+                        </div>
+                        
+                        <div class="toc-item-child">
+                          - <a class="subtext" href="https://breakbuild.dev/devlog/renderer/the_context/opengl/#generating-the-bindings">Generating the Bindings</a>
+                        </div>
+                        
+                    
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/the_context/handwritten-bindings/">2.2 [Excursion] Handwritten GL Bindings</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/">3 Hello Triangle</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/buffers/">3.1 Buffers</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/vertex-attributes/">3.2 Vertex Attributes</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle/shaders/">3.3 Shaders</a> 
+                
+                </div>
+                
+            
+        
+            <div class="toc-item header">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/">4 Hello Triangle V2</a> 
+                
+            </div>
+            
+             
+                 
+                 
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/gl-context/">4.1 The GL Context</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/error-handling/">4.2 Error Handling</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/alternative-contex/">4.3 GLFW</a> 
+                
+                </div>
+                
+             
+                 
+
+                <div class="toc-item-child">
+                
+                    <a href="https://breakbuild.dev/devlog/renderer/hello_triangle_v2/render-target/">4.4 RenderTargets</a> 
+                
+                </div>
+                
+            
+        
+
+    <nav>
+        
+        <a class="previous" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;">←</a>
+        
+        <span style="padding-left: 2rem; padding-right: 2rem">
+            3 / 13
+        </span>
+        
+        <a class="next" href="https:&#x2F;&#x2F;breakbuild.dev&#x2F;devlog&#x2F;renderer&#x2F;the_context&#x2F;handwritten-bindings&#x2F;">→</a>
+        
+    </nav>
+  </div>
+</div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav>
+        <ul><li><a href="https://breakbuild.dev/atom.xml" target="_blank" title="Atom/RSS Feed"><i type="Button" class="svg rss" title="Atom/RSS Feed"></i></a></li><li class="js"><a class="m-protected" href="#Z2VudXNueW1waGljdXNAZ21haWwuY29t" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a></li><li><a href="https://twitter.com/GenusNymphicus/" target="_blank" title="Twitter"><i type="Button" class="svg twitter" title="Twitter"></i></a></li><li><a href="https://github.com/KevinThielen/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a></li><li><a href="https://www.buymeacoffee.com/genusnymph/" target="_blank" title="Buy Me A Coffee"><i type="Button" class="svg buymeacoffee" title="Buy Me A Coffee"></i></a></li></ul>
+      </nav>
+      <p class="s90">Copyright &copy; 2022 BreakBuildGames</p>
+      <nav>
+        <ul><li class="s90"> <a href="https://breakbuild.dev/"> About </a> </li><li class="s90"> <a href="https://breakbuild.dev/privacy/"> Privacy </a> </li><li class="s90"> <a href="https://breakbuild.dev/contact/"> Contact </a> </li><li class="s90"> <a href="https://breakbuild.dev/sitemap.xml" target="_blank"> Sitemap </a> </li></ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
