@@ -688,8 +688,8 @@ quickly adding new features that people can agree on, but the difficult
 questions seem to be stuck at times, with only an occasional bump being a lost
 soul, asking for the current status. There are only so many skilled volunteers
 after all, who can only work on so many things. That said, I definitely prefer this approach any
-day over rushing half-finished or faulty additions, so I am really grateful to
-all the amazing volunteers out there.  
+day over rushing half-finished or faulty additions. So a little shout out to all
+the amazing volunteers out there, who made Rust what it is!   
 
 ## The Borrow Checker Is Not Always Right
 Another problem is, that things that should be possible in theory are not passing the borrow
