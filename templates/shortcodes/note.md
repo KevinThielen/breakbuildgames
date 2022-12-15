@@ -8,4 +8,4 @@
 {% endif %}
 
 <span class="admonition {{ kind | lower }} title"> {{ title }} </span>
-<span class="admonition {{ kind | lower }}"> {{ body | safe }}  </span>
+<span class="admonition {{ kind | lower }}"> {{ body }}  </span>

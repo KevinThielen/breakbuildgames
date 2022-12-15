@@ -733,6 +733,19 @@ fn main() {
     println!("{a} {b}");
 }
 ```
+Read the next point for two workarounds for this particular issue :)
+
+{% note(title="Edit", kind="note") %}
+Actually, this "limitation" makes total sense. Rust is explicit where it matters
+and there is no way to express the partial borrow with the function signature. 
+It's unreasonable to expect programmers to peek inside the fn implementation
+just to confirm whether a partial borrow happens or not :)  
+<br>
+Thanks [/u/llogiq](https://www.reddit.com/user/llogiq/), for pointing this out!  
+[See also](https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0c3te7/?context=3)
+{% end %}
+
+
 Another common scenario are matches(and other diverging code paths) inside a function: 
 
 ```rust 
