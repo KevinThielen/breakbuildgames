@@ -1,5 +1,5 @@
 # do NOT include a trailing slash on the base URL for web urls
-base_url = "https://kevinthielen.github.io/breakbuildgames/"
+base_url = "https://kevinthielen.github.io/breakbuildgames"
 title = "BreakBuildGames"
 description = "Devlog about game development in Rust and random rants"
 default_language = "en"
