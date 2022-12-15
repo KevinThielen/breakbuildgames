@@ -864,6 +864,10 @@ move all the functions to the context right now, just so they are consistent.
 After all, it would be a usability nightmare to find `set_variable` in the shader, but `set_texture`
 in the context, even though both should just update a value on the shader.
 
+The other alternative, splitting the borrow into a "double getter" works better
+for this example, but we could face an explosion of combinations with varying
+mutability and different fields.   
+
 This example is still fairly simple, and should be recognized early in development, but imagine a breaking issue like this potentially being layers deep, involving lifetimes and being in later stages in a project.. 
 
 All it takes is an oversight or a sudden change in requirements that could blow
