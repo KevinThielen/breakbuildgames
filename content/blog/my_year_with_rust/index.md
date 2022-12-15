@@ -962,7 +962,7 @@ Thank you for reading. If you are interested in more, check out my [devlog](/dev
 
 # Addendum 
 
-- [/u/ssokolow](https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0dcajz/?context=3) gives many interesting links and details to some of the
+- The user [/u/ssokolow](https://www.reddit.com/r/rust/comments/zmo8dv/my_first_year_with_rust_the_good_the_bad_the_ugly/j0dcajz/?context=3) gives many interesting links and details to some of the
     mentioned points in this article. I highly recommend checking it out!
 
 
