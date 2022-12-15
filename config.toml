@@ -1,5 +1,5 @@
 # do NOT include a trailing slash on the base URL for web urls
-base_url = "https://breakbuild.games"
+base_url = "https://kevinthielen.github.io/breakbuildgames/"
 title = "BreakBuildGames"
 description = "Devlog about game development in Rust and random rants"
 default_language = "en"
@@ -188,7 +188,7 @@ katex_bundle = "katexbundle.min.js"
 # meta/seo/analytic tags
 ##########################
 keywords = "BreakBuildGames, Rust, GameDev, Devlog, OpenGL, Graphics Programming, Blog, Game Development" # used for the primary site index
-twitter = "your-user-name" # used for twitter related
+twitter = "GenusNymphicus" # used for twitter related
 #google = "Your Google Site verification code."
 #bing = "Your Bing Site verification code."
 seo = true  # enable or disable seo-related meta tags: opengraph, facebook, twitter
@@ -201,7 +201,7 @@ mail = "genusnymphicus@gmail.com"
 #mastodon = "@your-user-name"
 #element = "matrix.example.com"
 #matrix = "matrix.example.com"
-#buymeacoffee = "your-user-name"
+buymeacoffee = "genusnymph"
 twitter = "GenusNymphicus"
 #facebook = "your-user-name"
 #linkedin = "your-user-name"

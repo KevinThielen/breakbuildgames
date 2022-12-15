@@ -38,7 +38,6 @@ automatically, once we hit a creative spark.
 
 {% code(name="cac_graphics/context/src/lib.rs") %}
 ```rust 
-//cac_graphics/context/src/lib.rs
 pub trait Context {
     fn update(&mut self);
 }
@@ -160,7 +159,8 @@ The issue is even enhanced when there is a naming clash.
 
 We are trying to find a middle ground, by using smaller traits, but not force
 them to be exposed to the user. In fact, our abstractions will use trait bounds
-only on the small subset of traits they need.
+only on the small subset of traits they need, but there won't be any need to
+import them, because we just relay the call inside our struct implementation.
 
 Let's add a little trait to our `render_target.rs`: 
 ```rust
@@ -189,7 +189,7 @@ impl RenderTarget {
 ```
 
 This might look confusing and tedious to write.
-However, actual implementation per backend will be done just once at this point.
+However, actual implementation per backend will be done just once after this point.
 
 The alternative would be to use some sort of PhantomData, to make the entire struct contain the type information of the
 Context-implementation, but then we would "infect" all code trying to store or reference that type.
@@ -293,6 +293,20 @@ screen.clear(&mut ctx);
 ```
 
 Now, our background should be green. 
+I agree that passing the context around might be a bit off-putting, especially
+when you are new to Rust. However, there is no real alternative in this case.
+Having the constructor be part of the context works, sure, but then there is the
+issue of saving the struct. Having to store it as
+`RenderTarget<opengl::Context>` is more painful, imho. 
+
+Another viable alternative could be to avoid the immediate calls, and just queue up a
+bunch of graphics commands instead. This also adds some multi-thread potential,
+because the lists only store commands instead of executing an actual graphics API. 
+Our actual Renderer will likely go that route, but for now, the immediate calls
+are sufficient.
+
+
+
 However, look at this hideous tuple for the color and its pretentious double parentheses.
 
 At this point we might add some proper Colors struct.
@@ -502,6 +516,8 @@ impl<C: GLContext> render_target::Context for Context<C> {
 }
 ```
 {% end %}
+
+![green](../green.png)
 
 More than 2000 words in and we basically only cleared the screen.. Guess we will look
 at the GL objects in the next chapter.

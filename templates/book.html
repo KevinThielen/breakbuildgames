@@ -1,6 +1,46 @@
 {%- extends "base.html" %}
 
 
+{%- block seo %}
+  {{- super() }}
+  {%- set title_addition = "" %}
+ 
+  {% if page %}
+      {% set pg = page %}
+  {% endif %}
+
+  {% if section %}
+    {% set section_item = get_section(path=section.relative_path) %}
+    {% set chapter_frontpage = section_item.pages %}
+    {% if chapter_frontpage[0].extra.chapter %} 
+        {%- set pg = chapter_frontpage[0] %}
+    {% endif %}
+  {% endif %}
+
+  {%- if pg.title and config.title %}
+    {%- set title = pg.title %}
+    {%- set title_addition = title_separator ~ config.title %}
+  {%- elif pg.title %}
+    {%- set title = pg.title %}
+  {%- else %}
+    {%- set title = config.title %}
+  {%- endif %}
+
+  {%- if pg.description %}
+    {%- set description = pg.description %}
+  {%- else %}
+    {%- set description = config.description %}
+  {%- endif %}
+  {%- set created_time = pg.date %}
+  {%- set updated_time = pg.updated %}
+  {%- if current_section %}
+    {%- set pg_section = current_section %}
+  {%- else %}
+    {%- set pg_section = "" %}
+  {%- endif %}
+
+  {{- macros_head::seo(config=config, title=title, title_addition=title_addition, description=description, type="article", is_page=true, created_time=created_time, updated_time=updated_time, page_section=pg_section) }}
+{%- endblock seo %}
 
 {%- block content %}
 {% set path = "" %}
@@ -73,6 +113,11 @@
         {% set section_item = get_section(path=section.relative_path) %}
         {% set chapter_frontpage = section_item.pages %}
         {% if chapter_frontpage[0].extra.chapter %} 
+            {%- set p = chapter_frontpage[0] %}
+            {%- if config.extra.meta_post.position %}
+            {%- if config.extra.meta_post.position == "top" or config.extra.meta_post.position == "both" %}
+            {{- macros::meta_post(page=p, config=config) }}
+            {%- endif %}{%- endif %}
             {{ chapter_frontpage[0].content | safe }}
         {% else %}
             {{ section.content | safe }}
@@ -80,6 +125,10 @@
     {% endif %}
 {%- else %}
     <h1>{{ page.title }}</h1>
+    {%- if config.extra.meta_post.position %}
+    {%- if config.extra.meta_post.position == "top" or config.extra.meta_post.position == "both" %}
+    {{- macros::meta_post(page=page, config=config) }}
+    {%- endif %}{%- endif %}
     {{ page.content | safe }}
 {%- endif %}
 

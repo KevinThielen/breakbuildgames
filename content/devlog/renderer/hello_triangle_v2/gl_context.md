@@ -1,7 +1,7 @@
 +++
 title = "The GL Context"
 description = "The first abstraction is for the context itself. It is going to be the core of our crate."
-date = 2022-12-05
+date = 2022-12-07
 weight = 1
 draft = false
 template="book.html"

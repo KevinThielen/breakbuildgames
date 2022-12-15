@@ -1,7 +1,7 @@
 +++
 title = "Hello Triangle V2"
 description = "We got our quick and dirty triangle, so let' do it again, but properly this time!"
-date = 2022-12-03
+date = 2022-12-07
 draft = false
 weight = 0
 render = false

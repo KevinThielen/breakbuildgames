@@ -1,7 +1,7 @@
 +++
 title = "Error Handling"
 description = "We weaseled our way out of error handling so far. Now is the time to do it right!"
-date = 2022-12-07
+date = 2022-12-08
 weight = 2
 draft = false
 template="book.html"

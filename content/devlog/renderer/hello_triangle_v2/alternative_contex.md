@@ -1,7 +1,7 @@
 +++
 title = "GLFW"
 description = "We are going to try our current context abstraction with GLFW, which is a non-Rusty alternative."
-date = 2022-12-08
+date = 2022-12-09
 weight = 3
 draft = false
 template="book.html"
