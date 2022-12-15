@@ -1,5 +1,5 @@
 # do NOT include a trailing slash on the base URL for web urls
-base_url = "https://kevinthielen.github.io/breakbuildgames"
+base_url = "https://breakbuild.dev"
 title = "BreakBuildGames"
 description = "Devlog about game development in Rust and random rants"
 default_language = "en"
@@ -97,7 +97,7 @@ integrity = true # setting this to false is useful for developing, should normal
 js_bundle = true # multiple javascript files combined into a single file
 js_switcher = true
 js_search_facade = true # Do not load search until user interaction with search.
-# search library to use, valid values are: false, "elasticlunr", "tinysearch", "stork"
+# search library to use, valid values are: false, "ej=asticlunr", "tinysearch", "stork"
 search_library = false
 
 js_search_index = "search_index.en.js" # Separate Always, generated each build
